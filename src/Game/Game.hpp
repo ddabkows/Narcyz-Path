@@ -45,6 +45,7 @@ class Game {
 
   // Methods
   void generateGame();
+  void updatePlayer(Directions);
 
   // Setters
 
