@@ -13,7 +13,7 @@ void MovingEntity::horizontalMove() {
   _position.x += _velocity;
 }
 
-void MovingEntity::verticalMove(std::vector<std::shared_ptr<GameEntity>> game_entities, Dimensions game_board) {
+void MovingEntity::verticalMove(std::vector<std::shared_ptr<GameEntity>> game_entities, const Dimensions& game_board) {
   _position.y += _velocity;
   for (size_t entity = 0; entity < game_entities.size(); ++entity) {
     float entity_pos_x  = game_entities[entity]->getPosition().x;
@@ -30,6 +30,8 @@ void MovingEntity::verticalMove(std::vector<std::shared_ptr<GameEntity>> game_en
       }
     }
   }
+  if (_position.y < 0.f) {_position.y = 0.f;}
+  else if (game_board.y < _position.y + _size.y) {_position.y = game_board.y - _size.y;}
 }
 
 void MovingEntity::oblicMove(float move_x, float move_y) {
@@ -37,7 +39,7 @@ void MovingEntity::oblicMove(float move_x, float move_y) {
   _position.y += move_y;
 }
 
-void MovingEntity::move(std::vector<std::shared_ptr<GameEntity>> game_entities, Dimensions game_board) {
+void MovingEntity::move(std::vector<std::shared_ptr<GameEntity>> game_entities, const Dimensions& game_board) {
   if (_directions.north) {
     if (!_directions.west && !_directions.east && !_directions.south) {
        verticalMove(game_entities, game_board);
@@ -54,7 +56,7 @@ bool MovingEntity::checkNorthConflicts(std::vector<std::shared_ptr<GameEntity>> 
 }
 
 void MovingEntity::checkNewDirectionsConsequences(Directions updating_directions, std::vector<std::shared_ptr<GameEntity>> game_entities,
-                                                  Dimensions game_board) {
+                                                  const Dimensions& game_board) {
   if (_directions.north && updating_directions.north) {
     if (!_directions.south && !_directions.west && !_directions.east && 
         !updating_directions.south && !updating_directions.west && !updating_directions.east) {
@@ -66,9 +68,10 @@ void MovingEntity::checkNewDirectionsConsequences(Directions updating_directions
     _velocity = 0.f;
   }
   if (_velocity > _max_velocity) {_velocity = _max_velocity;}
+  _directions = updating_directions;
   move(game_entities, game_board);
 }
 
-void MovingEntity::updateVelocity(Directions updating_directions, std::vector<std::shared_ptr<GameEntity>> game_entities, Dimensions game_board) {
+void MovingEntity::updatePosition(Directions updating_directions, std::vector<std::shared_ptr<GameEntity>> game_entities, const Dimensions& game_board) {
   checkNewDirectionsConsequences(updating_directions, game_entities, game_board);
 }

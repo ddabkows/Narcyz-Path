@@ -53,12 +53,12 @@ class MovingEntity : public GameEntity {
 
     // Methods
     void horizontalMove();
-    void verticalMove(std::vector<std::shared_ptr<GameEntity>>, Dimensions);
+    void verticalMove(std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
     void oblicMove(float, float);
-    void move(std::vector<std::shared_ptr<GameEntity>>, Dimensions);
+    void move(std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
     bool checkNorthConflicts(std::vector<std::shared_ptr<GameEntity>>);
-    void checkNewDirectionsConsequences(Directions, std::vector<std::shared_ptr<GameEntity>>, Dimensions);
-    void updateVelocity(Directions, std::vector<std::shared_ptr<GameEntity>>, Dimensions);
+    void checkNewDirectionsConsequences(Directions, std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
+    void updatePosition(Directions, std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
 
     // Setters
 
