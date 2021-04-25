@@ -5,7 +5,11 @@
 */
 
 
+#include <vector>
+#include <memory>
+
 #include "Dimensions.hpp"
+#include "Directions.hpp"
 
 
 #ifndef _GAME_ENTITY_HPP
@@ -20,7 +24,7 @@ class GameEntity {
 protected:
     Dimensions _position;
     Dimensions _size;
-    float _velocity = 0;
+    
 
   public:
     // Constructor
@@ -33,10 +37,8 @@ protected:
     }
 
     // Copy
-    GameEntity(const myClass& game_entity) {
-      _position = game_entity._position;
-      _size = game_entity._size;
-    }
+    GameEntity(const myClass& game_entity) : _position(game_entity._position),
+                                             _size(game_entity._size) {}
     myClass& operator=(const myClass&) = delete;
 
     // Move
@@ -44,9 +46,6 @@ protected:
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void horizontalMove(float);
-    void verticalMove(float);
-    void oblicMove(float, float);
 
     // Setters
     void setSize(float, float);

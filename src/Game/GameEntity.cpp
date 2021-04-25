@@ -9,18 +9,6 @@
 
 
 // Methods
-void GameEntity::horizontalMove(float move_x) {
-  _position.x += move_x;
-}
-
-void GameEntity::verticalMove(float move_y) {
-  _position.y += move_y;
-}
-
-void GameEntity::oblicMove(float move_x, float move_y) {
-  _position.x += move_x;
-  _position.y += move_y;
-}
 
 
 // Setters
