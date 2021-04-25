@@ -52,9 +52,10 @@ class MovingEntity : public GameEntity {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void horizontalMove(float);
-    void verticalMove(float);
+    void horizontalMove();
+    void verticalMove(std::vector<std::shared_ptr<GameEntity>>, Dimensions);
     void oblicMove(float, float);
+    void move(std::vector<std::shared_ptr<GameEntity>>, Dimensions);
     bool checkNorthConflicts(std::vector<std::shared_ptr<GameEntity>>);
     void checkNewDirectionsConsequences(Directions, std::vector<std::shared_ptr<GameEntity>>, Dimensions);
     void updateVelocity(Directions, std::vector<std::shared_ptr<GameEntity>>, Dimensions);
