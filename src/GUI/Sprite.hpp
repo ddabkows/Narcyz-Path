@@ -11,8 +11,8 @@
 #include <memory>
 
 
-#ifndef _SPRITE_H_
-#define _SPRITE_H_
+#ifndef _SPRITE_HPP
+#define _SPRITE_HPP
  
 
 class Sprite {

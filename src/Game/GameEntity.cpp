@@ -1,7 +1,7 @@
 /*
   Author : Dominik Dabkowski
   Specs  : GNU C++ version 10.2 - "gg+ -std=c++17"
-  Code   : GameBoard methods
+  Code   : Game Entity methods
 */
 
 
@@ -11,6 +11,15 @@
 // Methods
 void GameEntity::horizontalMove(float move_x) {
   _position.x += move_x;
+}
+
+void GameEntity::verticalMove(float move_y) {
+  _position.y += move_y;
+}
+
+void GameEntity::oblicMove(float move_x, float move_y) {
+  _position.x += move_x;
+  _position.y += move_y;
 }
 
 

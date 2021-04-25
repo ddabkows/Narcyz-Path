@@ -1,15 +1,16 @@
 /*
   Author : Dominik Dabkowski
   Specs  : GNU C++ version 10.2 - "gg+ -std=c++17"
-  Code   : Class of Game Entity - most virtual class
+  Code   : Class of Game Entity 
 */
 
 
 #include "Dimensions.hpp"
 
 
-#ifndef _GAME_ENTITY_H_
-#define _GAME_ENTITY_H_
+#ifndef _GAME_ENTITY_HPP
+#define _GAME_ENTITY_HPP
+
 
 class GameEntity {
   private:
@@ -19,6 +20,7 @@ class GameEntity {
 protected:
     Dimensions _position;
     Dimensions _size;
+    float _velocity = 0;
 
   public:
     // Constructor
@@ -43,6 +45,8 @@ protected:
 
     // Methods
     void horizontalMove(float);
+    void verticalMove(float);
+    void oblicMove(float, float);
 
     // Setters
     void setSize(float, float);

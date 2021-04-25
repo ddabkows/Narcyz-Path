@@ -1,7 +1,7 @@
  /*
   Author : Dominik Dabkowski
   Specs  : GNU C++ version 10.2 - "gg+ -std=c++17"
-  Code   : Rectangle methods
+  Code   : Rectangle shapes methods
 */
 
 

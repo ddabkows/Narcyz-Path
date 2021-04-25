@@ -8,8 +8,8 @@
 #include "Dimensions.hpp"
 
 
-#ifndef _GAME_BOARD_H_
-#define _GAME_BOARD_H_
+#ifndef _GAME_BOARD_HPP
+#define _GAME_BOARD_HPP
 
 
 class GameBoard final {

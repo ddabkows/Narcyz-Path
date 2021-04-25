@@ -10,8 +10,8 @@
 #include <SFML/Window.hpp>
 
 
-#ifndef _RECTANGLE_H_
-#define _RECTANGLE_H_
+#ifndef _RECTANGLE_HPP
+#define _RECTANGLE_HPP
 
 
 class Rectangle final {

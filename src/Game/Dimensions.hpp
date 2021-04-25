@@ -5,8 +5,8 @@
 */
 
 
-#ifndef _DIMENSIONS_H_
-#define _DIMENSIONS_H_
+#ifndef _DIMENSIONS_HPP
+#define _DIMENSIONS_HPP
 
 
 struct Dimensions {
