@@ -60,7 +60,12 @@ class MovingEntity : public GameEntity {
     void checkNewDirectionsConsequences(Directions, std::vector<std::shared_ptr<GameEntity>>, Dimensions);
     void updateVelocity(Directions, std::vector<std::shared_ptr<GameEntity>>, Dimensions);
 
+    // Setters
 
+    // Getters
+    
+    // Destructor
+    ~MovingEntity() = default;
 
 };
 #endif
