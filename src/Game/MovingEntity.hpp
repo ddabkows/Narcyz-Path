@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "GameEntity.hpp"
+#include "GameMacros.hpp"
 
 
 #ifndef _MOVING_ENTITY_HPP
@@ -52,13 +53,10 @@ class MovingEntity : public GameEntity {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void horizontalMove();
-    void verticalMove(std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
-    void oblicMove(float, float);
-    void move(std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
-    bool checkNorthConflicts(std::vector<std::shared_ptr<GameEntity>>);
-    void checkNewDirectionsConsequences(Directions, std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
-    void updatePosition(Directions, std::vector<std::shared_ptr<GameEntity>>, const Dimensions&);
+    void horizontalMove(int);
+    void verticalMove(int);
+    void oblicMove(int, int);
+    void move(Directions);
 
     // Setters
 
