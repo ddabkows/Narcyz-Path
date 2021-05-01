@@ -17,5 +17,8 @@ void Game::generateGame() {
 }
 
 void Game::updatePlayer(Directions updating_directions) {
-  _player->updatePosition(updating_directions, _walls, _game_board->getSize());
+  if (_game_timer.getElapsedTime().asSeconds() - _player_walk_timer > 0.2) {
+    _player->move(updating_directions);
+    _player_walk_timer = _game_timer.getElapsedTime().asSeconds();
+  }
 }

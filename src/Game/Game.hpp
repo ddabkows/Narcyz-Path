@@ -5,13 +5,14 @@
 */
 
 
+#include <vector>
+#include <memory>
+#include <SFML/Graphics.hpp>
+
 #include "GameEntity.hpp"
 #include "GameBoard.hpp"
 #include "MovingEntity.hpp"
 #include "GameMacros.hpp"
-
-#include <vector>
-#include <memory>
 
 
 #ifndef _GAME_HPP
@@ -27,6 +28,9 @@ class Game {
     std::vector<std::shared_ptr<GameEntity>> _walls{};
     std::shared_ptr<MovingEntity> _player;
     std::vector<std::shared_ptr<MovingEntity>> _enemies{};
+
+    float _player_walk_timer = 0.f;
+    sf::Clock _game_timer{};
 
   public:
   // Constructor
