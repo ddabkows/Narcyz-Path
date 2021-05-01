@@ -8,11 +8,14 @@
 #ifndef _DIRECTIONS_HPP
 #define _DIRECTIONS_HPP
 
-
-struct Directions {
-  bool north = false;
-  bool south = false;
-  bool east = false;
-  bool west = false;
+enum Directions {
+  north,
+  north_east,
+  east,
+  south_east,
+  south,
+  south_west,
+  west,
+  north_west
 };
 #endif
