@@ -30,11 +30,14 @@ class GameWindow {
     bool _rgt_clicked = false;
     bool _lft_clicked = false;
 
+    Directions _player_direction;
+
   public:
     // Constructor
     GameWindow() : _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(120, 120, 120, 120), sf::Color(0, 0, 0, 255), 0.f, 0.f),
                    _player(_player_size_x, _player_size_y, _game_board_size_y - _player_size_y, (_projection_size_x - _player_size_y) / 2.f,
-                   sf::Color(255, 255, 255, 255), sf::Color(0, 0, 0, 255), 0.5f, 0.f) {}
+                   sf::Color(255, 255, 255, 255), sf::Color(0, 0, 0, 255), 0.5f, 0.f),
+                   _player_direction(standby) {}
     
     // Copy
     GameWindow(const myClass&) = delete;
