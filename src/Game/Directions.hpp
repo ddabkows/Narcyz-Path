@@ -9,6 +9,7 @@
 #define _DIRECTIONS_HPP
 
 enum Directions {
+  standby,
   north,
   north_east,
   east,
