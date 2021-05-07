@@ -54,6 +54,7 @@ class Game {
   // Setters
 
   // Getters
+  const Dimensions& getPlayerDimensions() const;
 
   // Destructor
   ~Game() = default;

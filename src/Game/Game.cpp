@@ -22,3 +22,7 @@ void Game::updatePlayer(Directions updating_directions) {
     _player_walk_timer = _game_timer.getElapsedTime().asSeconds();
   }
 }
+
+
+// Getters
+const Dimensions& Game::getPlayerDimensions() const {return _player->getPosition();}

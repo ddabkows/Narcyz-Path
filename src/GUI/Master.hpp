@@ -6,9 +6,13 @@
 
 
 #include <memory>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+
+#include "../Game/GameMacros.hpp"
 
 
 #ifndef _MASTER_HPP
@@ -39,6 +43,9 @@ class Master {
     void setupWindow();
     void displayWindow();
     void closeWindow();
+    void clearWindow();
+    bool pollEvent(sf::Event&);
+    void drawRectangle(const sf::RectangleShape&);
 
     // Setters
 
