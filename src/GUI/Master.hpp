@@ -29,6 +29,7 @@ class Master {
   public:
     // Constructor
     Master() : _window() {
+      setupWindow();
     }
 
     // Copy

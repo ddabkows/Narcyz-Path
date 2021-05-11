@@ -15,14 +15,12 @@
 
 int main() {
   GameWindow game_win{};
-  Master master{};
   bool keep_program_open = true;
   
   while (keep_program_open) {
     sf::Event event;
 
-    while (master.getWindow()->pollEvent(event)) { game_win.processEvent(event); }
-    //while (game_win.pollEvent(event)) {game_win.processEvent(event);}
+    while (game_win.pollEvent(event)) {game_win.processEvent(event);}
     game_win.updateWindow();
 
     if (!game_win.getOpen()) {
