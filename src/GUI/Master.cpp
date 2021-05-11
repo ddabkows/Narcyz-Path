@@ -10,7 +10,7 @@
 
 //Methods
 void Master::setupWindow() {
-  _window = std::make_shared<sf::RenderWindow>(sf::VideoMode(static_cast<int>(_game_board_size_x), static_cast<int>(_game_board_size_y)),
+  _window = std::make_shared<sf::RenderWindow>(sf::VideoMode(static_cast<int>(_projection_size_x), static_cast<int>(_projection_size_y)),
                                                              "Narcyz Path");
   _window->setFramerateLimit(120);
 }
