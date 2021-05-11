@@ -121,6 +121,5 @@ bool GameWindow::pollEvent(sf::Event& event) {
 
 
 // Getters
-const Directions& GameWindow::getPlayerDirections() const {return _player_direction;}
-const bool& GameWindow::getOpen() const {return _open_window;}
+bool GameWindow::getOpen() {return _master.getOpen();}
 Master& GameWindow::getMaster() {return _master;}

@@ -14,6 +14,6 @@ const float _projection_size_x = _game_board_size_x / 10.f;
 const float _projection_size_y = _game_board_size_y / 10.f;
 const float _player_size_x = 30.f;
 const float _player_size_y = 15.f;
-const float _player_acceleration = 0.1f;
-const float _player_max_velocity = 3.f;
+const float _player_acceleration = 0.2f;
+const float _player_max_velocity = 6.f;
 #endif

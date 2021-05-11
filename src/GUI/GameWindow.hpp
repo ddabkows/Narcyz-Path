@@ -69,7 +69,7 @@ class GameWindow {
 
     // Getters
     const Directions& getPlayerDirections() const;
-    const bool& getOpen() const;
+    bool getOpen();
     Master& getMaster();
 
     // Destructor
