@@ -34,3 +34,5 @@
 # Vscode
 .vscode/
 build/NarcyzPath
+.vs/
+Narcyz-path/.vs/
