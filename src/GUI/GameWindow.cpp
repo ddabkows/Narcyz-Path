@@ -71,12 +71,13 @@ void GameWindow::processEvent(sf::Event event) {
       break;
     }
   }
+}
+
+void GameWindow::concludeEvent() {
   setPlayerDirection();
   _game.updatePlayer(_player_direction);
   setPlayerPosition();
-
 }
-
 
 void GameWindow::setPlayerDirection() {
   if (_top_clicked && _rgt_clicked) {
@@ -103,6 +104,9 @@ void GameWindow::setPlayerDirection() {
   else if (_lft_clicked) {
     _player_direction = west;
   }
+  else {
+    _player_direction = standby;
+  }
 }
 
 void GameWindow::setPlayerPosition() {
@@ -112,7 +116,6 @@ void GameWindow::setPlayerPosition() {
   float screen_dimension_y = new_dimensions.y - static_cast<float>(quadrant_y * static_cast<int>(_projection_size_y));
   float screen_dimension_x = new_dimensions.x - static_cast<float>(quadrant_x * static_cast<int>(_projection_size_x));
   _player.setPosition(screen_dimension_x, screen_dimension_y);
-  std::cout << _player.getRectangle().getPosition().x << std::endl;
 }
 
 bool GameWindow::pollEvent(sf::Event& event) {

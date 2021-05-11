@@ -60,7 +60,8 @@ class GameWindow {
 
     // Methods
     void updateWindow();
-    void processEvent(sf::Event);
+    void processEvent(sf::Event event);
+    void concludeEvent();
     bool pollEvent(sf::Event&);
 
     // Setters

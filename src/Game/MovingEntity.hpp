@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
 
 #include "GameEntity.hpp"
 #include "GameMacros.hpp"

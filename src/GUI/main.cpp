@@ -21,6 +21,7 @@ int main() {
     sf::Event event;
 
     while (game_win.pollEvent(event)) {game_win.processEvent(event);}
+    game_win.concludeEvent();
     game_win.updateWindow();
 
     if (!game_win.getOpen()) {
