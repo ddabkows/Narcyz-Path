@@ -176,3 +176,8 @@ void MovingEntity::move(Directions player_decision, const std::vector<std::vecto
   }
   _directions = player_decision;
 }
+
+
+// Getters
+const std::size_t MovingEntity::getQuadrantX() const {return _quadrant_x;}
+const std::size_t MovingEntity::getQuadrantY() const {return _quadrant_y;}

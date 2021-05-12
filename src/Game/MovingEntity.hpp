@@ -64,6 +64,8 @@ class MovingEntity : public GameEntity {
     // Setters
 
     // Getters
+    const std::size_t getQuadrantX() const;
+    const std::size_t getQuadrantY() const;
     
     // Destructor
     ~MovingEntity() = default;
