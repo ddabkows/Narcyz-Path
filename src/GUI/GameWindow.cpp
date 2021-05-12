@@ -12,6 +12,16 @@ void GameWindow::updateWindow() {
   _master.clearWindow();
   _master.drawRectangle(_background.getRectangle());
   _master.drawRectangle(_player.getRectangle());
+  _walls.clear();
+  std::vector<std::shared_ptr<GameEntity>> walls = _game.getWalls(_game.getPlayerQuadrantX(), _game.getPlayerQuadrantY());
+  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
+    _walls.emplace_back(walls[wall_index]->getSize().x, 
+                        walls[wall_index]->getSize().y, 
+                        walls[wall_index]->getPosition().x - static_cast<float>(_game.getPlayerQuadrantX()) * _projection_size_x,
+                        walls[wall_index]->getPosition().y - static_cast<float>(_game.getPlayerQuadrantY()) * _projection_size_y, 
+                        sf::Color::White, sf::Color::Yellow, 0.5f, 0.f);
+    _master.drawRectangle(_walls[wall_index].getRectangle());
+  } 
   _master.displayWindow();
 }
 
