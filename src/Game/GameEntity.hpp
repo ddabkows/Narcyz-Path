@@ -42,7 +42,8 @@ protected:
     myClass& operator=(const myClass&) = delete;
 
     // Move
-    GameEntity(myClass&&) = delete;
+    GameEntity(myClass&& game_entity) : _position(game_entity._position),
+                                        _size(game_entity._size) {}
     myClass& operator=(myClass&&) = delete;
 
     // Methods
