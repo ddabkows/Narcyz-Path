@@ -10,6 +10,7 @@
 
 void GameWindow::updateWindow() {
   _master.clearWindow();
+  _master.drawRectangle(_background.getRectangle());
   _master.drawRectangle(_player.getRectangle());
   _master.displayWindow();
 }

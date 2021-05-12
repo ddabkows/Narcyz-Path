@@ -43,7 +43,7 @@ class GameWindow {
 
   public:
     // Constructor
-    GameWindow() : _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(120, 120, 120, 120), sf::Color(0, 0, 0, 255), 0.f, 0.f),
+    GameWindow() : _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(0, 20, 0, 255), sf::Color(0, 0, 0, 255), 0.f, 0.f),
                    _player(_player_size_x, _player_size_y, _game_board_size_y - _player_size_y, (_projection_size_x - _player_size_y) / 2.f,
                    sf::Color::White, sf::Color(0, 0, 0, 255), 0.5f, 0.f),
                    _master(),
