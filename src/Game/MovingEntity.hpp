@@ -45,7 +45,9 @@ class MovingEntity : public GameEntity {
                                                  _directions(moving_entity._directions),
                                                  _max_velocity(moving_entity._max_velocity),
                                                  _acceleration(moving_entity._acceleration),
-                                                 _velocity(moving_entity._velocity) {
+                                                 _velocity(moving_entity._velocity),
+                                                 _quadrant_x(moving_entity._quadrant_x),
+                                                 _quadrant_y(moving_entity._quadrant_y) {
       _position = moving_entity._position;
       _size = moving_entity._size;
       _directions = moving_entity._directions;
@@ -66,8 +68,8 @@ class MovingEntity : public GameEntity {
     // Setters
 
     // Getters
-    const std::size_t getQuadrantX() const;
-    const std::size_t getQuadrantY() const;
+    const std::size_t& getQuadrantX() const;
+    const std::size_t& getQuadrantY() const;
     
     // Destructor
     ~MovingEntity() = default;
