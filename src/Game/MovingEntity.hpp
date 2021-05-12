@@ -26,6 +26,8 @@ class MovingEntity : public GameEntity {
     float _max_velocity;
     float _acceleration;
     float _velocity = 0.f;
+    std::size_t _quadrant_x = 9;
+    std::size_t _quadrant_y = 9;
 
   public:
     // Constructor
@@ -54,10 +56,10 @@ class MovingEntity : public GameEntity {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void horizontalMove(int);
-    void verticalMove(int);
-    void oblicMove(int, int);
-    void move(Directions);
+    void horizontalMove(int, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
+    void verticalMove(int, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
+    void oblicMove(int, int, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
+    void move(Directions, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
 
     // Setters
 
