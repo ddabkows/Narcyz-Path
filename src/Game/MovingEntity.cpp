@@ -10,47 +10,79 @@
 
 // Methods
 void MovingEntity::horizontalMove(int right) {
-  if ((0 < right && _position.x + _size.x + _velocity < _game_board_size_x) || (right < 0 && 0 < _position.x - _velocity)) {
+  if ((0 < right && _position.x + _size.x + (-1.f / (_velocity + _acceleration) + 21.f) < _game_board_size_x) || 
+                                   (right < 0 && 0 < _position.x - (-1.f / (_velocity + _acceleration) + 21.f))) {
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration;
     }
-    _position.x += static_cast<float>(right) * (_velocity * _velocity / 4.f +  12.f);
+    _position.x += static_cast<float>(right) * (-1.f / (_velocity) + 21.f);
   }
   else {
-    _velocity = 0.f;
+    if (0 < right && _position.x + _size.x < _game_board_size_x) {
+      _velocity = 0.f;
+      _position.x = _game_board_size_x - _size.x;
+    }
+    else if (right < 0 && 0 < _position.x) {
+      _velocity = 0.f;
+      _position.x = 0.f;
+    }
   }
 }
 
 void MovingEntity::verticalMove(int down) {
-  if ((0 < down && _position.y + _size.y + _velocity < _game_board_size_y) || (down < 0 && 0 < _position.y - _velocity)) {
+  if ((0 < down && _position.y + _size.y + (-1.f / (_velocity + _acceleration) + 21.f) <= _game_board_size_y) || 
+                                   (down < 0 && 0 <= _position.y - (-1.f / (_velocity + _acceleration) + 21.f))) {
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration;
     }
-    _position.y += static_cast<float>(down) * (_velocity * _velocity / 4.f + 12.f);
+    _position.y += static_cast<float>(down) * (-1.f / ( _velocity) + 21.f);
   } 
   else {
-    _velocity = 0.f;
+    if (0 < down && _position.y + _size.y < _game_board_size_y) {
+      _velocity = 0.f;
+      _position.y = _game_board_size_y - _size.y;
+    }
+    else if (down < 0 && 0 < _position.y) {
+      _velocity = 0.f;
+      _position.y = 0.f;
+    }
   }
 }
 
 void MovingEntity::oblicMove(int right, int down) {
-  if ((0 < right && _position.x + _size.x + _velocity < _game_board_size_x) || (right < 0 && 0 < _position.x - _velocity)) {
+  if ((0 < right && _position.x + _size.x + (-1.f / (2.f * (_velocity + _acceleration)) + 10.5f) < _game_board_size_x) ||
+                                   (right < 0 && 0 < _position.x - (-1.f / (2.f * (_velocity + _acceleration)) + 10.5f))) {
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration/2.f;
     }
-    _position.x += static_cast<float>(right) * (_velocity * _velocity / 8.f + 6.f);
+    _position.x += static_cast<float>(right) * (-1.f / (2.f * _velocity) + 10.5f);
   }
   else {
-    _velocity = 0.f;
+    if (0 < right && _position.x + _size.x < _game_board_size_x) {
+      _velocity = 0.f;
+      _position.x = _game_board_size_x - _size.x;
+    }
+    else if (right < 0 && 0 < _position.x) {
+      _velocity = 0.f;
+      _position.x = 0.f;
+    }
   }
-  if ((0 < down && _position.y + _size.y + _velocity < _game_board_size_y) || (down < 0 && 0 < _position.y - _velocity)) {
+  if ((0 < down && _position.y + _size.y + (-1.f / (2.f * (_velocity + _acceleration)) + 10.5f) <= _game_board_size_y) ||
+                                   (down < 0 && 0 <= _position.y - (-1.f / (2.f * (_velocity + _acceleration)) + 10.5f))) {
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration/2.f;
     }
-    _position.y += static_cast<float>(down) * (_velocity * _velocity / 8.f + 6.f);
+    _position.y += static_cast<float>(down) * (-1.f / (2.f * _velocity) + 10.5);
   }
   else {
-    _velocity = 0.f;
+    if (0 < down && _position.y + _size.y < _game_board_size_y) {
+      _velocity = 0.f;
+      _position.y = _game_board_size_y - _size.y;
+    }
+    else if (down < 0 && 0 < _position.y) {
+      _velocity = 0.f;
+      _position.y = 0.f;
+    }
   }
 }
 
@@ -98,6 +130,5 @@ void MovingEntity::move(Directions player_decision) {
       break;
     }
   }
-  std::cout << _velocity * _velocity / 4.f + 12.f << std::endl;
   _directions = player_decision;
 }
