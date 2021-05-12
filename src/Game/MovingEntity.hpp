@@ -26,8 +26,8 @@ class MovingEntity : public GameEntity {
     float _max_velocity;
     float _acceleration;
     float _velocity = 0.f;
-    std::size_t _quadrant_x = 9;
-    std::size_t _quadrant_y = 9;
+    std::size_t _quadrant_x;
+    std::size_t _quadrant_y;
 
   public:
     // Constructor
@@ -36,7 +36,9 @@ class MovingEntity : public GameEntity {
     MovingEntity(float size_x, float size_y, float pos_x, float pos_y, float acceleration, float max_velocity) : 
                                                                       GameEntity(size_x, size_y, pos_x, pos_y),
                                                                       _max_velocity(max_velocity),
-                                                                      _acceleration(acceleration) {}
+                                                                      _acceleration(acceleration),
+                                                                      _quadrant_x(static_cast<std::size_t>(_position.x / _projection_size_x)),
+                                                                      _quadrant_y(static_cast<std::size_t>(_position.y / _projection_size_y)) {}
 
     // Copy
     MovingEntity(const myClass& moving_entity) : GameEntity(moving_entity),
