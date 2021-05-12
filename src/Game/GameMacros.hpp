@@ -18,4 +18,6 @@ const float _player_size_x = 30.f;
 const float _player_size_y = 15.f;
 const float _player_acceleration = 0.1f;
 const float _player_max_velocity = 4.f;
+const float _player_movement_mult = -1.f;
+const float _player_movement_trans = 21.f;
 #endif

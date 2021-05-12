@@ -21,8 +21,8 @@ void MovingEntity::horizontalMove(int right, const std::vector<std::vector<std::
               (_position.y < wall_position_y && wall_position_y < _position.y + _size.y)) {
       float wall_position_x = in_player_zone_walls[wall_index]->getPosition().x;
       float wall_size_x = in_player_zone_walls[wall_index]->getSize().x;
-      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + (-1.f / (_velocity + _acceleration) + 21.f) < wall_position_x)) ||
-         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - (-1.f / (_velocity + _acceleration) + 21.f)))) {
+      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_x)) ||
+         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
         conflict = true;
         _velocity = 0.f;
         if (0 < right && _position.x + _size.x < wall_position_x) {
@@ -38,7 +38,7 @@ void MovingEntity::horizontalMove(int right, const std::vector<std::vector<std::
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration;
     }
-    _position.x += static_cast<float>(right) * (-1.f / (_velocity) + 21.f);
+    _position.x += static_cast<float>(right) * (_player_movement_mult / (_velocity) + _player_movement_trans);
   }
 }
 
@@ -52,8 +52,8 @@ void MovingEntity::verticalMove(int down, const std::vector<std::vector<std::vec
               (_position.x < wall_position_x && wall_position_x < _position.x + _size.x)) {
       float wall_position_y = in_player_zone_walls[wall_index]->getPosition().y;
       float wall_size_y = in_player_zone_walls[wall_index]->getSize().y;
-      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + (-1.f / (_velocity + _acceleration) + 21.f) < wall_position_y)) ||
-         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - (-1.f / (_velocity + _acceleration) + 21.f)))) {
+      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_y)) ||
+         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
         conflict = true;
         _velocity = 0.f;
         if (0 < down && _position.y + _size.y < wall_position_y) {
@@ -69,7 +69,7 @@ void MovingEntity::verticalMove(int down, const std::vector<std::vector<std::vec
     if (_velocity + _acceleration < _max_velocity) {
       _velocity += _acceleration;
     }
-    _position. y += static_cast<float>(down) * (-1.f / (_velocity) + 21.f);
+    _position. y += static_cast<float>(down) * (_player_movement_mult / (_velocity) + _player_movement_trans);
   }
 }
 
@@ -83,8 +83,8 @@ void MovingEntity::oblicMove(int right, int down, const std::vector<std::vector<
               (_position.y < wall_position_y && wall_position_y < _position.y + _size.y)) {
       float wall_position_x = in_player_zone_walls[wall_index]->getPosition().x;
       float wall_size_x = in_player_zone_walls[wall_index]->getSize().x;
-      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + (-1.f / (_velocity + _acceleration) + 21.f) < wall_position_x)) ||
-         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - (-1.f / (_velocity + _acceleration) + 21.f)))) {
+      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_x)) ||
+         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
         conflict_horizontal = true;
         _velocity = 0.f;
         if (0 < right && _position.x + _size.x < wall_position_x) {
@@ -105,8 +105,8 @@ void MovingEntity::oblicMove(int right, int down, const std::vector<std::vector<
               (_position.x < wall_position_x && wall_position_x < _position.x + _size.x)) {
       float wall_position_y = in_player_zone_walls[wall_index]->getPosition().y;
       float wall_size_y = in_player_zone_walls[wall_index]->getSize().y;
-      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + (-1.f / (_velocity + _acceleration) + 21.f) < wall_position_y)) ||
-         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - (-1.f / (_velocity + _acceleration) + 21.f)))) {
+      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_y)) ||
+         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
         conflict_vertical = true;
         _velocity = 0.f;
         if (0 < down && _position.y + _size.y < wall_position_y) {
@@ -124,8 +124,8 @@ void MovingEntity::oblicMove(int right, int down, const std::vector<std::vector<
       _velocity += _acceleration;
     }
   }
-  if (!conflict_horizontal) {_position.x += static_cast<float>(right) * (std::sqrt(2) / 2.f) * (-1.f / (_velocity) + 21.f);}
-  if (!conflict_vertical) {_position.y += static_cast<float>(down) * (std::sqrt(2) / 2.f) * (-1.f / (_velocity) + 21.f);}
+  if (!conflict_horizontal) {_position.x += static_cast<float>(right) * (std::sqrt(2) / 2.f) * (_player_movement_mult / (_velocity) + _player_movement_trans);}
+  if (!conflict_vertical) {_position.y += static_cast<float>(down) * (std::sqrt(2) / 2.f) * (_player_movement_mult / (_velocity) + _player_movement_trans);}
 }
 
 void MovingEntity::move(Directions player_decision, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
