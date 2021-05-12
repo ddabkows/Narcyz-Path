@@ -175,6 +175,8 @@ void MovingEntity::move(Directions player_decision, const std::vector<std::vecto
     }
   }
   _directions = player_decision;
+  _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
+  _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
 }
 
 
