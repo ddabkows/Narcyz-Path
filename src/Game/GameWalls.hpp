@@ -30,8 +30,9 @@ const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls =
     { // [0][9]
       std::make_shared<GameEntity>(1600.f, 10.f, 0.f, 8100.f),      // Top wall
       std::make_shared<GameEntity>(1600.f, 10.f, 0.f, 8990.f),      // Bottom wall
-      std::make_shared<GameEntity>(10.f, 880.f, 0.f, 8110.f),       // Left wall
-      std::make_shared<GameEntity>(10.f, 880.f, 1590.f, 8110.f)     // Right wall}
+      std::make_shared<GameEntity>(10.f, 900.f, 0.f, 8100.f),       // Left wall
+      std::make_shared<GameEntity>(10.f, 900.f, 1590.f, 8100.f),     // Right wall}
+      std::make_shared<GameEntity>(50.f, 50.f, 775.f, 8525.f)
     }
   },
   {
