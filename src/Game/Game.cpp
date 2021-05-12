@@ -27,3 +27,6 @@ void Game::updatePlayer(Directions updating_directions) {
 
 // Getters
 const Dimensions& Game::getPlayerDimensions() const {return _player->getPosition();}
+const std::vector<std::shared_ptr<GameEntity>> Game::getWalls(std::size_t quadrant_x, std::size_t quadrant_y) const {
+  return _walls[quadrant_x][quadrant_y];
+}

@@ -56,6 +56,7 @@ class Game {
 
   // Getters
   const Dimensions& getPlayerDimensions() const;
+  const std::vector<std::shared_ptr<GameEntity>> getWalls(std::size_t, std::size_t) const;
 
   // Destructor
   ~Game() = default;
