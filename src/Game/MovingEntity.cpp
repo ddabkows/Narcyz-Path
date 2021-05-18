@@ -75,6 +75,7 @@ void MovingEntity::verticalMove(int down, const std::vector<std::vector<std::vec
 
 void MovingEntity::oblicMove(int right, int down, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
   std::vector<std::shared_ptr<GameEntity>> in_player_zone_walls = walls[_quadrant_x][_quadrant_y];
+
   bool conflict_horizontal = false;
   for (std::size_t wall_index = 0; wall_index < in_player_zone_walls.size(); ++wall_index) {
     float wall_position_y = in_player_zone_walls[wall_index]->getPosition().y;
@@ -95,6 +96,12 @@ void MovingEntity::oblicMove(int right, int down, const std::vector<std::vector<
         }
       }
     }
+  }
+  if (!conflict_horizontal) {
+    if (_velocity + _acceleration < _max_velocity) {
+      _velocity += _acceleration;
+    }
+    _position.x += static_cast<float>(right) * _pi_fourth * (_player_movement_mult / (_velocity)+_player_movement_trans);
   }
 
   bool conflict_vertical = false;
@@ -119,16 +126,18 @@ void MovingEntity::oblicMove(int right, int down, const std::vector<std::vector<
     }
   }
 
-  if ((!conflict_horizontal) || (!conflict_vertical)) {
-    if (_velocity + _acceleration < _max_velocity) { 
-      _velocity += _acceleration;
+  if (!conflict_vertical) {
+    if (conflict_horizontal) {
+      if (_velocity + _acceleration < _max_velocity) {
+        _velocity += _acceleration;
+      }
     }
+    _position.y += static_cast<float>(down) * _pi_fourth * (_player_movement_mult / (_velocity)+_player_movement_trans);
   }
-  if (!conflict_horizontal) {_position.x += static_cast<float>(right) * _pi_fourth * (_player_movement_mult / (_velocity) + _player_movement_trans);}
-  if (!conflict_vertical) {_position.y += static_cast<float>(down) * _pi_fourth * (_player_movement_mult / (_velocity) + _player_movement_trans);}
 }
 
 void MovingEntity::move(Directions player_decision, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
+  std::cout << _velocity << std::endl;
   _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
   if (player_decision - _directions > 2 || player_decision - _directions < -2) {
