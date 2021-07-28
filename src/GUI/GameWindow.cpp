@@ -22,6 +22,7 @@ void GameWindow::updateWindow() {
                         sf::Color::White, sf::Color::Yellow, 0.5f, 0.f);
     _master.drawRectangle(_walls[wall_index].getRectangle());
   } 
+  _master.drawText(_spawn_text.getText());
   _master.displayWindow();
 }
 

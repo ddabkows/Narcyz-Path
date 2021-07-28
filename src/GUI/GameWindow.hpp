@@ -13,6 +13,7 @@
 
 #include "Rectangle.hpp"
 #include "Master.hpp"
+#include "Text.hpp"
 #include "../Game/Game.hpp"
 #include "../Game/Dimensions.hpp"
 #include "../Game/GameMacros.hpp"
@@ -33,6 +34,7 @@ class GameWindow {
     Master _master;
     Game _game;
     std::vector<Rectangle> _walls{};
+    Text _spawn_text;
 
     bool _top_clicked = false;
     bool _bot_clicked = false;
@@ -49,6 +51,7 @@ class GameWindow {
                    sf::Color::White, sf::Color(0, 0, 0, 255), 0.5f, 0.f),
                    _master(),
                    _game(),
+                   _spawn_text(100, 100, sf::Color(0, 0, 0), sf::Color(255, 255, 255), 0.f, _master.getFont1(), std::string("Spawn Monsters")),
                    _player_direction(standby) {}
     
     // Copy
