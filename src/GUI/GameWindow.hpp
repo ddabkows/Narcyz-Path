@@ -34,6 +34,7 @@ class GameWindow {
     Master _master;
     Game _game;
     std::vector<Rectangle> _walls{};
+    std::vector<Rectangle> _mobs{};
     Text _spawn_text;
 
     bool _top_clicked = false;

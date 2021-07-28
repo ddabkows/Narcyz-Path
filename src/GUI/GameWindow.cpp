@@ -10,15 +10,35 @@
 
 void GameWindow::updateWindow() {
   _master.clearWindow();
+  _walls.clear();
   _master.drawRectangle(_background.getRectangle());
   _master.drawRectangle(_player.getRectangle());
-  _walls.clear();
-  std::vector<std::shared_ptr<GameEntity>> walls = _game.getWalls(_game.getPlayerQuadrantX(), _game.getPlayerQuadrantY());
+  std::size_t player_quadrant_x = _game.getPlayerQuadrantX();
+  std::size_t player_quadrant_y = _game.getPlayerQuadrantY();
+  std::vector<std::shared_ptr<GameEntity>> walls = _game.getWalls(player_quadrant_x, player_quadrant_y);
+  std::vector<std::shared_ptr<Spawner>> spawners = _game.getSpawners();
+  _mobs.clear();
+  for (std::size_t spawner_index = 0; spawner_index < spawners.size(); ++spawner_index) {
+    if (spawners[spawner_index]->getQuadrantX() == player_quadrant_x && spawners[spawner_index]->getQuadrantY() == player_quadrant_y) {
+      std::vector<std::shared_ptr<Mob>> in_screen_mobs = spawners[spawner_index]->getMobs();
+      for (std::size_t mob_index = 0; mob_index < in_screen_mobs.size(); ++mob_index) {
+        std::shared_ptr<Mob> mob = in_screen_mobs[mob_index];
+        float div_x = _game_board_size_x / _board_divider;
+        float div_y = _game_board_size_y / _board_divider;
+        int quot_x = std::div(static_cast<int>(mob->getPosition().x), static_cast<int>(div_x)).quot;
+        int quot_y = std::div(static_cast<int>(mob->getPosition().y), static_cast<int>(div_y)).quot;
+        float pos_x = mob->getPosition().x - (static_cast<float>(quot_x) * div_x);
+        float pos_y = mob->getPosition().y - (static_cast<float>(quot_y) * div_y);
+        _mobs.emplace_back(mob->getSize().x, mob->getSize().y, pos_x, pos_y, sf::Color::Red, sf::Color(0,0,0), 0.5f, 0.f);
+        _master.drawRectangle(_mobs[mob_index].getRectangle());
+      }
+    }
+  }
   for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
     _walls.emplace_back(walls[wall_index]->getSize().x, 
                         walls[wall_index]->getSize().y, 
-                        walls[wall_index]->getPosition().x - static_cast<float>(_game.getPlayerQuadrantX()) * _projection_size_x,
-                        walls[wall_index]->getPosition().y - static_cast<float>(_game.getPlayerQuadrantY()) * _projection_size_y, 
+                        walls[wall_index]->getPosition().x - static_cast<float>(player_quadrant_x) * _projection_size_x,
+                        walls[wall_index]->getPosition().y - static_cast<float>(player_quadrant_y) * _projection_size_y, 
                         sf::Color::White, sf::Color::Yellow, 0.5f, 0.f);
     _master.drawRectangle(_walls[wall_index].getRectangle());
   } 
