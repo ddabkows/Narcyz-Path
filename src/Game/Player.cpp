@@ -131,7 +131,6 @@ void Player::oblicMove(int right, int down, const std::vector<std::shared_ptr<Ga
 }
 
 void Player::move(Directions player_decision, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
-  std::cout << _velocity << std::endl;
   _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
   std::vector<std::shared_ptr<GameEntity>> in_player_zone_walls = walls[_quadrant_x][_quadrant_y];

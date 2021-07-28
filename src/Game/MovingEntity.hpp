@@ -25,19 +25,26 @@ class MovingEntity : public GameEntity {
   protected:
     float _max_velocity;
 
+    std::size_t _quadrant_x;
+    std::size_t _quadrant_y;
+
 
   public:
     // Constructor
     MovingEntity() = default;
 
-    MovingEntity(float size_x, float size_y, float pos_x, float pos_y, float max_velocity) : 
+    MovingEntity(float size_x, float size_y, float pos_x, float pos_y, float max_velocity, std::size_t quadrant_x, std::size_t quadrant_y) : 
                                                                       GameEntity(size_x, size_y, pos_x, pos_y),
-                                                                      _max_velocity(max_velocity)
+                                                                      _max_velocity(max_velocity),
+                                                                      _quadrant_x(quadrant_x),
+                                                                      _quadrant_y(quadrant_y)
                                                                        {}
 
     // Copy
     MovingEntity(const myClass& moving_entity) : GameEntity(moving_entity),
-                                                 _max_velocity(moving_entity._max_velocity) {
+                                                 _max_velocity(moving_entity._max_velocity),
+                                                 _quadrant_x(moving_entity._quadrant_x),
+                                                 _quadrant_y(moving_entity._quadrant_y) {
       _position = moving_entity._position;
       _size = moving_entity._size;
     }

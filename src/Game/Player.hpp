@@ -26,26 +26,21 @@ class Player : public MovingEntity {
     float _velocity = 0.f;
     float _acceleration;
 
-    std::size_t _quadrant_x;
-    std::size_t _quadrant_y;
-
   public:
     // Constructor
     Player() = default;
 
     Player(float size_x, float size_y, float pos_x, float pos_y, float acceleration, float max_velocity) :
-                                                                                    MovingEntity(size_x, size_y, pos_x, pos_y, max_velocity),
-                                                                                    _acceleration(acceleration),
-                                                                                    _quadrant_x(static_cast<std::size_t>(_position.x / _projection_size_x)),
-                                                                                    _quadrant_y(static_cast<std::size_t>(_position.y / _projection_size_y)) {}
+                                                                                    MovingEntity(size_x, size_y, pos_x, pos_y, max_velocity,
+                                                                                      std::size_t(0),
+                                                                                      std::size_t(9)),
+                                                                                    _acceleration(acceleration) {}
     
     // Copy
     Player(const myClass& player) : MovingEntity(player),
                                     _directions(player._directions),
                                     _velocity(player._velocity),
-                                    _acceleration(player._acceleration),
-                                    _quadrant_x(player._quadrant_x),
-                                    _quadrant_y(player._quadrant_y) {
+                                    _acceleration(player._acceleration) {
       _position = player._position;
       _size = player._size;
       _directions = player._directions;
