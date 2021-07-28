@@ -29,7 +29,7 @@ class Spawner {
     Dimensions _mob_size;
     float _mob_velocity;
     std::size_t _max_mobs;
-    std::vector<std::shared_ptr<Mob>> _mobs;
+    std::vector<std::shared_ptr<Mob>> _mobs = {};
 
     float _spawn_speed;
     float _last_spawn = 0.f;
