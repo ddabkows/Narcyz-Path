@@ -1,0 +1,189 @@
+/*
+  Author : Dominik Dabkowski
+  Specs  : GNU C++ version 10.2 - "gg+ -std=c++17"
+  Code   : Moving Entity methods
+*/
+
+
+#include "Player.hpp"
+
+
+// Methods
+void Player::horizontalMove(int right, const std::vector<std::shared_ptr<GameEntity>> walls) {
+  bool conflict = false;
+  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
+    float wall_position_y = walls[wall_index]->getPosition().y;
+    float wall_size_y = walls[wall_index]->getSize().y;
+    if ((wall_position_y < _position.y && _position.y < wall_position_y + wall_size_y) ||
+              (_position.y < wall_position_y && wall_position_y < _position.y + _size.y)) {
+      float wall_position_x = walls[wall_index]->getPosition().x;
+      float wall_size_x = walls[wall_index]->getSize().x;
+      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_x)) ||
+         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+        conflict = true;
+        _velocity = 0.f;
+        if (0 < right && _position.x + _size.x < wall_position_x) {
+          _position.x = wall_position_x - _size.x;
+        }
+        else if (right < 0 && wall_position_x + wall_size_x < _position.x) {
+          _position.x = wall_position_x + wall_size_x;
+        }
+      }
+    }
+  }
+  if (!conflict) {
+    if (_velocity + _acceleration < _max_velocity) { 
+      _velocity += _acceleration;
+    }
+    _position.x += static_cast<float>(right) * (_player_movement_mult / (_velocity) + _player_movement_trans);
+  }
+}
+
+void Player::verticalMove(int down, const std::vector<std::shared_ptr<GameEntity>> walls) {
+  bool conflict = false;
+  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
+    float wall_position_x = walls[wall_index]->getPosition().x;
+    float wall_size_x = walls[wall_index]->getSize().x;
+    if ((wall_position_x < _position.x && _position.x < wall_position_x + wall_size_x) ||
+              (_position.x < wall_position_x && wall_position_x < _position.x + _size.x)) {
+      float wall_position_y = walls[wall_index]->getPosition().y;
+      float wall_size_y = walls[wall_index]->getSize().y;
+      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_y)) ||
+         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+        conflict = true;
+        _velocity = 0.f;
+        if (0 < down && _position.y + _size.y < wall_position_y) {
+          _position.y = wall_position_y - _size.y;
+        }
+        else if (down < 0 && wall_position_y + wall_size_y < _position.y) {
+          _position.y = wall_position_y + wall_size_y;
+        }
+      }
+    }
+  }
+  if (!conflict) {
+    if (_velocity + _acceleration < _max_velocity) {
+      _velocity += _acceleration;
+    }
+    _position. y += static_cast<float>(down) * (_player_movement_mult / (_velocity) + _player_movement_trans);
+  }
+}
+
+void Player::oblicMove(int right, int down, const std::vector<std::shared_ptr<GameEntity>> walls) {
+  bool conflict_horizontal = false;
+  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
+    float wall_position_y = walls[wall_index]->getPosition().y;
+    float wall_size_y = walls[wall_index]->getSize().y;
+    if ((wall_position_y < _position.y && _position.y < wall_position_y + wall_size_y) ||
+              (_position.y < wall_position_y && wall_position_y < _position.y + _size.y)) {
+      float wall_position_x = walls[wall_index]->getPosition().x;
+      float wall_size_x = walls[wall_index]->getSize().x;
+      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_x)) ||
+         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+        conflict_horizontal = true;
+        _velocity = 0.f;
+        if (0 < right && _position.x + _size.x < wall_position_x) {
+          _position.x = wall_position_x - _size.x;
+        }
+        else if (right < 0 && wall_position_x + wall_size_x < _position.x) {
+          _position.x = wall_position_x + wall_size_x;
+        }
+      }
+    }
+  }
+  if (!conflict_horizontal) {
+    if (_velocity + _acceleration < _max_velocity) {
+      _velocity += _acceleration;
+    }
+    _position.x += static_cast<float>(right) * _pi_fourth * (_player_movement_mult / (_velocity)+_player_movement_trans);
+  }
+
+  bool conflict_vertical = false;
+  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
+    float wall_position_x = walls[wall_index]->getPosition().x;
+    float wall_size_x = walls[wall_index]->getSize().x;
+    if ((wall_position_x < _position.x && _position.x < wall_position_x + wall_size_x) ||
+              (_position.x < wall_position_x && wall_position_x < _position.x + _size.x)) {
+      float wall_position_y = walls[wall_index]->getPosition().y;
+      float wall_size_y = walls[wall_index]->getSize().y;
+      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_y)) ||
+         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+        conflict_vertical = true;
+        _velocity = 0.f;
+        if (0 < down && _position.y + _size.y < wall_position_y) {
+          _position.y = wall_position_y - _size.y;
+        }
+        else if (down < 0 && wall_position_y + wall_size_y < _position.y) {
+          _position.y = wall_position_y + wall_size_y;
+        }
+      }
+    }
+  }
+
+  if (!conflict_vertical) {
+    if (conflict_horizontal) {
+      if (_velocity + _acceleration < _max_velocity) {
+        _velocity += _acceleration;
+      }
+    }
+    _position.y += static_cast<float>(down) * _pi_fourth * (_player_movement_mult / (_velocity)+_player_movement_trans);
+  }
+}
+
+void Player::move(Directions player_decision, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
+  std::cout << _velocity << std::endl;
+  _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
+  _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
+  std::vector<std::shared_ptr<GameEntity>> in_player_zone_walls = walls[_quadrant_x][_quadrant_y];
+  if (player_decision - _directions > 2 || player_decision - _directions < -2) {
+    if (!((player_decision == north && _directions == north_west) || (player_decision == north_west && _directions == north))) {
+      _velocity = 0.f;
+    }
+  }
+  switch (player_decision) {
+    case north : {
+      verticalMove(-1, in_player_zone_walls);
+      break;
+    }
+    case north_east : {
+      oblicMove(1, -1, in_player_zone_walls);
+      break;
+    }
+    case east : {
+      horizontalMove(1, in_player_zone_walls);
+      break;
+    }
+    case south_east : {
+      oblicMove(1, 1, in_player_zone_walls);
+      break;
+    }
+    case south : {
+      verticalMove(1, in_player_zone_walls);
+      break;
+    }
+    case south_west : {
+      oblicMove(-1, 1, in_player_zone_walls);
+      break;
+    }
+    case west : {
+      horizontalMove(-1, in_player_zone_walls);
+      break;
+    }
+    case north_west : {
+      oblicMove(-1, -1, in_player_zone_walls);
+      break;
+    }
+    default : {
+      _velocity = 0;
+      break;
+    }
+  }
+  _directions = player_decision;
+  _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
+  _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
+}
+
+
+// Getters
+const std::size_t& Player::getQuadrantX() const {return _quadrant_x;}
+const std::size_t& Player::getQuadrantY() const {return _quadrant_y;}
