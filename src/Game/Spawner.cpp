@@ -21,3 +21,8 @@ void Spawner::spawn_mobs(float time) {
 void Spawner::despawn_mobs() {
   _mobs.clear();
 }
+
+// Getters
+const std::size_t& Spawner::getQuadrantX() const {return _quadrant_x;}
+const std::size_t& Spawner::getQuadrantY() const {return _quadrant_y;}
+std::vector<std::shared_ptr<Mob>> Spawner::getMobs() {return _mobs;}

@@ -47,15 +47,20 @@ class Spawner {
                                                                                                                                   _spawn_speed(spawn_speed) {}
 
     // Copy
-    Spawner(const myClass&) = delete;
+    Spawner(const myClass&) = default;
     myClass& operator=(const myClass&) = delete;
 
     // Move
-    Spawner(myClass&&) = delete;
+    Spawner(myClass&&) = default;
     myClass& operator=(myClass&&) = delete;
 
     // Methods
     void spawn_mobs(float);
     void despawn_mobs();
+
+    // Getters
+    const std::size_t& getQuadrantX() const;
+    const std::size_t& getQuadrantY() const;
+    std::vector<std::shared_ptr<Mob>> getMobs();
 };
 #endif
