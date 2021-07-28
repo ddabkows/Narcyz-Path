@@ -1,7 +1,7 @@
 /*
   Author : Dominik Dabkowski
   Specs  : GNU C++ version 10.2 - "gg+ -std=c++17"
-  Code   : Moving Entity methods
+  Code   : Player methods
 */
 
 
@@ -9,28 +9,10 @@
 
 
 // Methods
-void Player::horizontalMove(int right, const std::vector<std::shared_ptr<GameEntity>> walls) {
-  bool conflict = false;
-  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
-    float wall_position_y = walls[wall_index]->getPosition().y;
-    float wall_size_y = walls[wall_index]->getSize().y;
-    if ((wall_position_y < _position.y && _position.y < wall_position_y + wall_size_y) ||
-              (_position.y < wall_position_y && wall_position_y < _position.y + _size.y)) {
-      float wall_position_x = walls[wall_index]->getPosition().x;
-      float wall_size_x = walls[wall_index]->getSize().x;
-      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_x)) ||
-         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
-        conflict = true;
-        _velocity = 0.f;
-        if (0 < right && _position.x + _size.x < wall_position_x) {
-          _position.x = wall_position_x - _size.x;
-        }
-        else if (right < 0 && wall_position_x + wall_size_x < _position.x) {
-          _position.x = wall_position_x + wall_size_x;
-        }
-      }
-    }
-  }
+void Player::horizontalMove(int right, std::vector<std::shared_ptr<GameEntity>> mobs, const std::vector<std::shared_ptr<GameEntity>> walls) {
+  bool conflict;
+  conflict = checkHorizontal(right, mobs);
+  if (!conflict) conflict = checkHorizontal(right, walls);
   if (!conflict) {
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration;
@@ -39,28 +21,37 @@ void Player::horizontalMove(int right, const std::vector<std::shared_ptr<GameEnt
   }
 }
 
-void Player::verticalMove(int down, const std::vector<std::shared_ptr<GameEntity>> walls) {
+bool Player::checkHorizontal(int right, std::vector<std::shared_ptr<GameEntity>> entities) {
   bool conflict = false;
-  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
-    float wall_position_x = walls[wall_index]->getPosition().x;
-    float wall_size_x = walls[wall_index]->getSize().x;
-    if ((wall_position_x < _position.x && _position.x < wall_position_x + wall_size_x) ||
-              (_position.x < wall_position_x && wall_position_x < _position.x + _size.x)) {
-      float wall_position_y = walls[wall_index]->getPosition().y;
-      float wall_size_y = walls[wall_index]->getSize().y;
-      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_y)) ||
-         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+  for (std::size_t entity_index = 0; entity_index < entities.size(); ++entity_index) {
+    float entity_position_y = entities[entity_index]->getPosition().y;
+    float entity_size_y = entities[entity_index]->getSize().y;
+    if ((entity_position_y < _position.y && _position.y < entity_position_y + entity_size_y) ||
+        (_position.y < entity_position_y && entity_position_y < _position.y + _size.y)) {
+      float entity_position_x = entities[entity_index]->getPosition().x;
+      float entity_size_x = entities[entity_index]->getSize().x;
+      if ((0 < right && _position.x + _size.x <= entity_position_x && !(_position.x + _size.x + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < entity_position_x)) ||
+        (right < 0 && entity_position_x + entity_size_x <= _position.x && !(entity_position_x + entity_size_x < _position.x - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
         conflict = true;
         _velocity = 0.f;
-        if (0 < down && _position.y + _size.y < wall_position_y) {
-          _position.y = wall_position_y - _size.y;
+        if (0 < right && _position.x + _size.x < entity_position_x) {
+          _position.x = entity_position_x - _size.x;
         }
-        else if (down < 0 && wall_position_y + wall_size_y < _position.y) {
-          _position.y = wall_position_y + wall_size_y;
+        else if (right < 0 && entity_position_x + entity_size_x < _position.x) {
+          _position.x = entity_position_x + entity_size_x;
         }
+        break;
       }
     }
   }
+  return conflict;
+}
+
+void Player::verticalMove(int down, std::vector<std::shared_ptr<GameEntity>> mobs, const std::vector<std::shared_ptr<GameEntity>> walls) {
+  bool conflict;
+  conflict = checkVertical(down, mobs);
+  if (!conflict) conflict = checkVertical(down, walls);
+  
   if (!conflict) {
     if (_velocity + _acceleration < _max_velocity) {
       _velocity += _acceleration;
@@ -69,28 +60,37 @@ void Player::verticalMove(int down, const std::vector<std::shared_ptr<GameEntity
   }
 }
 
-void Player::oblicMove(int right, int down, const std::vector<std::shared_ptr<GameEntity>> walls) {
-  bool conflict_horizontal = false;
-  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
-    float wall_position_y = walls[wall_index]->getPosition().y;
-    float wall_size_y = walls[wall_index]->getSize().y;
-    if ((wall_position_y < _position.y && _position.y < wall_position_y + wall_size_y) ||
-              (_position.y < wall_position_y && wall_position_y < _position.y + _size.y)) {
-      float wall_position_x = walls[wall_index]->getPosition().x;
-      float wall_size_x = walls[wall_index]->getSize().x;
-      if ((0 < right && _position.x + _size.x <= wall_position_x && !(_position.x + _size.x + _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_x)) ||
-         (right < 0 && wall_position_x + wall_size_x <= _position.x && !(wall_position_x + wall_size_x < _position.x - _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
-        conflict_horizontal = true;
+bool Player::checkVertical(int down, std::vector<std::shared_ptr<GameEntity>> entities) {
+  bool conflict = false;
+  for (std::size_t entity_index = 0; entity_index < entities.size(); ++entity_index) {
+    float entity_position_x = entities[entity_index]->getPosition().x;
+    float entity_size_x = entities[entity_index]->getSize().x;
+    if ((entity_position_x < _position.x && _position.x < entity_position_x + entity_size_x) ||
+              (_position.x < entity_position_x && entity_position_x < _position.x + _size.x)) {
+      float entity_position_y = entities[entity_index]->getPosition().y;
+      float entity_size_y = entities[entity_index]->getSize().y;
+      if ((0 < down && _position.y + _size.y <= entity_position_y && !(_position.y + _size.y + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < entity_position_y)) ||
+         (down < 0 && entity_position_y + entity_size_y <= _position.y && !(entity_position_y + entity_size_y < _position.y - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+        conflict = true;
         _velocity = 0.f;
-        if (0 < right && _position.x + _size.x < wall_position_x) {
-          _position.x = wall_position_x - _size.x;
+        if (0 < down && _position.y + _size.y < entity_position_y) {
+          _position.y = entity_position_y - _size.y;
         }
-        else if (right < 0 && wall_position_x + wall_size_x < _position.x) {
-          _position.x = wall_position_x + wall_size_x;
+        else if (down < 0 && entity_position_y + entity_size_y < _position.y) {
+          _position.y = entity_position_y + entity_size_y;
         }
+        break;
       }
     }
   }
+  return conflict;
+}
+
+void Player::oblicMove(int right, int down, std::vector<std::shared_ptr<GameEntity>> mobs, const std::vector<std::shared_ptr<GameEntity>> walls) {
+  bool conflict_horizontal;
+  conflict_horizontal = checkHorizontal(right, mobs);
+  if (!conflict_horizontal) conflict_horizontal = checkHorizontal(right, walls);
+  
   if (!conflict_horizontal) {
     if (_velocity + _acceleration < _max_velocity) {
       _velocity += _acceleration;
@@ -98,27 +98,9 @@ void Player::oblicMove(int right, int down, const std::vector<std::shared_ptr<Ga
     _position.x += static_cast<float>(right) * _pi_fourth * (_player_movement_mult / (_velocity)+_player_movement_trans);
   }
 
-  bool conflict_vertical = false;
-  for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
-    float wall_position_x = walls[wall_index]->getPosition().x;
-    float wall_size_x = walls[wall_index]->getSize().x;
-    if ((wall_position_x < _position.x && _position.x < wall_position_x + wall_size_x) ||
-              (_position.x < wall_position_x && wall_position_x < _position.x + _size.x)) {
-      float wall_position_y = walls[wall_index]->getPosition().y;
-      float wall_size_y = walls[wall_index]->getSize().y;
-      if ((0 < down && _position.y + _size.y <= wall_position_y && !(_position.y + _size.y + _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < wall_position_y)) ||
-         (down < 0 && wall_position_y + wall_size_y <= _position.y && !(wall_position_y + wall_size_y < _position.y - _pi_fourth * (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
-        conflict_vertical = true;
-        _velocity = 0.f;
-        if (0 < down && _position.y + _size.y < wall_position_y) {
-          _position.y = wall_position_y - _size.y;
-        }
-        else if (down < 0 && wall_position_y + wall_size_y < _position.y) {
-          _position.y = wall_position_y + wall_size_y;
-        }
-      }
-    }
-  }
+  bool conflict_vertical;
+  conflict_vertical = checkVertical(down, mobs);
+  if (!conflict_vertical) conflict_vertical = checkVertical(down, walls);
 
   if (!conflict_vertical) {
     if (conflict_horizontal) {
@@ -130,7 +112,7 @@ void Player::oblicMove(int right, int down, const std::vector<std::shared_ptr<Ga
   }
 }
 
-void Player::move(Directions player_decision, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
+void Player::move(Directions player_decision, std::vector<std::shared_ptr<GameEntity>> mobs, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
   _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
   std::vector<std::shared_ptr<GameEntity>> in_player_zone_walls = walls[_quadrant_x][_quadrant_y];
@@ -141,35 +123,35 @@ void Player::move(Directions player_decision, const std::vector<std::vector<std:
   }
   switch (player_decision) {
     case north : {
-      verticalMove(-1, in_player_zone_walls);
+      verticalMove(-1, mobs, in_player_zone_walls);
       break;
     }
     case north_east : {
-      oblicMove(1, -1, in_player_zone_walls);
+      oblicMove(1, -1, mobs, in_player_zone_walls);
       break;
     }
     case east : {
-      horizontalMove(1, in_player_zone_walls);
+      horizontalMove(1, mobs, in_player_zone_walls);
       break;
     }
     case south_east : {
-      oblicMove(1, 1, in_player_zone_walls);
+      oblicMove(1, 1, mobs, in_player_zone_walls);
       break;
     }
     case south : {
-      verticalMove(1, in_player_zone_walls);
+      verticalMove(1, mobs, in_player_zone_walls);
       break;
     }
     case south_west : {
-      oblicMove(-1, 1, in_player_zone_walls);
+      oblicMove(-1, 1, mobs, in_player_zone_walls);
       break;
     }
     case west : {
-      horizontalMove(-1, in_player_zone_walls);
+      horizontalMove(-1, mobs, in_player_zone_walls);
       break;
     }
     case north_west : {
-      oblicMove(-1, -1, in_player_zone_walls);
+      oblicMove(-1, -1, mobs, in_player_zone_walls);
       break;
     }
     default : {

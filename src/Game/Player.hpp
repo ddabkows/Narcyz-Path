@@ -53,10 +53,12 @@ class Player : public MovingEntity {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void horizontalMove(int, const std::vector<std::shared_ptr<GameEntity>>);
-    void verticalMove(int, const std::vector<std::shared_ptr<GameEntity>>);
-    void oblicMove(int, int, const std::vector<std::shared_ptr<GameEntity>>);
-    void move(Directions, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
+    void horizontalMove(int, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::shared_ptr<GameEntity>>);
+    bool checkHorizontal(int, std::vector<std::shared_ptr<GameEntity>>);
+    void verticalMove(int, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::shared_ptr<GameEntity>>);
+    bool checkVertical(int, std::vector<std::shared_ptr<GameEntity>>);
+    void oblicMove(int, int, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::shared_ptr<GameEntity>>);
+    void move(Directions, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
 
     // Setters
 
