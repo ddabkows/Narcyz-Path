@@ -19,20 +19,18 @@ void Game::generateGame() {
 }
 
 void Game::updatePlayer(Directions updating_directions) {
-  std::vector<std::shared_ptr<GameEntity>> mobs;
-  std::shared_ptr<Mob> mob = std::make_shared<Mob>(100.f, 100.f, 100.f, 100.f, 20, std::size_t(0), std::size_t(9));
-  mobs.emplace_back(mob);
+  std::vector<std::shared_ptr<GameEntity>> mobs{};
+  for (std::size_t spawner_index = 0; spawner_index < _mob_spawners.size(); ++spawner_index) {
+    if (_mob_spawners[spawner_index]->getQuadrantX() == _player->getQuadrantX() && _mob_spawners[spawner_index]->getQuadrantY() == _player->getQuadrantY()) {
+      for (std::size_t mob_index = 0; mob_index < _mob_spawners[spawner_index]->getMobs().size(); ++mob_index) {
+        mobs.emplace_back(_mob_spawners[spawner_index]->getMobs()[mob_index]);
+      }
+    } 
+  }
 
   if (_game_timer.getElapsedTime().asSeconds() - _player_walk_timer > 0.1) {
     _player->move(updating_directions, mobs, _walls);
     checkSpawners();
-    std::vector<std::shared_ptr<Mob>> mobs = _mob_spawners[0]->getMobs();
-    if (mobs.size() == 0) std::cout << "Spawner Empty" << std::endl;
-    else {
-      for (std::size_t i = 0; i < mobs.size(); ++i) {
-        std::cout << mobs[i]->getPosition().x << std::endl;
-      }
-    }
     _player_walk_timer = _game_timer.getElapsedTime().asSeconds();
   }
 }
@@ -41,6 +39,15 @@ void Game::checkSpawners() {
   for (std::size_t spawner_index = 0; spawner_index < _mob_spawners.size(); ++spawner_index) {
     std::size_t dist_x = checkDist(_player->getQuadrantX(), _mob_spawners[spawner_index]->getQuadrantX());
     std::size_t dist_y = checkDist(_player->getQuadrantY(), _mob_spawners[spawner_index]->getQuadrantY());
+    if (dist_x == 0 && dist_y == 0) {
+      std::vector<std::shared_ptr<Mob>> mobs_to_move = _mob_spawners[spawner_index]->getMobs();
+      for (std::size_t mob_index = 0; mob_index < mobs_to_move.size(); ++mob_index) {
+        GameEntity player = *_player;
+        std::vector<std::shared_ptr<Mob>> other_mobs = mobs_to_move;
+        other_mobs.erase(other_mobs.begin() + static_cast<int>(mob_index));
+        mobs_to_move[mob_index]->move(std::make_shared<GameEntity>(player), other_mobs, _walls[_player->getQuadrantX()][_player->getQuadrantY()]);
+      }
+    }
     if (dist_x <= _spawn_dist && dist_y <= _spawn_dist) {
       _mob_spawners[spawner_index]->spawn_mobs(_game_timer.getElapsedTime().asSeconds());
     }
@@ -60,3 +67,4 @@ const Dimensions& Game::getPlayerDimensions() const {return _player->getPosition
 const std::vector<std::shared_ptr<GameEntity>>& Game::getWalls(std::size_t quadrant_x, std::size_t quadrant_y) const {return _walls[quadrant_x][quadrant_y];}
 const std::size_t& Game::getPlayerQuadrantX() const {return _player->getQuadrantX();}
 const std::size_t& Game::getPlayerQuadrantY() const {return _player->getQuadrantY();}
+const std::vector<std::shared_ptr<Spawner>>& Game::getSpawners() const {return _mob_spawners;}

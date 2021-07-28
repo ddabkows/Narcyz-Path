@@ -36,7 +36,7 @@ class Game {
 
     float _player_walk_timer = 0.f;
     sf::Clock _game_timer{};
-    std::vector<std::shared_ptr<Spawner>> _mob_spawners = {std::make_shared<Spawner>(std::size_t(0), std::size_t(8), 30.f, 15.f, 4.f, std::size_t(15), 3.f)};
+    std::vector<std::shared_ptr<Spawner>> _mob_spawners = {std::make_shared<Spawner>(std::size_t(0), std::size_t(8), 15.f, 30.f, 8.f, std::size_t(15), 3.f)};
 
   public:
   // Constructor
@@ -66,6 +66,7 @@ class Game {
   const std::vector<std::shared_ptr<GameEntity>>& getWalls(std::size_t, std::size_t) const;
   const std::size_t& getPlayerQuadrantX() const;
   const std::size_t& getPlayerQuadrantY() const;
+  const std::vector<std::shared_ptr<Spawner>>& getSpawners() const;
 
   // Destructor
   ~Game() = default;
