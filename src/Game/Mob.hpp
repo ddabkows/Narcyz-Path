@@ -44,6 +44,7 @@ class Mob : public MovingEntity {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void move(std::shared_ptr<GameEntity>, const std::vector<std::shared_ptr<GameEntity>>);
+    void move(std::shared_ptr<GameEntity>, std::vector<std::shared_ptr<Mob>>, const std::vector<std::shared_ptr<GameEntity>>);
+    float checkDistanceToPlayer(std::shared_ptr<GameEntity>, float, float);
 };
 #endif
