@@ -9,7 +9,6 @@
 #include <memory>
 #include <iostream>
 
-#include "GameEntity.hpp"
 #include "MovingEntity.hpp"
 #include "GameMacros.hpp"
 
