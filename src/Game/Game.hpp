@@ -13,6 +13,7 @@
 #include "GameBoard.hpp"
 #include "MovingEntity.hpp"
 #include "Player.hpp"
+#include "Mob.hpp"
 #include "GameMacros.hpp"
 #include "GameWalls.hpp"
 

@@ -18,8 +18,12 @@ void Game::generateGame() {
 }
 
 void Game::updatePlayer(Directions updating_directions) {
+  std::vector<std::shared_ptr<GameEntity>> mobs;
+  std::shared_ptr<Mob> mob = std::make_shared<Mob>(100.f, 100.f, 100.f, 100.f, 20, std::size_t(0), std::size_t(9));
+  mobs.emplace_back(mob);
+
   if (_game_timer.getElapsedTime().asSeconds() - _player_walk_timer > 0.1) {
-    _player->move(updating_directions, _walls);
+    _player->move(updating_directions, mobs, _walls);
     _player_walk_timer = _game_timer.getElapsedTime().asSeconds();
   }
 }
