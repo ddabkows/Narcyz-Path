@@ -24,4 +24,6 @@ const float _player_max_velocity = 4.f;
 const float _player_movement_mult = -1.f;
 const float _player_movement_trans = 21.f;
 const float _pi_fourth = static_cast<float>(sqrt(2))/2.f;
+const std::size_t _despawn_dist = 3;
+const std::size_t _spawn_dist = 1;
 #endif
