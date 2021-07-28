@@ -26,8 +26,7 @@ bool Player::checkHorizontal(int right, std::vector<std::shared_ptr<GameEntity>>
   for (std::size_t entity_index = 0; entity_index < entities.size(); ++entity_index) {
     float entity_position_y = entities[entity_index]->getPosition().y;
     float entity_size_y = entities[entity_index]->getSize().y;
-    if ((entity_position_y < _position.y && _position.y < entity_position_y + entity_size_y) ||
-        (_position.y < entity_position_y && entity_position_y < _position.y + _size.y)) {
+    if (entity_position_y < _position.y + _size.y && _position.y < entity_position_y + entity_size_y) {
       float entity_position_x = entities[entity_index]->getPosition().x;
       float entity_size_x = entities[entity_index]->getSize().x;
       if ((0 < right && _position.x + _size.x <= entity_position_x && !(_position.x + _size.x + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < entity_position_x)) ||
@@ -65,8 +64,7 @@ bool Player::checkVertical(int down, std::vector<std::shared_ptr<GameEntity>> en
   for (std::size_t entity_index = 0; entity_index < entities.size(); ++entity_index) {
     float entity_position_x = entities[entity_index]->getPosition().x;
     float entity_size_x = entities[entity_index]->getSize().x;
-    if ((entity_position_x < _position.x && _position.x < entity_position_x + entity_size_x) ||
-              (_position.x < entity_position_x && entity_position_x < _position.x + _size.x)) {
+    if (entity_position_x < _position.x + _size.x && _position.x < entity_position_x + entity_size_x) {
       float entity_position_y = entities[entity_index]->getPosition().y;
       float entity_size_y = entities[entity_index]->getSize().y;
       if ((0 < down && _position.y + _size.y <= entity_position_y && !(_position.y + _size.y + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < entity_position_y)) ||
