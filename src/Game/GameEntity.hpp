@@ -30,11 +30,8 @@ protected:
     // Constructor
     GameEntity() = default;
 
-    GameEntity(float size_x, float size_y, float pos_x, float pos_y) : _position(),
-                                                               _size() {
-      setSize(size_x, size_y);
-      setPosition(pos_x, pos_y);
-    }
+    GameEntity(float size_x, float size_y, float pos_x, float pos_y) : _position(pos_x, pos_y),
+                                                               _size(size_x, size_y) {}
 
     // Copy
     GameEntity(const myClass& game_entity) : _position(game_entity._position),

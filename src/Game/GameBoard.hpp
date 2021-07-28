@@ -20,9 +20,7 @@ class GameBoard final {
     
   public:
     // Constructor
-    GameBoard(float size_x, float size_y) : _inside_limits() {
-      setSize(size_x, size_y);
-    }
+    GameBoard(float size_x, float size_y) : _inside_limits(size_x, size_y) {}
 
     // Copy
     GameBoard(const myClass&) = delete;

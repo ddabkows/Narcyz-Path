@@ -10,6 +10,9 @@
 
 
 struct Dimensions {
+  Dimensions() = default;
+  Dimensions(float to_x, float to_y) : x(to_x), 
+                                       y(to_y) {} 
   float x;
   float y;
 };
