@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <memory>
+#include <cstdlib>
 #include <SFML/Graphics.hpp>
 
 #include "GameEntity.hpp"
@@ -14,6 +15,7 @@
 #include "MovingEntity.hpp"
 #include "Player.hpp"
 #include "Mob.hpp"
+#include "Spawner.hpp"
 #include "GameMacros.hpp"
 #include "GameWalls.hpp"
 
@@ -34,6 +36,7 @@ class Game {
 
     float _player_walk_timer = 0.f;
     sf::Clock _game_timer{};
+    std::vector<std::shared_ptr<Spawner>> _mob_spawners = {std::make_shared<Spawner>(std::size_t(0), std::size_t(8), 30.f, 15.f, 4.f, std::size_t(15), 3.f)};
 
   public:
   // Constructor
@@ -53,6 +56,8 @@ class Game {
   // Methods
   void generateGame();
   void updatePlayer(Directions);
+  void checkSpawners();
+  std::size_t checkDist(std::size_t, std::size_t);
 
   // Setters
 
