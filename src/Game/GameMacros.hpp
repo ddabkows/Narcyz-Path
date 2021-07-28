@@ -5,6 +5,9 @@
 */
 
 
+#include <cmath>
+
+
 #ifndef _GAME_MACROS_HPP
 #define _GAME_MACROS_HPP
 
@@ -20,5 +23,5 @@ const float _player_acceleration = 0.1f;
 const float _player_max_velocity = 4.f;
 const float _player_movement_mult = -1.f;
 const float _player_movement_trans = 21.f;
-const float _pi_fourth = 0.707f;
+const float _pi_fourth = sqrt(2)/2.f;
 #endif
