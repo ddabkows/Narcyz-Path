@@ -12,6 +12,7 @@
 #include "GameEntity.hpp"
 #include "GameBoard.hpp"
 #include "MovingEntity.hpp"
+#include "Player.hpp"
 #include "GameMacros.hpp"
 #include "GameWalls.hpp"
 
@@ -26,7 +27,7 @@ class Game {
     using myClass = Game;
 
     std::shared_ptr<GameBoard> _game_board;
-    std::shared_ptr<MovingEntity> _player;
+    std::shared_ptr<Player> _player;
     std::vector<std::shared_ptr<MovingEntity>> _enemies{};
     const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> _walls = walls;
 
