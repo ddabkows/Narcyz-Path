@@ -12,8 +12,11 @@
 struct Dimensions {
   Dimensions() = default;
   Dimensions(float to_x, float to_y) : x(to_x), 
-                                       y(to_y) {} 
+                                       y(to_y) {}
   float x;
   float y;
+  bool operator==(const Dimensions& other_dimensions) {
+    return (x == other_dimensions.x && y == other_dimensions.y);
+  }
 };
 #endif 
