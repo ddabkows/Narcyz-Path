@@ -24,7 +24,9 @@ void Spawner::spawn_mobs(float time, std::vector<std::shared_ptr<GameEntity>> wa
           _mobs[mob_index]->getPosition().y <= pos_y + _mob_size.y && pos_y <= _mobs[mob_index]->getPosition().y + _mob_size.y) spawn_allow = false;
     }
     if (spawn_allow) {
-      _mobs.emplace_back(std::make_shared<Mob>(_mob_size.x, _mob_size.y, pos_x, pos_y, _mob_velocity, static_cast<float>(_quadrant_x), static_cast<float>(_quadrant_y)));
+      _mobs.emplace_back(std::make_shared<Mob>(_mob_size.x, _mob_size.y, pos_x, pos_y, _mob_velocity, 
+                                               static_cast<float>(_quadrant_x), static_cast<float>(_quadrant_y), _max_hp,
+                                               _hit_charge, _hit_cooldown, _hit_strength, _attack_display));
       _last_spawn = time;
     }
   } 
