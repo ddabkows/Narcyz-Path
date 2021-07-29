@@ -61,8 +61,6 @@ void GameWindow::drawMobs(std::size_t player_quadrant_x, std::size_t player_quad
         if (in_screen_mobs[mob_index]->getAttackToDisplay()) {
           AttackToDisplay attack_to_charge = in_screen_mobs[mob_index]->getAttackDisplay();
           _attacks_displays.emplace_back(attack_to_charge);
-          std::cout << in_screen_mobs[mob_index]->getPosition().x << std::endl;
-          std::cout << attack_to_charge.pos.x << std::endl << std::endl;
           _attacks.emplace_back(attack_to_charge.size.x, attack_to_charge.size.y, 
                                 attack_to_charge.pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.pos.y - (static_cast<float>(quot_y) * div_y),
                                 sf::Color(128, 128, 128), sf::Color::Transparent, 0.f, 0.f);
@@ -98,7 +96,7 @@ void GameWindow::processEvent(sf::Event event) {
       break;
     }
     case sf::Event::KeyPressed : {
-      //std::cout << static_cast<int>(event.key.code) << std::endl;
+      std::cout << static_cast<int>(event.key.code) << std::endl;
       switch (event.key.code) {
         case 22 : {
           _top_clicked = true;
@@ -114,6 +112,22 @@ void GameWindow::processEvent(sf::Event event) {
         }
         case 3 : {
           _rgt_clicked = true;
+          break;
+        }
+        case 71 : {
+          _lft_attack = true;
+          break;
+        }
+        case 72  : {
+          _rgt_attack = true;
+          break;
+        }
+        case 73 : {
+          _top_attack = true;
+          break;
+        }
+        case 74 : {
+          _bot_attack = true;
           break;
         }
         case sf::Keyboard::Escape : {
@@ -144,6 +158,22 @@ void GameWindow::processEvent(sf::Event event) {
           _rgt_clicked = false;
           break;
         }
+        case 71 : {
+          _lft_attack = false;
+          break;
+        }
+        case 72  : {
+          _rgt_attack = false;
+          break;
+        }
+        case 73 : {
+          _top_attack = false;
+          break;
+        }
+        case 74 : {
+          _bot_attack = false;
+          break;
+        }
         default : {break;}
       }
       break;
@@ -154,7 +184,7 @@ void GameWindow::processEvent(sf::Event event) {
 
 void GameWindow::concludeEvent() {
   if (!_game.isOver()) {
-    setPlayerDirection();
+    setPlayerDirections();
     _game.updateGame(_player_direction);
     setPlayerPosition();
   }
@@ -164,34 +194,21 @@ void GameWindow::concludeEvent() {
   }
 }
 
-void GameWindow::setPlayerDirection() {
-  if (_top_clicked && _rgt_clicked) {
-    _player_direction = north_east;
-  }
-  else if (_rgt_clicked && _bot_clicked) {
-    _player_direction = south_east;
-  }
-  else if (_bot_clicked && _lft_clicked) {
-    _player_direction = south_west;
-  }
-  else if (_lft_clicked && _top_clicked) {
-    _player_direction = north_west;
-  }
-  else if (_top_clicked) {
-    _player_direction = north;
-  }
-  else if (_rgt_clicked) {
-    _player_direction = east;
-  }
-  else if (_bot_clicked) {
-    _player_direction = south;
-  }
-  else if (_lft_clicked) {
-    _player_direction = west;
-  }
-  else {
-    _player_direction = standby;
-  }
+void GameWindow::setPlayerDirections() {
+  if (_top_clicked && _rgt_clicked) {_player_direction = north_east;}
+  else if (_rgt_clicked && _bot_clicked) {_player_direction = south_east;}
+  else if (_bot_clicked && _lft_clicked) {_player_direction = south_west;}
+  else if (_lft_clicked && _top_clicked) {_player_direction = north_west;}
+  else if (_top_clicked) {_player_direction = north;}
+  else if (_rgt_clicked) {_player_direction = east;}
+  else if (_bot_clicked) {_player_direction = south;}
+  else if (_lft_clicked) {_player_direction = west;}
+  else {_player_direction = standby;}
+  if (_top_attack) {_player_attack_direction = north;}
+  else if (_bot_attack) {_player_attack_direction = south;}
+  else if (_rgt_attack) {_player_attack_direction = east;}
+  else if (_lft_attack) {_player_attack_direction = west;}
+  else {_player_attack_direction = standby;}
 }
 
 void GameWindow::setPlayerPosition() {

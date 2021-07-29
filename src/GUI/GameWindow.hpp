@@ -45,9 +45,14 @@ class GameWindow {
     bool _bot_clicked = false;
     bool _rgt_clicked = false;
     bool _lft_clicked = false;
+    bool _top_attack = false;
+    bool _bot_attack = false;
+    bool _rgt_attack = false;
+    bool _lft_attack = false;
     bool _open_window = true;
 
     Directions _player_direction;
+    Directions _player_attack_direction;
 
   public:
     // Constructor
@@ -56,7 +61,8 @@ class GameWindow {
                    sf::Color(0, 0, 100), sf::Color(0, 0, 0, 255), 0.5f, 0.f),
                    _master(),
                    _game(),
-                   _player_direction(standby) {}
+                   _player_direction(standby),
+                   _player_attack_direction(standby) {}
     
     // Copy
     GameWindow(const myClass&) = delete;
@@ -79,7 +85,7 @@ class GameWindow {
 
     // Setters
     void setPlayerPosition();
-    void setPlayerDirection();
+    void setPlayerDirections();
 
     // Getters
     const Directions& getPlayerDirections() const;
