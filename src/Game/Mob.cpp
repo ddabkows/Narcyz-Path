@@ -10,11 +10,10 @@
 
 // Methods
 void Mob::move(std::shared_ptr<GameEntity> player, std::vector<std::shared_ptr<Mob>> other_mobs, const std::vector<std::shared_ptr<GameEntity>> walls) {
-  float step_dist = _max_velocity;
   Dimensions new_position(_position.x, _position.y);
   for (int quadrant = 0; quadrant < 8; ++quadrant) {
-    float new_pos_x = _position.x + step_dist * static_cast<float>(cos(static_cast<float>(quadrant) / 4 * M_PI));
-    float new_pos_y = _position.y + step_dist * static_cast<float>(sin(static_cast<float>(quadrant) / 4 * M_PI));
+    float new_pos_x = _position.x + _max_velocity * static_cast<float>(cos(static_cast<float>(quadrant) / 4 * M_PI));
+    float new_pos_y = _position.y + _max_velocity * static_cast<float>(sin(static_cast<float>(quadrant) / 4 * M_PI));
     if (!(player->getPosition().x <= new_pos_x + _size.x && new_pos_x <= player->getPosition().x + player->getSize().x &&
            player->getPosition().y <= new_pos_y + _size.y && new_pos_y <= player->getPosition().y + player->getSize().y)) {
       bool wall_conflict = false;
