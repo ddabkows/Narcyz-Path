@@ -49,7 +49,7 @@ void Game::checkSpawners() {
       }
     }
     if (dist_x <= _spawn_dist && dist_y <= _spawn_dist) {
-      _mob_spawners[spawner_index]->spawn_mobs(_game_timer.getElapsedTime().asSeconds());
+      _mob_spawners[spawner_index]->spawn_mobs(_game_timer.getElapsedTime().asSeconds(), _walls[_mob_spawners[spawner_index]->getQuadrantX()][_mob_spawners[spawner_index]->getQuadrantY()]);
     }
     else if (dist_x > _despawn_dist || dist_y > _despawn_dist) {
       _mob_spawners[spawner_index]->despawn_mobs();
