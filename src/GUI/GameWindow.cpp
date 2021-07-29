@@ -99,9 +99,7 @@ void GameWindow::processEvent(sf::Event event) {
       }
       break;
     }
-    default : {
-      break;
-    }
+    default: {break;}
   }
 }
 

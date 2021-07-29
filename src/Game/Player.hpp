@@ -26,15 +26,20 @@ class Player : public MovingEntity {
     float _velocity = 0.f;
     float _acceleration;
 
+    int _max_hp;
+    int _hp;
+
   public:
     // Constructor
     Player() = default;
 
-    Player(float size_x, float size_y, float pos_x, float pos_y, float acceleration, float max_velocity) :
+    Player(float size_x, float size_y, float pos_x, float pos_y, float acceleration, float max_velocity, const int max_hp) :
                                                                                     MovingEntity(size_x, size_y, pos_x, pos_y, max_velocity,
-                                                                                      std::size_t(0),
-                                                                                      std::size_t(9)),
-                                                                                    _acceleration(acceleration) {}
+                                                                                    std::size_t(0),
+                                                                                    std::size_t(9)),
+                                                                                    _acceleration(acceleration),
+                                                                                    _max_hp(max_hp),
+                                                                                    _hp(max_hp) {}
     
     // Copy
     Player(const myClass& player) : MovingEntity(player),

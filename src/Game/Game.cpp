@@ -14,7 +14,8 @@
 void Game::generateGame() {
   _game_board = std::make_shared<GameBoard>(_game_board_size_x, _game_board_size_y);
   _player = std::make_shared<Player>(_player_size_x, _player_size_y,(_projection_size_x - _player_size_x) / 2.f,
-                                           _game_board_size_y - 0.5f * (_projection_size_y - _player_size_y) / 2.f, _player_acceleration, _player_max_velocity);
+                                           _game_board_size_y - 0.5f * (_projection_size_y - _player_size_y) / 2.f, _player_acceleration, _player_max_velocity,
+                                           _player_starting_max_hp);
   
 }
 

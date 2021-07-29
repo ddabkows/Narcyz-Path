@@ -31,6 +31,7 @@ class GameWindow {
 
     Rectangle _background;
     Rectangle _player;
+    Rectangle _player_hp[2];
     Master _master;
     Game _game;
     std::vector<Rectangle> _walls{};
@@ -53,7 +54,8 @@ class GameWindow {
                    _master(),
                    _game(),
                    _spawn_text(100, 100, sf::Color(0, 0, 0), sf::Color(255, 255, 255), 0.f, _master.getFont1(), std::string("Spawn Monsters")),
-                   _player_direction(standby) {}
+                   _player_direction(standby),
+                   _player_hp[0](){}
     
     // Copy
     GameWindow(const myClass&) = delete;

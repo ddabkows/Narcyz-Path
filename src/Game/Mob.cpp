@@ -8,6 +8,11 @@
 #include "Mob.hpp"
 
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+
 // Methods
 void Mob::move(std::shared_ptr<GameEntity> player, std::vector<std::shared_ptr<Mob>> other_mobs, const std::vector<std::shared_ptr<GameEntity>> walls) {
   Dimensions new_position(_position.x, _position.y);
