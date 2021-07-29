@@ -14,11 +14,11 @@
 
 
 // Methods
-void Mob::move(std::shared_ptr<GameEntity> player, std::vector<std::shared_ptr<Mob>> other_mobs, const std::vector<std::shared_ptr<GameEntity>> walls) {
+void Mob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>> other_mobs, const std::vector<std::shared_ptr<GameEntity>> walls, float time) {
   Dimensions new_position(_position.x, _position.y);
-  for (int quadrant = 0; quadrant < 8; ++quadrant) {
-    float new_pos_x = _position.x + _max_velocity * static_cast<float>(cos(static_cast<float>(quadrant) / 4 * M_PI));
-    float new_pos_y = _position.y + _max_velocity * static_cast<float>(sin(static_cast<float>(quadrant) / 4 * M_PI));
+  for (int quadrant = 0; quadrant < _circle_div_max; ++quadrant) {
+    float new_pos_x = _position.x + _max_velocity * static_cast<float>(cos(static_cast<float>(quadrant) / _circle_div_iterator * M_PI));
+    float new_pos_y = _position.y + _max_velocity * static_cast<float>(sin(static_cast<float>(quadrant) / _circle_div_iterator * M_PI));
     if (!(player->getPosition().x <= new_pos_x + _size.x && new_pos_x <= player->getPosition().x + player->getSize().x &&
            player->getPosition().y <= new_pos_y + _size.y && new_pos_y <= player->getPosition().y + player->getSize().y)) {
       bool wall_conflict = false;
@@ -45,11 +45,45 @@ void Mob::move(std::shared_ptr<GameEntity> player, std::vector<std::shared_ptr<M
         }
       }
     }
+    else {
+      attack(player, time);
+    }
   }
   _position.x = new_position.x;
   _position.y = new_position.y;
 }
 
-float Mob::checkDistanceToPlayer(std::shared_ptr<GameEntity> player, float new_pos_x, float new_pos_y) {
+float Mob::checkDistanceToPlayer(std::shared_ptr<Player> player, float new_pos_x, float new_pos_y) {
   return static_cast<float>(sqrt(pow(new_pos_x - player->getPosition().x, 2) + pow(new_pos_y - player->getPosition().y, 2) * 1.0));
 }
+
+void Mob::attack(std::shared_ptr<Player> player, float time) {
+  if (!_charge_attack) {
+    if (time - _last_hit > _hit_cooldown) {
+      _charge_attack = true;
+      _attack_display.pos = Dimensions(_position.x - ((_attack_display.size.x - _size.x) / 2.f), _position.y - ((_attack_display.size.y - _size.y) / 2.f));
+      _last_hit = time;
+    }
+  }
+  else {
+    if (time - _last_hit > _hit_charge) {
+      _charge_attack = false;
+      _last_hit = time;
+      if (_attack_display.pos.x <= player->getPosition().x + player->getSize().x && player->getPosition().x <= _attack_display.pos.x + _attack_display.size.x &&
+          _attack_display.pos.y <= player->getPosition().y + player->getSize().y && player->getPosition().y <= _attack_display.pos.y + _attack_display.size.y) {
+            player->takeDamage(_hit_strength);
+          }
+      _attack_display.display_moment = time;
+      _display_attack = true;
+    }
+  }
+}
+
+void Mob::attackDisplayed() {
+  _display_attack = false;
+}
+
+
+// Getters
+const AttackToDisplay& Mob::getAttackDisplay() const {return _attack_display;}
+const bool& Mob::getAttackToDisplay() const {return _display_attack;}
