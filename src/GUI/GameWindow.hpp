@@ -18,6 +18,7 @@
 #include "../Game/Dimensions.hpp"
 #include "../Game/GameMacros.hpp"
 #include "../Game/Directions.hpp"
+#include "../Game/AttackToDisplay.hpp"
 
 
 #ifndef _GAME_WINDOW_HPP
@@ -31,12 +32,14 @@ class GameWindow {
 
     Rectangle _background;
     Rectangle _player;
-    Rectangle _player_hp[2];
+    std::vector<Rectangle> _player_hp{};
     Master _master;
     Game _game;
     std::vector<Rectangle> _walls{};
     std::vector<Rectangle> _mobs{};
-    Text _spawn_text;
+    std::vector<Rectangle> _attacks{};
+    std::vector<AttackToDisplay> _attacks_displays{};
+    std::vector<std::vector<Rectangle>> _mobs_hp{};
 
     bool _top_clicked = false;
     bool _bot_clicked = false;
@@ -48,14 +51,12 @@ class GameWindow {
 
   public:
     // Constructor
-    GameWindow() : _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(0, 20, 0, 255), sf::Color(0, 0, 0, 255), 0.f, 0.f),
+    GameWindow() : _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(0, 50, 0, 255), sf::Color(0, 0, 0, 255), 0.f, 0.f),
                    _player(_player_size_x, _player_size_y, _game_board_size_y - _player_size_y, (_projection_size_x - _player_size_x) / 2.f,
-                   sf::Color::White, sf::Color(0, 0, 0, 255), 0.5f, 0.f),
+                   sf::Color(0, 0, 100), sf::Color(0, 0, 0, 255), 0.5f, 0.f),
                    _master(),
                    _game(),
-                   _spawn_text(100, 100, sf::Color(0, 0, 0), sf::Color(255, 255, 255), 0.f, _master.getFont1(), std::string("Spawn Monsters")),
-                   _player_direction(standby),
-                   _player_hp[0](){}
+                   _player_direction(standby) {}
     
     // Copy
     GameWindow(const myClass&) = delete;
@@ -70,6 +71,11 @@ class GameWindow {
     void processEvent(sf::Event event);
     void concludeEvent();
     bool pollEvent(sf::Event&);
+    void drawMobs(std::size_t, std::size_t);
+    void drawWalls(std::size_t, std::size_t);
+    void drawPlayer();
+    void drawAttacks();
+    void deleteAttacksDisplays();
 
     // Setters
     void setPlayerPosition();
