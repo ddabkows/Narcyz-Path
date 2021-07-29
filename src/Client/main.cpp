@@ -5,8 +5,8 @@
 */
 
 
-#include "GameWindow.hpp"
-#include "Master.hpp"
+#include "../GUI/GameWindow.hpp"
+#include "../GUI/Master.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
