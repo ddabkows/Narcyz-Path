@@ -34,7 +34,7 @@ class Rectangle final {
 
     // Move
     Rectangle(myClass&&) = default;
-    myClass& operator=(myClass&&) = delete;
+    myClass& operator=(myClass&&) = default;
 
     // Methods
     void setupRectangle(float, float, sf::Color, sf::Color, float, float);
