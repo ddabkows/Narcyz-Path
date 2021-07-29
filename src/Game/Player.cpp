@@ -114,7 +114,7 @@ void Player::move(Directions player_decision, std::vector<std::shared_ptr<GameEn
   _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
   std::vector<std::shared_ptr<GameEntity>> in_player_zone_walls = walls[_quadrant_x][_quadrant_y];
-  if (player_decision - _directions > 2 || player_decision - _directions < -2) {
+  if (player_decision - _directions > _direction_change || player_decision - _directions < -_direction_change) {
     if (!((player_decision == north && _directions == north_west) || (player_decision == north_west && _directions == north))) {
       _velocity = 0.f;
     }
@@ -161,6 +161,8 @@ void Player::move(Directions player_decision, std::vector<std::shared_ptr<GameEn
   _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
 }
+
+void Player::takeDamage(int damage) {_hp -= damage;}
 
 
 // Getters

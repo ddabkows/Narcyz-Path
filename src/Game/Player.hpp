@@ -26,9 +26,6 @@ class Player : public MovingEntity {
     float _velocity = 0.f;
     float _acceleration;
 
-    int _max_hp;
-    int _hp;
-
   public:
     // Constructor
     Player() = default;
@@ -36,10 +33,8 @@ class Player : public MovingEntity {
     Player(float size_x, float size_y, float pos_x, float pos_y, float acceleration, float max_velocity, const int max_hp) :
                                                                                     MovingEntity(size_x, size_y, pos_x, pos_y, max_velocity,
                                                                                     std::size_t(0),
-                                                                                    std::size_t(9)),
-                                                                                    _acceleration(acceleration),
-                                                                                    _max_hp(max_hp),
-                                                                                    _hp(max_hp) {}
+                                                                                    std::size_t(9), max_hp),
+                                                                                    _acceleration(acceleration) {}
     
     // Copy
     Player(const myClass& player) : MovingEntity(player),
@@ -64,13 +59,12 @@ class Player : public MovingEntity {
     bool checkVertical(int, std::vector<std::shared_ptr<GameEntity>>);
     void oblicMove(int, int, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::shared_ptr<GameEntity>>);
     void move(Directions, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
+    void takeDamage(int);
 
     // Setters
 
     // Getters
     const std::size_t& getQuadrantX() const;
     const std::size_t& getQuadrantY() const;
-
-
 };
 #endif
