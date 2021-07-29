@@ -18,6 +18,7 @@
 #include "Spawner.hpp"
 #include "GameMacros.hpp"
 #include "GameWalls.hpp"
+#include "AttackToDisplay.hpp"
 
 
 #ifndef _GAME_HPP
@@ -36,7 +37,12 @@ class Game {
 
     float _player_walk_timer = 0.f;
     sf::Clock _game_timer{};
-    std::vector<std::shared_ptr<Spawner>> _mob_spawners = {std::make_shared<Spawner>(std::size_t(0), std::size_t(8), 15.f, 30.f, 8.f, std::size_t(15), 3.f)};
+    bool _is_over = false;
+    std::vector<std::shared_ptr<Spawner>> _mob_spawners = {std::make_shared<Spawner>(_classic_mob_spawn_1_x, _classic_mob_spawn_1_y, 
+                                                           _player_size_x, _player_size_y, _classic_mob_velocity, _classic_mob_max_count, 
+                                                           _classic_mob_spawn_speed, _classic_mob_max_hp, _classic_mob_hit_charge, _classic_mob_hit_cooldown,
+                                                           _classic_mob_attack_strength,
+                                                           AttackToDisplay(_classic_mob_attack_size_x, _classic_mob_attack_size_y, _classic_mob_hit_display_time))};
 
   public:
   // Constructor
@@ -55,9 +61,10 @@ class Game {
 
   // Methods
   void generateGame();
-  void updatePlayer(Directions);
+  void updateGame(Directions);
   void checkSpawners();
   std::size_t checkDist(std::size_t, std::size_t);
+  void endGame();
 
   // Setters
 
@@ -66,7 +73,11 @@ class Game {
   const std::vector<std::shared_ptr<GameEntity>>& getWalls(std::size_t, std::size_t) const;
   const std::size_t& getPlayerQuadrantX() const;
   const std::size_t& getPlayerQuadrantY() const;
+  const Dimensions& getPlayerSize() const;
   const std::vector<std::shared_ptr<Spawner>>& getSpawners() const;
+  float getPlayerHealth() const;
+  const bool& isOver() const;
+  float getGameTimer() const;
 
   // Destructor
   ~Game() = default;
