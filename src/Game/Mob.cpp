@@ -44,7 +44,6 @@ void Mob::move(std::shared_ptr<GameEntity> player, std::vector<std::shared_ptr<M
   }
   _position.x = new_position.x;
   _position.y = new_position.y;
-  std::cout << "Final choice: " << checkDistanceToPlayer(player, new_position.x, new_position.y) << std::endl << std::endl;
 }
 
 float Mob::checkDistanceToPlayer(std::shared_ptr<GameEntity> player, float new_pos_x, float new_pos_y) {
