@@ -43,4 +43,9 @@ const double _game_tick                    = 0.1;
 const int _circle_div_iterator             = 4;
 const int _circle_div_max                  = 8;
 const int _direction_change                = 2;
+const int _classic_weapon_damage           = 1;
+const float _classic_weapon_cooldown       = 1.f;
+const float _classic_weapon_attack_size_x  = 3.f * _player_size_y;
+const float _classic_weapon_attack_size_y  = _player_size_y;
+const float _classic_weapon_display_time   = 0.5f;
 #endif
