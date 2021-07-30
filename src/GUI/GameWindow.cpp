@@ -96,7 +96,7 @@ void GameWindow::processEvent(sf::Event event) {
       break;
     }
     case sf::Event::KeyPressed : {
-      std::cout << static_cast<int>(event.key.code) << std::endl;
+      //std::cout << static_cast<int>(event.key.code) << std::endl;
       switch (event.key.code) {
         case 22 : {
           _top_clicked = true;
@@ -185,7 +185,7 @@ void GameWindow::processEvent(sf::Event event) {
 void GameWindow::concludeEvent() {
   if (!_game.isOver()) {
     setPlayerDirections();
-    _game.updateGame(_player_direction);
+    _game.updateGame(_player_direction, _player_attack_direction);
     setPlayerPosition();
   }
   else {
