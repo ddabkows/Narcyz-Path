@@ -51,6 +51,6 @@ class Weapon {
     const AttackToDisplay& getAttackDisplay() const;
 
     // Destructor
-    ~Weapon() = default;
+    virtual ~Weapon() = default;
 };
 #endif
