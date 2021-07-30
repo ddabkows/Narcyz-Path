@@ -47,8 +47,8 @@ class Text {
 
     // Getters
     const sf::Text& getText() const;
-    const float& getX() const;
-    const float& getY() const;
+    float getX() const;
+    float getY() const;
     const sf::Vector2f& getScale() const;
 
     // Destructor

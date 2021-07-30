@@ -34,6 +34,6 @@ void Text::setScale(float scale_x, float scale_y) {
 
 // Getters
 const sf::Text& Text::getText() const {return _text;}
-const float& Text::getX() const {return _text.getPosition().x;}
-const float& Text::getY() const {return _text.getPosition().y;}
+float Text::getX() const {return _text.getGlobalBounds().left;}
+float Text::getY() const {return _text.getGlobalBounds().top;}
 const sf::Vector2f& Text::getScale() const {return _text.getScale();}
