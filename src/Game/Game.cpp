@@ -34,6 +34,11 @@ void Game::updateGame(Directions updating_directions, Directions updating_attack
     float time = _game_timer.getElapsedTime().asSeconds();
     if (time - _player_walk_timer > _game_tick) {
       _player->move(updating_directions, mobs, _walls);
+      _player->setAttackDirection(updating_attack_directions);
+      if (updating_attack_directions != standby) {
+        _player->setAttackPosition();
+        _player->attack(mobs, time);
+      }
       checkSpawners();
       _player_walk_timer = _game_timer.getElapsedTime().asSeconds();
     }
@@ -46,6 +51,7 @@ void Game::checkSpawners() {
     std::size_t dist_x = checkDist(_player->getQuadrantX(), _mob_spawners[spawner_index]->getQuadrantX());
     std::size_t dist_y = checkDist(_player->getQuadrantY(), _mob_spawners[spawner_index]->getQuadrantY());
     if (dist_x == 0 && dist_y == 0) {
+      _mob_spawners[spawner_index]->killMobs();
       std::vector<std::shared_ptr<Mob>> mobs_to_move = _mob_spawners[spawner_index]->getMobs();
       for (std::size_t mob_index = 0; mob_index < mobs_to_move.size(); ++mob_index) {
         std::vector<std::shared_ptr<Mob>> other_mobs = mobs_to_move;
@@ -54,10 +60,10 @@ void Game::checkSpawners() {
       }
     }
     if (dist_x <= _spawn_dist && dist_y <= _spawn_dist) {
-      _mob_spawners[spawner_index]->spawn_mobs(time, _walls[_mob_spawners[spawner_index]->getQuadrantX()][_mob_spawners[spawner_index]->getQuadrantY()]);
+      _mob_spawners[spawner_index]->spawnMobs(time, _walls[_mob_spawners[spawner_index]->getQuadrantX()][_mob_spawners[spawner_index]->getQuadrantY()]);
     }
     else if (dist_x > _despawn_dist || dist_y > _despawn_dist) {
-      _mob_spawners[spawner_index]->despawn_mobs();
+      _mob_spawners[spawner_index]->despawnMobs();
     }
   }
 }
@@ -70,6 +76,8 @@ void Game::endGame() {
   if (_player->getHealth() <= 0) {_is_over = true;}
 }
 
+void Game::playerAttackDisplayed() {_player->attackDisplayed();}
+
 
 // Getters
 const Dimensions& Game::getPlayerDimensions() const {return _player->getPosition();}
@@ -78,6 +86,8 @@ const std::size_t& Game::getPlayerQuadrantX() const {return _player->getQuadrant
 const std::size_t& Game::getPlayerQuadrantY() const {return _player->getQuadrantY();}
 const std::vector<std::shared_ptr<Spawner>>& Game::getSpawners() const {return _mob_spawners;}
 const Dimensions& Game::getPlayerSize() const {return _player->getSize();}
+const bool& Game::getPlayerAttackToBeDisplayed() const {return _player->getAttackToBeDisplayed();}
+const AttackToDisplay& Game::getPlayerAttackDisplay() const {return _player->getAttackToDisplay();}
 float Game::getPlayerHealth() const {return _player->getHealthProportion();}
 const bool& Game::isOver() const {return _is_over;}
 float Game::getGameTimer() const {return _game_timer.getElapsedTime().asSeconds();}

@@ -65,6 +65,7 @@ class Game {
   void checkSpawners();
   std::size_t checkDist(std::size_t, std::size_t);
   void endGame();
+  void playerAttackDisplayed();
 
   // Setters
 
@@ -74,6 +75,8 @@ class Game {
   const std::size_t& getPlayerQuadrantX() const;
   const std::size_t& getPlayerQuadrantY() const;
   const Dimensions& getPlayerSize() const;
+  const bool& getPlayerAttackToBeDisplayed() const;
+  const AttackToDisplay& getPlayerAttackDisplay() const;
   const std::vector<std::shared_ptr<Spawner>>& getSpawners() const;
   float getPlayerHealth() const;
   const bool& isOver() const;
