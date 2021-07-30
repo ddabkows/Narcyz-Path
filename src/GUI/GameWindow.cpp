@@ -103,100 +103,59 @@ void GameWindow::drawWalls(std::size_t player_quadrant_x, std::size_t player_qua
 }
 
 void GameWindow::processEvent(sf::Event event) {
+  _swap_pressed = false;
   switch (event.type) {
     case sf::Event::Closed : {
       _master.closeWindow();
       _open_window = false;
       break;
     }
+    case sf::Event::MouseButtonPressed : {
+      if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (_keys_swap.getX() <= static_cast<float>(event.mouseButton.x) && static_cast<float>(event.mouseButton.x) <= _keys_swap.getX() + _keys_swap.getText().getGlobalBounds().width &&
+            _keys_swap.getY() <= static_cast<float>(event.mouseButton.y) && static_cast<float>(event.mouseButton.y) <= _keys_swap.getY() + _keys_swap.getText().getGlobalBounds().height) {
+          _swap_pressed = true;
+          break;
+        }
+      }
+      break;
+    }
     case sf::Event::KeyPressed : {
       //std::cout << static_cast<int>(event.key.code) << std::endl;
-      switch (event.key.code) {
-        case 22 : {
-          _top_clicked = true;
-          break;
-        }
-        case 18 : {
-          _bot_clicked = true;
-          break;
-        }
-        case 0 : {
-          _lft_clicked = true;
-          break;
-        }
-        case 3 : {
-          _rgt_clicked = true;
-          break;
-        }
-        case 71 : {
-          _lft_attack = true;
-          break;
-        }
-        case 72  : {
-          _rgt_attack = true;
-          break;
-        }
-        case 73 : {
-          _top_attack = true;
-          break;
-        }
-        case 74 : {
-          _bot_attack = true;
-          break;
-        }
-        case sf::Keyboard::Escape : {
-          _master.closeWindow();
-          _open_window = false;
-          break;
-        }
-        default : {break;}
+      if (event.key.code == _move_top) {_top_clicked = true; break;} 
+      else if (event.key.code == _move_bot) {_bot_clicked = true; break;}
+      else if (event.key.code == _move_lft) {_lft_clicked = true; break;}
+      else if (event.key.code == _move_rgt) {_rgt_clicked = true; break;}
+      else if (event.key.code == 71) {_lft_attack = true; break;}
+      else if (event.key.code == 72) {_rgt_attack = true; break;}
+      else if (event.key.code == 73) {_top_attack = true; break;}
+      else if (event.key.code == 74) {_bot_attack = true; break;}
+      else if (event.key.code == sf::Keyboard::Escape) {
+        _master.closeWindow();
+        _open_window = false;
+        break;
       }
       break;
     }
     case sf::Event::KeyReleased : {
       //std::cout << static_cast<int>(event.key.code) << std::endl;
-      switch (event.key.code) {
-        case 22 : {
-          _top_clicked = false;
-          break;
-        }
-        case 18 : {
-          _bot_clicked = false;
-          break;
-        }
-        case 0 : {
-          _lft_clicked = false;
-          break;
-        }
-        case 3 : {
-          _rgt_clicked = false;
-          break;
-        }
-        case 71 : {
-          _lft_attack = false;
-          break;
-        }
-        case 72  : {
-          _rgt_attack = false;
-          break;
-        }
-        case 73 : {
-          _top_attack = false;
-          break;
-        }
-        case 74 : {
-          _bot_attack = false;
-          break;
-        }
-        default : {break;}
-      }
+      if (event.key.code == _move_top) {_top_clicked = false; break;} 
+      else if (event.key.code == _move_bot) {_bot_clicked = false; break;}
+      else if (event.key.code == _move_lft) {_lft_clicked = false; break;}
+      else if (event.key.code == _move_rgt) {_rgt_clicked = false; break;}
+      else if (event.key.code == 71) {_lft_attack = false; break;}
+      else if (event.key.code == 72) {_rgt_attack = false; break;}
+      else if (event.key.code == 73) {_top_attack = false; break;}
+      else if (event.key.code == 74) {_bot_attack = false; break;}
       break;
     }
     default: {break;}
   }
+  //if (event.type == sf::Event::MouseButtonPressed) std::cout << _move_top << std::endl << std::endl;
 }
 
 void GameWindow::concludeEvent() {
+  if (_swap_pressed) {swapMoveKeys(); std::cout << "swap clicked" << std::endl;}
   if (!_game.isOver()) {
     setPlayerDirections();
     _game.updateGame(_player_direction, _player_attack_direction);
@@ -252,6 +211,26 @@ void GameWindow::drawAttacks() {
   for (std::size_t attack_index = 0; attack_index < _attacks.size(); ++attack_index) {
     _master.drawRectangle(_attacks[attack_index].getRectangle());
   }
+}
+
+void GameWindow::swapMoveKeys() {
+  if (_move_top == sf::Keyboard::W) {
+    _move_top = sf::Keyboard::Z;
+    _move_lft = sf::Keyboard::Q;
+  }
+  else {
+    _move_top = sf::Keyboard::W;
+    _move_lft = sf::Keyboard::A;
+  }
+  _swap_pressed = false;
+  _top_clicked = false;
+  _bot_clicked = false;
+  _rgt_clicked = false;
+  _lft_clicked = false;
+  _top_attack = false;
+  _bot_attack = false;
+  _rgt_attack = false;
+  _lft_attack = false;
 }
 
 

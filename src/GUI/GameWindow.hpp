@@ -52,6 +52,11 @@ class GameWindow {
     bool _open_window = true;
     bool _swap_pressed = false;
 
+    sf::Keyboard::Key _move_top = sf::Keyboard::W;
+    sf::Keyboard::Key _move_bot = sf::Keyboard::S;
+    sf::Keyboard::Key _move_rgt = sf::Keyboard::D;
+    sf::Keyboard::Key _move_lft = sf::Keyboard::A;
+
     Directions _player_direction;
     Directions _player_attack_direction;
     Text _spawn_message;
@@ -87,6 +92,7 @@ class GameWindow {
     void drawPlayer();
     void drawAttacks();
     void deleteAttacksDisplays();
+    void swapMoveKeys();
 
     // Setters
     void setPlayerPosition();
