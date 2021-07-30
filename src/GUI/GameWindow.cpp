@@ -18,10 +18,17 @@ void GameWindow::updateWindow() {
   drawAttacks();
   drawMobs(player_quadrant_x, player_quadrant_y);
   drawPlayer();
+  if (player_quadrant_x == 0 && player_quadrant_y == 9) {
+    _master.drawText(_spawn_message.getText());
+  }
   _master.displayWindow();
 }
 
 void GameWindow::drawPlayer() {
+  float div_x = _game_board_size_x / _board_divider;
+  float div_y = _game_board_size_y / _board_divider;
+  int quot_x = std::div(static_cast<int>(_game.getPlayerDimensions().x), static_cast<int>(div_x)).quot;
+  int quot_y = std::div(static_cast<int>(_game.getPlayerDimensions().y), static_cast<int>(div_y)).quot;
   _player_hp.clear();
   _master.drawRectangle(_player.getRectangle());
   _player_hp.emplace_back(_game.getPlayerSize().x * _hp_display_prop, _hp_display_height,
@@ -30,6 +37,14 @@ void GameWindow::drawPlayer() {
   _player_hp.emplace_back(_game.getPlayerSize().x * _hp_display_prop * _game.getPlayerHealth(), _hp_display_height,
                           _player.getX() - _game.getPlayerSize().x, _player.getY() + _game.getPlayerSize().y + _hp_display_height,
                           sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
+  if (_game.getPlayerAttackToBeDisplayed()) {
+    AttackToDisplay attack_to_charge = _game.getPlayerAttackDisplay();
+    _attacks_displays.emplace_back(attack_to_charge);
+    _attacks.emplace_back(attack_to_charge.size.x, attack_to_charge.size.y,
+                          attack_to_charge.pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.pos.y - (static_cast<float>(quot_y) * div_y),
+                          sf::Color(0, 204, 204), sf::Color::Transparent, 0.f, 0.f);
+    _game.playerAttackDisplayed();
+  }
   _master.drawRectangle(_player_hp[0].getRectangle());
   _master.drawRectangle(_player_hp[1].getRectangle());
 }

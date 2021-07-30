@@ -53,6 +53,7 @@ class GameWindow {
 
     Directions _player_direction;
     Directions _player_attack_direction;
+    Text _spawn_message;
 
   public:
     // Constructor
@@ -62,7 +63,8 @@ class GameWindow {
                    _master(),
                    _game(),
                    _player_direction(standby),
-                   _player_attack_direction(standby) {}
+                   _player_attack_direction(standby),
+                   _spawn_message(20.f, 20.f, sf::Color::Black, sf::Color::White, 0.f, _master.getFont1(), _spawn_text) {}
     
     // Copy
     GameWindow(const myClass&) = delete;
