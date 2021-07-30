@@ -62,7 +62,7 @@ class MovingEntity : public GameEntity {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    
+    void takeDamage(int);
 
     // Setters
 
