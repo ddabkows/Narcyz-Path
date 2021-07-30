@@ -166,7 +166,19 @@ void Player::move(Directions player_decision, std::vector<std::shared_ptr<Moving
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
 }
 
+void Player::attack(std::vector<std::shared_ptr<MovingEntity>> mobs, float time) {
+  _weapon->attack(mobs, time);
+}
+
+void Player::attackDisplayed() {_weapon->attackDisplayed();}
+
+
+// Setters
+void Player::setAttackDirection(Directions new_direction) {_weapon->setDirection(new_direction);}
+void Player::setAttackPosition() {_weapon->setPosition(_position);}
 
 // Getters
 const std::size_t& Player::getQuadrantX() const {return _quadrant_x;}
 const std::size_t& Player::getQuadrantY() const {return _quadrant_y;}
+const bool& Player::getAttackToBeDisplayed() const {return _weapon->getAttackToDisplay();}
+const AttackToDisplay& Player::getAttackToDisplay() const {return _weapon->getAttackDisplay();}
