@@ -46,8 +46,9 @@ void Mob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>>
       }
     }
     else {
-      attack(player, time);
+      chargeAttack(time);
     }
+    attack(player, time);
   }
   _position.x = new_position.x;
   _position.y = new_position.y;
@@ -57,15 +58,15 @@ float Mob::checkDistanceToPlayer(std::shared_ptr<Player> player, float new_pos_x
   return static_cast<float>(sqrt(pow(new_pos_x - player->getPosition().x, 2) + pow(new_pos_y - player->getPosition().y, 2) * 1.0));
 }
 
-void Mob::attack(std::shared_ptr<Player> player, float time) {
-  if (!_charge_attack) {
-    if (time - _last_hit > _hit_cooldown) {
-      _charge_attack = true;
-      _attack_display.pos = Dimensions(_position.x - ((_attack_display.size.x - _size.x) / 2.f), _position.y - ((_attack_display.size.y - _size.y) / 2.f));
-      _last_hit = time;
-    }
+void Mob::chargeAttack(float time) {
+  if (!_charge_attack && time - _last_hit > _hit_cooldown) {
+    _charge_attack = true;
+    _attack_display.pos = Dimensions(_position.x - ((_attack_display.size.x - _size.x) / 2.f), _position.y - ((_attack_display.size.y - _size.y) / 2.f));
+    _last_hit = time;
   }
-  else {
+}
+void Mob::attack(std::shared_ptr<Player> player, float time) {
+  if (_charge_attack) {
     if (time - _last_hit > _hit_charge) {
       _charge_attack = false;
       _last_hit = time;

@@ -69,6 +69,7 @@ class Mob : public MovingEntity {
     // Methods
     void move(std::shared_ptr<Player>, std::vector<std::shared_ptr<Mob>>, const std::vector<std::shared_ptr<GameEntity>>, float);
     float checkDistanceToPlayer(std::shared_ptr<Player>, float, float);
+    void chargeAttack(float);
     void attack(std::shared_ptr<Player>, float);
     void attackDisplayed();
 
