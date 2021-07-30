@@ -12,6 +12,7 @@
 void Master::setupWindow() {
   _window = std::make_shared<sf::RenderWindow>(sf::VideoMode(static_cast<int>(_projection_size_x), static_cast<int>(_projection_size_y)),
                                                              "Narcyz Path");
+  _window->setSize(sf::Vector2u(800, 450));
   _window->setFramerateLimit(120);
 
   _font_1 = std::make_shared<sf::Font>();
