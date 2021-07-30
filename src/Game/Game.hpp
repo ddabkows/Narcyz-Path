@@ -61,7 +61,7 @@ class Game {
 
   // Methods
   void generateGame();
-  void updateGame(Directions);
+  void updateGame(Directions, Directions);
   void checkSpawners();
   std::size_t checkDist(std::size_t, std::size_t);
   void endGame();

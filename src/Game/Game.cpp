@@ -19,10 +19,10 @@ void Game::generateGame() {
   
 }
 
-void Game::updateGame(Directions updating_directions) {
+void Game::updateGame(Directions updating_directions, Directions updating_attack_directions) {
   endGame();
   if (!_is_over) {
-    std::vector<std::shared_ptr<GameEntity>> mobs{};
+    std::vector<std::shared_ptr<MovingEntity>> mobs{};
     for (std::size_t spawner_index = 0; spawner_index < _mob_spawners.size(); ++spawner_index) {
       if (_mob_spawners[spawner_index]->getQuadrantX() == _player->getQuadrantX() && _mob_spawners[spawner_index]->getQuadrantY() == _player->getQuadrantY()) {
         for (std::size_t mob_index = 0; mob_index < _mob_spawners[spawner_index]->getMobs().size(); ++mob_index) {
