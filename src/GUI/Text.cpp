@@ -18,7 +18,7 @@ void Text::setupText(float pos_x, float pos_y, sf::Color inside_color, sf::Color
   _text.rotate(rotation);
   _text.setStyle(sf::Text::Bold);
   _text.setOutlineThickness(1.f);
-  _text.setScale(2.f, 2.f);
+  _text.setScale(1.f, 1.f);
 }
 
 
