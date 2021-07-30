@@ -106,11 +106,6 @@ const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls =
       std::make_shared<GameEntity>(10.f, 900.f, 0.f, 8100.f),       // Left wall
       std::make_shared<GameEntity>(10.f, 400.f, 1590.f, 8100.f),    // Right walls
       std::make_shared<GameEntity>(10.f, 400.f, 1590.f, 8600.f),
-      std::make_shared<GameEntity>(50.f, 50.f, 775.f, 8525.f),      // Middle square  
-      std::make_shared<GameEntity>(400.f, 10.f, 300.f, 8300.f),     // Top latteral walls 
-      std::make_shared<GameEntity>(400.f, 10.f, 900.f, 8300.f),
-      std::make_shared<GameEntity>(400.f, 10.f, 300.f, 8790.f),     // Bottom latteral walls 
-      std::make_shared<GameEntity>(400.f, 10.f, 900.f, 8790.f)
     }
   },
   {
@@ -211,7 +206,7 @@ const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls =
       std::make_shared<GameEntity>(10.f, 400.f, 1600.f, 8600.f),
       std::make_shared<GameEntity>(10.f, 400.f, 3190.f, 8100.f),    // Right walls
       std::make_shared<GameEntity>(10.f, 400.f, 3190.f, 8600.f),
-      std::make_shared<GameEntity>(50.f, 50.f, 775.f, 8525.f),      // Middle square  
+      std::make_shared<GameEntity>(50.f, 50.f, 2375.f, 8525.f),      // Middle square  
       std::make_shared<GameEntity>(400.f, 10.f, 300.f, 8300.f),     // Top latteral walls 
       std::make_shared<GameEntity>(400.f, 10.f, 900.f, 8300.f),
       std::make_shared<GameEntity>(400.f, 10.f, 300.f, 8790.f),     // Bottom latteral walls 
