@@ -21,10 +21,13 @@ class Weapon {
     // Trait
     using myClass = Weapon;
 
+  protected:
     int _damage;
     float _cooldown;
     AttackToDisplay _attack_display;
     WeaponTypes _weapon_type;
+    float _last_hit = 0.f;
+    bool _attack_to_display = false;
     
 
   public:
@@ -46,9 +49,15 @@ class Weapon {
 
     // Methods
     virtual void attack(std::vector<std::shared_ptr<MovingEntity>>, float) = 0;
+    void attackDisplayed();
 
     // Getters
     const AttackToDisplay& getAttackDisplay() const;
+    const bool& getAttackToDisplay() const;
+
+    // Setters
+    void setDirection(Directions);
+    void setPosition(Dimensions);
 
     // Destructor
     virtual ~Weapon() = default;
