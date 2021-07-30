@@ -110,10 +110,14 @@ void Player::oblicMove(int right, int down, std::vector<std::shared_ptr<GameEnti
   }
 }
 
-void Player::move(Directions player_decision, std::vector<std::shared_ptr<GameEntity>> mobs, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
+void Player::move(Directions player_decision, std::vector<std::shared_ptr<MovingEntity>> mobs, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>> walls) {
   _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
   std::vector<std::shared_ptr<GameEntity>> in_player_zone_walls = walls[_quadrant_x][_quadrant_y];
+  std::vector<std::shared_ptr<GameEntity>> reinterpreted_mobs{};
+  for (std::size_t mob_index = 0; mob_index < mobs.size(); ++mob_index) {
+    reinterpreted_mobs.emplace_back(mobs[mob_index]);
+  }
   if (player_decision - _directions > _direction_change || player_decision - _directions < -_direction_change) {
     if (!((player_decision == north && _directions == north_west) || (player_decision == north_west && _directions == north))) {
       _velocity = 0.f;
@@ -121,35 +125,35 @@ void Player::move(Directions player_decision, std::vector<std::shared_ptr<GameEn
   }
   switch (player_decision) {
     case north : {
-      verticalMove(-1, mobs, in_player_zone_walls);
+      verticalMove(-1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     case north_east : {
-      oblicMove(1, -1, mobs, in_player_zone_walls);
+      oblicMove(1, -1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     case east : {
-      horizontalMove(1, mobs, in_player_zone_walls);
+      horizontalMove(1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     case south_east : {
-      oblicMove(1, 1, mobs, in_player_zone_walls);
+      oblicMove(1, 1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     case south : {
-      verticalMove(1, mobs, in_player_zone_walls);
+      verticalMove(1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     case south_west : {
-      oblicMove(-1, 1, mobs, in_player_zone_walls);
+      oblicMove(-1, 1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     case west : {
-      horizontalMove(-1, mobs, in_player_zone_walls);
+      horizontalMove(-1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     case north_west : {
-      oblicMove(-1, -1, mobs, in_player_zone_walls);
+      oblicMove(-1, -1, reinterpreted_mobs, in_player_zone_walls);
       break;
     }
     default : {
@@ -161,8 +165,6 @@ void Player::move(Directions player_decision, std::vector<std::shared_ptr<GameEn
   _quadrant_x = static_cast<std::size_t>(_position.x / _projection_size_x);
   _quadrant_y = static_cast<std::size_t>(_position.y / _projection_size_y);
 }
-
-void Player::takeDamage(int damage) {_hp -= damage;}
 
 
 // Getters

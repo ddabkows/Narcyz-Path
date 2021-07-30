@@ -11,6 +11,7 @@
 
 #include "MovingEntity.hpp"
 #include "GameMacros.hpp"
+#include "Weapon.hpp"
 
 
 #ifndef _PLAYER_HPP
@@ -58,13 +59,15 @@ class Player : public MovingEntity {
     void verticalMove(int, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::shared_ptr<GameEntity>>);
     bool checkVertical(int, std::vector<std::shared_ptr<GameEntity>>);
     void oblicMove(int, int, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::shared_ptr<GameEntity>>);
-    void move(Directions, std::vector<std::shared_ptr<GameEntity>>, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
-    void takeDamage(int);
+    void move(Directions, std::vector<std::shared_ptr<MovingEntity>>, const std::vector<std::vector<std::vector<std::shared_ptr<GameEntity>>>>);
 
     // Setters
 
     // Getters
     const std::size_t& getQuadrantX() const;
     const std::size_t& getQuadrantY() const;
+
+    // Destructor
+    ~Player() = default;
 };
 #endif
