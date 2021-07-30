@@ -18,9 +18,8 @@ void GameWindow::updateWindow() {
   drawAttacks();
   drawMobs(player_quadrant_x, player_quadrant_y);
   drawPlayer();
-  if (player_quadrant_x == 0 && player_quadrant_y == 9) {
-    _master.drawText(_spawn_message.getText());
-  }
+  if (player_quadrant_x == 0 && player_quadrant_y == 9) _master.drawText(_spawn_message.getText());
+  _master.drawText(_keys_swap.getText());
   _master.displayWindow();
 }
 

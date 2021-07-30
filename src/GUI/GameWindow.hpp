@@ -50,10 +50,12 @@ class GameWindow {
     bool _rgt_attack = false;
     bool _lft_attack = false;
     bool _open_window = true;
+    bool _swap_pressed = false;
 
     Directions _player_direction;
     Directions _player_attack_direction;
     Text _spawn_message;
+    Text _keys_swap;
 
   public:
     // Constructor
@@ -64,7 +66,8 @@ class GameWindow {
                    _game(),
                    _player_direction(standby),
                    _player_attack_direction(standby),
-                   _spawn_message(20.f, 20.f, sf::Color::Black, sf::Color::White, 0.f, _master.getFont1(), _spawn_text) {}
+                   _spawn_message(20.f, 20.f, sf::Color::Black, sf::Color::White, 0.f, _master.getFont1(), _spawn_text),
+                   _keys_swap(1388.f, 10.f, sf::Color::Black, sf::Color::White, 0.f, _master.getFont1(), _swap_keys_text) {}
     
     // Copy
     GameWindow(const myClass&) = delete;
