@@ -9,7 +9,7 @@
 
 
 // Methods
-void Spawner::spawn_mobs(float time, std::vector<std::shared_ptr<GameEntity>> walls) {
+void Spawner::spawnMobs(float time, std::vector<std::shared_ptr<GameEntity>> walls) {
   if (_mobs.size() < _max_mobs && _spawn_speed < (time - _last_spawn)) {
     float pos_x = (_projection_size_x * static_cast<float>(_quadrant_x)) + _board_divider + static_cast<float>((rand()%static_cast<int>(_projection_size_x - _board_divider - _mob_size.x)));
     float pos_y = (_projection_size_y * static_cast<float>(_quadrant_y)) + _board_divider + static_cast<float>((rand()%static_cast<int>(_projection_size_y - _board_divider - _mob_size.y)));
@@ -32,9 +32,21 @@ void Spawner::spawn_mobs(float time, std::vector<std::shared_ptr<GameEntity>> wa
   } 
 }
 
-void Spawner::despawn_mobs() {
+void Spawner::despawnMobs() {
   _mobs.clear();
 }
+
+void Spawner::killMobs() {
+  for (std::size_t mob_index = 0; mob_index < _mobs.size(); ++mob_index) {
+    if (_mobs[mob_index]->getHealth() <= 0) {
+      _mobs.erase(_mobs.begin() + static_cast<int>(mob_index));
+      --mob_index;
+    }
+  }
+}
+
+// Setters
+void Spawner::setMobs(std::vector<std::shared_ptr<Mob>> new_mobs) {_mobs = new_mobs;}
 
 // Getters
 const std::size_t& Spawner::getQuadrantX() const {return _quadrant_x;}

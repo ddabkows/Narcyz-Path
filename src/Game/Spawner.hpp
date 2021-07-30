@@ -67,8 +67,12 @@ class Spawner {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void spawn_mobs(float, std::vector<std::shared_ptr<GameEntity>>);
-    void despawn_mobs();
+    void spawnMobs(float, std::vector<std::shared_ptr<GameEntity>>);
+    void despawnMobs();
+    void killMobs();
+
+    // Setters
+    void setMobs(std::vector<std::shared_ptr<Mob>>);
 
     // Getters
     const std::size_t& getQuadrantX() const;
