@@ -21,5 +21,6 @@ struct AttackToDisplay {
   Dimensions pos;
   float hit_display_time;
   float display_moment = 0.f;
+  Directions attack_direction = standby;
 };
 #endif
