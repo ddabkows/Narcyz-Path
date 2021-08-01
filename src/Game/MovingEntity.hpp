@@ -23,6 +23,7 @@ class MovingEntity : public GameEntity {
     using myClass = MovingEntity;
 
   protected:
+    Directions _directions{};
     float _max_velocity;
 
     std::size_t _quadrant_x;
@@ -47,6 +48,7 @@ class MovingEntity : public GameEntity {
 
     // Copy
     MovingEntity(const myClass& moving_entity) : GameEntity(moving_entity),
+                                                 _directions(moving_entity._directions),
                                                  _max_velocity(moving_entity._max_velocity),
                                                  _quadrant_x(moving_entity._quadrant_x),
                                                  _quadrant_y(moving_entity._quadrant_y),

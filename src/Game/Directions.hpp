@@ -9,14 +9,14 @@
 #define _DIRECTIONS_HPP
 
 enum Directions {
-  standby,
-  north,
-  north_east,
-  east,
-  south_east,
-  south,
-  south_west,
-  west,
-  north_west
+  standby = 0,
+  north = 1,
+  north_east = 2,
+  east = 3,
+  south_east = 4,
+  south = 5,
+  south_west = 6,
+  west = 7,
+  north_west = 8
 };
 #endif

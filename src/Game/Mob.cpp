@@ -41,6 +41,8 @@ void Mob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>>
         if (!other_mob_conflict) {
           if (checkDistanceToPlayer(player, new_pos_x, new_pos_y) < checkDistanceToPlayer(player, new_position.x, new_position.y)) {
             new_position = Dimensions(new_pos_x, new_pos_y);  
+            if (quadrant <= 5) _directions = Directions(quadrant + 3);
+            else _directions = Directions(quadrant - 5);
           }
         }
       }

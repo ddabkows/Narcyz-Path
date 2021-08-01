@@ -24,7 +24,6 @@ class Player : public MovingEntity {
     // Trait
     using myClass = Player;
 
-    Directions _directions{};
     float _velocity = 0.f;
     float _acceleration;
     std::shared_ptr<Weapon> _weapon;
@@ -47,7 +46,6 @@ class Player : public MovingEntity {
     
     // Copy
     Player(const myClass& player) : MovingEntity(player),
-                                    _directions(player._directions),
                                     _velocity(player._velocity),
                                     _acceleration(player._acceleration),
                                     _weapon(player._weapon) {
