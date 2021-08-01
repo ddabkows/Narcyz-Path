@@ -19,6 +19,7 @@
 #include "../Game/GameMacros.hpp"
 #include "../Game/Directions.hpp"
 #include "../Game/AttackToDisplay.hpp"
+#include "Animation.hpp"
 
 
 #ifndef _GAME_WINDOW_HPP
@@ -38,7 +39,9 @@ class GameWindow {
     std::vector<Rectangle> _walls{};
     std::vector<Rectangle> _mobs{};
     std::vector<Rectangle> _attacks{};
+    std::vector<Animation> _animated_attacks{};
     std::vector<AttackToDisplay> _attacks_displays{};
+    std::vector<AttackToDisplay> _animated_attacks_displays{};
     std::vector<std::vector<Rectangle>> _mobs_hp{};
 
     bool _top_clicked = false;

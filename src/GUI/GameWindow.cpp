@@ -38,10 +38,14 @@ void GameWindow::drawPlayer() {
                           sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
   if (_game.getPlayerAttackToBeDisplayed()) {
     AttackToDisplay attack_to_charge = _game.getPlayerAttackDisplay();
-    _attacks_displays.emplace_back(attack_to_charge);
-    _attacks.emplace_back(attack_to_charge.size.x, attack_to_charge.size.y,
-                          attack_to_charge.pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.pos.y - (static_cast<float>(quot_y) * div_y),
-                          sf::Color(0, 204, 204), sf::Color::Transparent, 0.f, 0.f);
+    //std::cout << _game.getPlayerDimensions().x << std::endl;
+    //std::cout << attack_to_charge.pos.x << std::endl;
+    _animated_attacks_displays.emplace_back(attack_to_charge);
+    _animated_attacks.emplace_back(_master.getMagicBallTexture(), sf::Vector2u(_magic_ball_texture_x , _magic_ball_texture_y), 
+                                   attack_to_charge.hit_display_time, false,
+                                   Dimensions(attack_to_charge.display_pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.display_pos.y - (static_cast<float>(quot_y) * div_y)),
+                                   Dimensions(attack_to_charge.starting_size.x, attack_to_charge.starting_size.y),
+                                   _player_attack_direction); 
     _game.playerAttackDisplayed();
   }
   _master.drawRectangle(_player_hp[0].getRectangle());
@@ -205,11 +209,24 @@ void GameWindow::deleteAttacksDisplays() {
       --attack_display_index;
     }
   }
+  for (std::size_t attack_display_index = 0; attack_display_index < _animated_attacks_displays.size(); ++attack_display_index) {
+    if (!_animated_attacks[attack_display_index].checkLoop() && _animated_attacks[attack_display_index].checkLastImage()) {
+      _animated_attacks.erase(_animated_attacks.begin() + static_cast<int>(attack_display_index));
+      _animated_attacks_displays.erase(_animated_attacks_displays.begin() + static_cast<int>(attack_display_index));
+      --attack_display_index;
+    }
+  }
 }
 
 void GameWindow::drawAttacks() {
+  //std::cout << "Player: " << _player.getX() << std::endl;
   for (std::size_t attack_index = 0; attack_index < _attacks.size(); ++attack_index) {
     _master.drawRectangle(_attacks[attack_index].getRectangle());
+  }
+  for (std::size_t attack_index = 0; attack_index < _animated_attacks.size(); ++attack_index) {
+    //std::cout << "Attack" << _animated_attacks[attack_index].getRectangle().getPosition().x << std::endl;
+    _animated_attacks[attack_index].nextImage(_game.getGameTimer());
+    _master.drawRectangle(_animated_attacks[attack_index].getRectangle());
   }
 }
 
