@@ -14,11 +14,15 @@
 
 struct AttackToDisplay {
   AttackToDisplay() = default;
-  AttackToDisplay(float size_x, float size_y, float display_time) : size(size_x, size_y),
+  AttackToDisplay(float size_x, float size_y, float display_time) : starting_size(size_x, size_y),
+                                                                    size(size_x, size_y),
                                                                     pos(0.f, 0.f),
+                                                                    display_pos(0.f, 0.f),
                                                                     hit_display_time(display_time) {}
+  Dimensions starting_size;
   Dimensions size;
   Dimensions pos;
+  Dimensions display_pos;
   float hit_display_time;
   float display_moment = 0.f;
   Directions attack_direction = standby;
