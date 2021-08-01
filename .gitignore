@@ -36,3 +36,5 @@
 build/NarcyzPath
 .vs/
 Narcyz-path/.vs/
+*Narcyz-path/
+Narcyz-path
