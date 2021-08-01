@@ -8,6 +8,7 @@
 #ifndef _DIRECTIONS_HPP
 #define _DIRECTIONS_HPP
 
+
 enum Directions {
   standby = 0,
   north = 1,
