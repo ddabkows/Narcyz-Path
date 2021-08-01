@@ -38,9 +38,7 @@ class GameWindow {
     Game _game;
     std::vector<Rectangle> _walls{};
     std::vector<Rectangle> _mobs{};
-    std::vector<Rectangle> _attacks{};
     std::vector<Animation> _animated_attacks{};
-    std::vector<AttackToDisplay> _attacks_displays{};
     std::vector<AttackToDisplay> _animated_attacks_displays{};
     std::vector<std::vector<Rectangle>> _mobs_hp{};
 
@@ -69,7 +67,7 @@ class GameWindow {
     // Constructor
     GameWindow() : _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(0, 50, 0, 255), sf::Color(0, 0, 0, 255), 0.f, 0.f),
                    _player(_player_size_x, _player_size_y, _game_board_size_y - _player_size_y, (_projection_size_x - _player_size_x) / 2.f,
-                   sf::Color(0, 0, 100), sf::Color(0, 0, 0, 255), 0.5f, 0.f),
+                   sf::Color(0, 0, 100), sf::Color(0, 0, 0, 255), 0.f, 0.f),
                    _master(),
                    _game(),
                    _player_direction(standby),

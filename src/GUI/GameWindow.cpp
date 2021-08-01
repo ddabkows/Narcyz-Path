@@ -38,8 +38,6 @@ void GameWindow::drawPlayer() {
                           sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
   if (_game.getPlayerAttackToBeDisplayed()) {
     AttackToDisplay attack_to_charge = _game.getPlayerAttackDisplay();
-    //std::cout << _game.getPlayerDimensions().x << std::endl;
-    //std::cout << attack_to_charge.pos.x << std::endl;
     _animated_attacks_displays.emplace_back(attack_to_charge);
     _animated_attacks.emplace_back(_master.getMagicBallTexture(), sf::Vector2u(_magic_ball_texture_x , _magic_ball_texture_y), 
                                    attack_to_charge.hit_display_time, false,
@@ -78,10 +76,11 @@ void GameWindow::drawMobs(std::size_t player_quadrant_x, std::size_t player_quad
                                          sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
         if (in_screen_mobs[mob_index]->getAttackToDisplay()) {
           AttackToDisplay attack_to_charge = in_screen_mobs[mob_index]->getAttackDisplay();
-          _attacks_displays.emplace_back(attack_to_charge);
-          _attacks.emplace_back(attack_to_charge.size.x, attack_to_charge.size.y, 
-                                attack_to_charge.pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.pos.y - (static_cast<float>(quot_y) * div_y),
-                                sf::Color(128, 128, 128), sf::Color::Transparent, 0.f, 0.f);
+          std::shared_ptr<sf::Texture> animation_texture = _master.getMobAttackTexture(attack_to_charge.skin);
+          _animated_attacks_displays.emplace_back(attack_to_charge);
+          _animated_attacks.emplace_back(animation_texture, sf::Vector2u(_mob_attack_1_x, _mob_attack_1_y), attack_to_charge.hit_display_time, false,
+                                         Dimensions(attack_to_charge.pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.pos.y - (static_cast<float>(quot_y) * div_y)),
+                                         Dimensions(attack_to_charge.size.x, attack_to_charge.size.y), attack_to_charge.attack_direction);
           in_screen_mobs[mob_index]->attackDisplayed();
         }
         _master.drawRectangle(_mobs[mob_index].getRectangle());
@@ -101,7 +100,7 @@ void GameWindow::drawWalls(std::size_t player_quadrant_x, std::size_t player_qua
                         walls[wall_index]->getSize().y, 
                         walls[wall_index]->getPosition().x - static_cast<float>(player_quadrant_x) * _projection_size_x,
                         walls[wall_index]->getPosition().y - static_cast<float>(player_quadrant_y) * _projection_size_y, 
-                        sf::Color::White, sf::Color::Yellow, 0.5f, 0.f);
+                        sf::Color::White, sf::Color::Yellow, 0.f, 0.f);
     _master.drawRectangle(_walls[wall_index].getRectangle());
   } 
 }
@@ -155,11 +154,10 @@ void GameWindow::processEvent(sf::Event event) {
     }
     default: {break;}
   }
-  //if (event.type == sf::Event::MouseButtonPressed) std::cout << _move_top << std::endl << std::endl;
 }
 
 void GameWindow::concludeEvent() {
-  if (_swap_pressed) {swapMoveKeys(); std::cout << "swap clicked" << std::endl;}
+  if (_swap_pressed) swapMoveKeys();
   if (!_game.isOver()) {
     setPlayerDirections();
     _game.updateGame(_player_direction, _player_attack_direction);
@@ -202,13 +200,6 @@ bool GameWindow::pollEvent(sf::Event& event) {
 }
 
 void GameWindow::deleteAttacksDisplays() {
-  for (std::size_t attack_display_index = 0; attack_display_index < _attacks_displays.size(); ++attack_display_index) {
-    if (_game.getGameTimer() - _attacks_displays[attack_display_index].display_moment > _attacks_displays[attack_display_index].hit_display_time) {
-      _attacks_displays.erase(_attacks_displays.begin() + static_cast<int>(attack_display_index));
-      _attacks.erase(_attacks.begin() + static_cast<int>(attack_display_index));
-      --attack_display_index;
-    }
-  }
   for (std::size_t attack_display_index = 0; attack_display_index < _animated_attacks_displays.size(); ++attack_display_index) {
     if (!_animated_attacks[attack_display_index].checkLoop() && _animated_attacks[attack_display_index].checkLastImage()) {
       _animated_attacks.erase(_animated_attacks.begin() + static_cast<int>(attack_display_index));
@@ -219,12 +210,7 @@ void GameWindow::deleteAttacksDisplays() {
 }
 
 void GameWindow::drawAttacks() {
-  //std::cout << "Player: " << _player.getX() << std::endl;
-  for (std::size_t attack_index = 0; attack_index < _attacks.size(); ++attack_index) {
-    _master.drawRectangle(_attacks[attack_index].getRectangle());
-  }
   for (std::size_t attack_index = 0; attack_index < _animated_attacks.size(); ++attack_index) {
-    //std::cout << "Attack" << _animated_attacks[attack_index].getRectangle().getPosition().x << std::endl;
     _animated_attacks[attack_index].nextImage(_game.getGameTimer());
     _master.drawRectangle(_animated_attacks[attack_index].getRectangle());
   }
