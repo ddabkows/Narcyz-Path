@@ -27,10 +27,13 @@ class Master {
 
     std::shared_ptr<sf::RenderWindow> _window;
     std::shared_ptr<sf::Font> _font_1;
+    std::shared_ptr<sf::Texture> _magic_ball_texture;
 
   public:
     // Constructor
-    Master() : _window(), _font_1() {
+    Master() : _window(), 
+               _font_1(),
+               _magic_ball_texture() {
       setupWindow();
     }
 
@@ -50,12 +53,12 @@ class Master {
     bool pollEvent(sf::Event&);
     void drawRectangle(const sf::RectangleShape&);
     void drawText(const sf::Text&);
-
     // Setters
 
     // Getters
     std::shared_ptr<sf::RenderWindow>& getWindow();
     std::shared_ptr<sf::Font>& getFont1();
+    std::shared_ptr<sf::Texture> getMagicBallTexture();
     bool getOpen();
 
     // Destructor

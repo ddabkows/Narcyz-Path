@@ -17,6 +17,9 @@ void Master::setupWindow() {
 
   _font_1 = std::make_shared<sf::Font>();
   _font_1->loadFromFile(_font_1_path);
+
+  _magic_ball_texture = std::make_shared<sf::Texture>();
+  _magic_ball_texture->loadFromFile(_magic_ball_path);
 }
 
 void Master::clearWindow() {
@@ -49,4 +52,5 @@ void Master::drawText(const sf::Text& text) {
 // Getters
 std::shared_ptr<sf::RenderWindow>& Master::getWindow() {return _window;}
 std::shared_ptr<sf::Font>& Master::getFont1() {return _font_1;}
+std::shared_ptr<sf::Texture> Master::getMagicBallTexture() {return _magic_ball_texture;}
 bool Master::getOpen() {return _window->isOpen();}
