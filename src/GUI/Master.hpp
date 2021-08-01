@@ -14,6 +14,7 @@
 
 #include "../Game/GameMacros.hpp"
 #include "GUIMacros.hpp"
+#include "Skin.hpp"
 
 
 #ifndef _MASTER_HPP
@@ -28,6 +29,7 @@ class Master {
     std::shared_ptr<sf::RenderWindow> _window;
     std::shared_ptr<sf::Font> _font_1;
     std::shared_ptr<sf::Texture> _magic_ball_texture;
+    std::shared_ptr<sf::Texture> _classic_mob_attack;
 
   public:
     // Constructor
@@ -59,6 +61,7 @@ class Master {
     std::shared_ptr<sf::RenderWindow>& getWindow();
     std::shared_ptr<sf::Font>& getFont1();
     std::shared_ptr<sf::Texture> getMagicBallTexture();
+    std::shared_ptr<sf::Texture> getMobAttackTexture(Skin);
     bool getOpen();
 
     // Destructor
