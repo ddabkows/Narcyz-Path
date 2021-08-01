@@ -30,5 +30,5 @@ void Animation::nextImage(float time) {
 
 // Getters
 const bool& Animation::checkLoop() const {return _repeat;}
-bool Animation::checkLastImage() {return _current_image.x > _image_count.x;}
+bool Animation::checkLastImage() {return _current_image.x == _image_count.x-1;}
 sf::RectangleShape Animation::getRectangle() {return _rectangle;}
