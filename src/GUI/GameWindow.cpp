@@ -10,14 +10,15 @@
 
 void GameWindow::updateWindow() {
   _master.clearWindow();
+  deleteAttacksDisplays();
+
   _master.drawRectangle(_background.getRectangle());
   std::size_t player_quadrant_x = _game.getPlayerQuadrantX();
   std::size_t player_quadrant_y = _game.getPlayerQuadrantY();
   drawWalls(player_quadrant_x, player_quadrant_y);
-  deleteAttacksDisplays();
-  drawAttacks();
   drawMobs(player_quadrant_x, player_quadrant_y);
   drawPlayer();
+  drawAttacks();
   if (player_quadrant_x == 0 && player_quadrant_y == 9) _master.drawText(_spawn_message.getText());
   _master.drawText(_keys_swap.getText());
   _master.displayWindow();

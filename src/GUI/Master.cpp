@@ -20,9 +20,11 @@ void Master::setupWindow() {
 
   _magic_ball_texture = std::make_shared<sf::Texture>();
   _magic_ball_texture->loadFromFile(_magic_ball_path);
+  _magic_ball_texture->setSmooth(true);
 
   _classic_mob_attack = std::make_shared<sf::Texture>();
   _classic_mob_attack->loadFromFile(_mob_attack_1_path);
+  _classic_mob_attack->setSmooth(true);
 }
 
 void Master::clearWindow() {
