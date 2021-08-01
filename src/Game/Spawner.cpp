@@ -26,7 +26,7 @@ void Spawner::spawnMobs(float time, std::vector<std::shared_ptr<GameEntity>> wal
     if (spawn_allow) {
       _mobs.emplace_back(std::make_shared<Mob>(_mob_size.x, _mob_size.y, pos_x, pos_y, _mob_velocity, 
                                                static_cast<float>(_quadrant_x), static_cast<float>(_quadrant_y), _max_hp,
-                                               _hit_charge, _hit_cooldown, _hit_strength, _attack_display));
+                                               _hit_charge, _hit_cooldown, _hit_strength, _attack_display, _skin, _attack_skin));
       _last_spawn = time;
     }
   } 

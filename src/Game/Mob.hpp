@@ -30,18 +30,20 @@ class Mob : public MovingEntity {
     bool _charge_attack = false;
     bool _display_attack = false;
     AttackToDisplay _attack_display;
+    Skin _attack_skin;
 
   public:
     // Constructor
     Mob() = default;
 
     Mob(float size_x, float size_y, float pos_x, float pos_y, float max_velocity, std::size_t quadrant_x, std::size_t quadrant_y, const int max_hp,
-        float hit_charge, float hit_cooldown, int hit_strength, AttackToDisplay attack_display) : MovingEntity(size_x, size_y, pos_x, pos_y, max_velocity, 
-                                                                                                 quadrant_x, quadrant_y, max_hp),
-                                                                                                 _hit_charge(hit_charge),
-                                                                                                 _hit_cooldown(hit_cooldown),
-                                                                                                 _hit_strength(hit_strength),
-                                                                                                 _attack_display(attack_display) {}
+      float hit_charge, float hit_cooldown, int hit_strength, AttackToDisplay attack_display, Skin skin, Skin attack_skin) : MovingEntity(size_x, size_y, pos_x, pos_y, max_velocity,
+                                                                                                                    quadrant_x, quadrant_y, max_hp),
+                                                                                                                    _hit_charge(hit_charge),
+                                                                                                                    _hit_cooldown(hit_cooldown),
+                                                                                                                    _hit_strength(hit_strength),
+                                                                                                                    _attack_display(attack_display),
+                                                                                                                    _attack_skin(attack_skin) {_skin = skin;}
 
     // Copy
     Mob(const myClass& mob) : MovingEntity(mob),

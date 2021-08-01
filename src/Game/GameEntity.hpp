@@ -10,6 +10,7 @@
 
 #include "Dimensions.hpp"
 #include "Directions.hpp"
+#include "../GUI/Skin.hpp"
 
 
 #ifndef _GAME_ENTITY_HPP
@@ -24,6 +25,7 @@ class GameEntity {
 protected:
     Dimensions _position;
     Dimensions _size;
+    Skin _skin = no_skin;
     
 
   public:

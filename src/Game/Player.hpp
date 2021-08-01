@@ -41,7 +41,7 @@ class Player : public MovingEntity {
                                                                                                                             _classic_weapon_cooldown,
                                                                                                                             AttackToDisplay(_classic_weapon_attack_size_x,
                                                                                                                                             _classic_weapon_attack_size_y,
-                                                                                                                                            _classic_weapon_display_time),
+                                                                                                                                            _classic_weapon_display_time, no_skin),
                                                                                                                             WeaponTypes(classic))) {}
     
     // Copy

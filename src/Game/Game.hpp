@@ -42,7 +42,8 @@ class Game {
                                                            _player_size_x, _player_size_y, _classic_mob_velocity, _classic_mob_max_count, 
                                                            _classic_mob_spawn_speed, _classic_mob_max_hp, _classic_mob_hit_charge, _classic_mob_hit_cooldown,
                                                            _classic_mob_attack_strength,
-                                                           AttackToDisplay(_classic_mob_attack_size_x, _classic_mob_attack_size_y, _classic_mob_hit_display_time))};
+                                                           AttackToDisplay(_classic_mob_attack_size_x, _classic_mob_attack_size_y, _classic_mob_hit_display_time, Skin(classic_mob_attack)),
+                                                           Skin(no_skin), Skin(classic_mob_attack))};
 
   public:
   // Constructor

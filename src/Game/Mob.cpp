@@ -72,6 +72,7 @@ void Mob::attack(std::shared_ptr<Player> player, float time) {
     if (time - _last_hit > _hit_charge) {
       _charge_attack = false;
       _last_hit = time;
+      _attack_display.attack_direction = east;
       if (_attack_display.pos.x <= player->getPosition().x + player->getSize().x && player->getPosition().x <= _attack_display.pos.x + _attack_display.size.x &&
           _attack_display.pos.y <= player->getPosition().y + player->getSize().y && player->getPosition().y <= _attack_display.pos.y + _attack_display.size.y) {
             player->takeDamage(_hit_strength);
