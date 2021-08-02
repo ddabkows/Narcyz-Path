@@ -23,6 +23,7 @@ class Mob : public MovingEntity {
     // Trait
     using myClass = Mob;
 
+  protected:
     float _last_hit   = 0.f;
     float _hit_charge;
     float _hit_cooldown;
@@ -72,7 +73,7 @@ class Mob : public MovingEntity {
     void move(std::shared_ptr<Player>, std::vector<std::shared_ptr<Mob>>, const std::vector<std::shared_ptr<GameEntity>>, float);
     float checkDistanceToPlayer(std::shared_ptr<Player>, float, float);
     void chargeAttack(float);
-    void attack(std::shared_ptr<Player>, float);
+    virtual void attack(std::shared_ptr<Player>, float);
     void attackDisplayed();
 
     // Getters

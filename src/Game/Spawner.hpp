@@ -10,6 +10,7 @@
 #include <random>
 
 #include "Mob.hpp"
+#include "ClassicMob.hpp"
 #include "GameEntity.hpp"
 #include "GameMacros.hpp"
 #include "AttackToDisplay.hpp"

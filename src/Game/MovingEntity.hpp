@@ -43,8 +43,7 @@ class MovingEntity : public GameEntity {
                                                                       _quadrant_x(quadrant_x),
                                                                       _quadrant_y(quadrant_y),
                                                                       _max_hp(max_hp),
-                                                                      _hp(max_hp)
-                                                                       {}
+                                                                      _hp(max_hp) {}
 
     // Copy
     MovingEntity(const myClass& moving_entity) : GameEntity(moving_entity),
@@ -65,6 +64,8 @@ class MovingEntity : public GameEntity {
 
     // Methods
     void takeDamage(int);
+    bool checkCollisionME(std::shared_ptr<MovingEntity>);
+    bool checkCollisionGE(std::shared_ptr<GameEntity>);
 
     // Setters
 

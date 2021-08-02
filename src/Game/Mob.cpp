@@ -23,8 +23,9 @@ void Mob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>>
            player->getPosition().y <= new_pos_y + _size.y && new_pos_y <= player->getPosition().y + player->getSize().y)) {
       bool wall_conflict = false;
       for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
-        if (walls[wall_index]->getPosition().x <= new_pos_x + _size.x && new_pos_x <= walls[wall_index]->getPosition().x + walls[wall_index]->getSize().x &&
-            walls[wall_index]->getPosition().y <= new_pos_y + _size.y && new_pos_y <= walls[wall_index]->getPosition().y + walls[wall_index]->getSize().y) {
+        std::shared_ptr<GameEntity> wall = walls[wall_index];
+        if (wall->getPosition().x <= new_pos_x + _size.x && new_pos_x <= wall->getPosition().x + wall->getSize().x &&
+          wall->getPosition().y <= new_pos_y + _size.y && new_pos_y <= wall->getPosition().y + wall->getSize().y) {
           wall_conflict = true;
           break;
         }
@@ -32,8 +33,8 @@ void Mob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>>
       if (!wall_conflict) {
         bool other_mob_conflict = false;
         for (std::size_t other_mob_index = 0; other_mob_index < other_mobs.size(); ++other_mob_index) {
-          if (other_mobs[other_mob_index]->getPosition().x <= new_pos_x + _size.x && new_pos_x <= other_mobs[other_mob_index]->getPosition().x + other_mobs[other_mob_index]->getSize().x &&
-               other_mobs[other_mob_index]->getPosition().y <= new_pos_y + _size.y && new_pos_y <= other_mobs[other_mob_index]->getPosition().y + other_mobs[other_mob_index]->getSize().y) {
+          std::shared_ptr<MovingEntity> other_mob = other_mobs[other_mob_index];
+          if (checkCollisionME(other_mob)) {
             other_mob_conflict = true;
             break;
           } 
@@ -67,20 +68,7 @@ void Mob::chargeAttack(float time) {
     _last_hit = time;
   }
 }
-void Mob::attack(std::shared_ptr<Player> player, float time) {
-  if (_charge_attack) {
-    if (time - _last_hit > _hit_charge) {
-      _charge_attack = false;
-      _last_hit = time;
-      _attack_display.attack_direction = east;
-      if (checkDistanceToPlayer(player, _attack_display.pos.x + (_attack_display.size.x / 2.f), _attack_display.pos.y + (_attack_display.size.y / 2.f)) <= _classic_mob_attack_radius) {
-        player->takeDamage(_hit_strength);
-      }
-      _attack_display.display_moment = time;
-      _display_attack = true;
-    }
-  }
-}
+
 
 void Mob::attackDisplayed() {
   _display_attack = false;
