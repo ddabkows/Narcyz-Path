@@ -20,13 +20,14 @@
 #include "../Game/Directions.hpp"
 #include "../Game/AttackToDisplay.hpp"
 #include "Animation.hpp"
+#include "Window.hpp"
 
 
 #ifndef _GAME_WINDOW_HPP
 #define _GAME_WINDOW_HPP
 
 
-class GameWindow {
+class GameWindow : public Window {
   private:
     // Trait
     using myClass = GameWindow;
@@ -34,8 +35,7 @@ class GameWindow {
     Rectangle _background;
     Rectangle _player;
     std::vector<Rectangle> _player_hp{};
-    Master _master;
-    Game _game;
+    std::shared_ptr<Game> _game;
     std::vector<Rectangle> _walls{};
     std::vector<Rectangle> _mobs{};
     std::vector<Animation> _animated_attacks{};
@@ -65,15 +65,15 @@ class GameWindow {
 
   public:
     // Constructor
-    GameWindow() : _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(0, 50, 0, 255), sf::Color(0, 0, 0, 255), 0.f, 0.f),
-                   _player(_player_size_x, _player_size_y, _game_board_size_y - _player_size_y, (_projection_size_x - _player_size_x) / 2.f,
-                   sf::Color(0, 0, 100), sf::Color(0, 0, 0, 255), 0.f, 0.f),
-                   _master(),
-                   _game(),
-                   _player_direction(standby),
-                   _player_attack_direction(standby),
-                   _spawn_message(20.f, 20.f, sf::Color::Black, sf::Color::White, 0.f, _master.getFont1(), _spawn_text),
-                   _keys_swap(1388.f, 10.f, sf::Color::Black, sf::Color::White, 0.f, _master.getFont1(), _swap_keys_text) {}
+    GameWindow(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Game> game) : Window(window),
+                                                                                       _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(0, 50, 0, 255), sf::Color(0, 0, 0, 255), 0.f, 0.f),
+                                                                                       _player(_player_size_x, _player_size_y, _game_board_size_y - _player_size_y, (_projection_size_x - _player_size_x) / 2.f,
+                                                                                       sf::Color(0, 0, 100), sf::Color(0, 0, 0, 255), 0.f, 0.f),
+                                                                                       _game(game),
+                                                                                       _player_direction(standby),
+                                                                                       _player_attack_direction(standby),
+                                                                                       _spawn_message(20.f, 20.f, sf::Color::Black, sf::Color::White, 0.f, _master->getFont1(), _spawn_text),
+                                                                                       _keys_swap(1388.f, 10.f, sf::Color::Black, sf::Color::White, 0.f, _master->getFont1(), _swap_keys_text) {}
     
     // Copy
     GameWindow(const myClass&) = delete;
@@ -84,10 +84,9 @@ class GameWindow {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
-    void updateWindow();
-    void processEvent(sf::Event event);
-    void concludeEvent();
-    bool pollEvent(sf::Event&);
+    void updateWindow() override;
+    void processEvent(sf::Event event) override;
+    void concludeEvent() override;
     void drawMobs(std::size_t, std::size_t);
     void drawWalls(std::size_t, std::size_t);
     void drawPlayer();
@@ -101,8 +100,6 @@ class GameWindow {
 
     // Getters
     const Directions& getPlayerDirections() const;
-    bool getOpen();
-    Master& getMaster();
 
     // Destructor
     ~GameWindow() = default;

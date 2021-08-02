@@ -9,50 +9,50 @@
 
 
 void GameWindow::updateWindow() {
-  _master.clearWindow();
+  _master->clearWindow();
   deleteAttacksDisplays();
 
-  _master.drawRectangle(_background.getRectangle());
-  std::size_t player_quadrant_x = _game.getPlayerQuadrantX();
-  std::size_t player_quadrant_y = _game.getPlayerQuadrantY();
+  _master->drawRectangle(_background.getRectangle());
+  std::size_t player_quadrant_x = _game->getPlayerQuadrantX();
+  std::size_t player_quadrant_y = _game->getPlayerQuadrantY();
   drawWalls(player_quadrant_x, player_quadrant_y);
   drawMobs(player_quadrant_x, player_quadrant_y);
   drawPlayer();
   drawAttacks();
-  if (player_quadrant_x == 0 && player_quadrant_y == 9) _master.drawText(_spawn_message.getText());
-  _master.drawText(_keys_swap.getText());
-  _master.displayWindow();
+  if (player_quadrant_x == 0 && player_quadrant_y == 9) _master->drawText(_spawn_message.getText());
+  _master->drawText(_keys_swap.getText());
+  _master->displayWindow();
 }
 
 void GameWindow::drawPlayer() {
   float div_x = _game_board_size_x / _board_divider;
   float div_y = _game_board_size_y / _board_divider;
-  int quot_x = std::div(static_cast<int>(_game.getPlayerDimensions().x), static_cast<int>(div_x)).quot;
-  int quot_y = std::div(static_cast<int>(_game.getPlayerDimensions().y), static_cast<int>(div_y)).quot;
+  int quot_x = std::div(static_cast<int>(_game->getPlayerDimensions().x), static_cast<int>(div_x)).quot;
+  int quot_y = std::div(static_cast<int>(_game->getPlayerDimensions().y), static_cast<int>(div_y)).quot;
   _player_hp.clear();
-  _master.drawRectangle(_player.getRectangle());
-  _player_hp.emplace_back(_game.getPlayerSize().x * _hp_display_prop, _hp_display_height,
-                          _player.getX() - _game.getPlayerSize().x, _player.getY() + _game.getPlayerSize().y + _hp_display_height,
+  _master->drawRectangle(_player.getRectangle());
+  _player_hp.emplace_back(_game->getPlayerSize().x * _hp_display_prop, _hp_display_height,
+                          _player.getX() - _game->getPlayerSize().x, _player.getY() + _game->getPlayerSize().y + _hp_display_height,
                           sf::Color(255, 255, 255, 100), sf::Color::Transparent, 0.f, 0.f);
-  _player_hp.emplace_back(_game.getPlayerSize().x * _hp_display_prop * _game.getPlayerHealth(), _hp_display_height,
-                          _player.getX() - _game.getPlayerSize().x, _player.getY() + _game.getPlayerSize().y + _hp_display_height,
+  _player_hp.emplace_back(_game->getPlayerSize().x * _hp_display_prop * _game->getPlayerHealth(), _hp_display_height,
+                          _player.getX() - _game->getPlayerSize().x, _player.getY() + _game->getPlayerSize().y + _hp_display_height,
                           sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
-  if (_game.getPlayerAttackToBeDisplayed()) {
-    AttackToDisplay attack_to_charge = _game.getPlayerAttackDisplay();
+  if (_game->getPlayerAttackToBeDisplayed()) {
+    AttackToDisplay attack_to_charge = _game->getPlayerAttackDisplay();
     _animated_attacks_displays.emplace_back(attack_to_charge);
-    _animated_attacks.emplace_back(_master.getMagicBallTexture(), sf::Vector2u(_magic_ball_texture_x , _magic_ball_texture_y), 
+    _animated_attacks.emplace_back(_master->getMagicBallTexture(), sf::Vector2u(_magic_ball_texture_x , _magic_ball_texture_y), 
                                    attack_to_charge.hit_display_time, false,
                                    Dimensions(attack_to_charge.display_pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.display_pos.y - (static_cast<float>(quot_y) * div_y)),
                                    Dimensions(attack_to_charge.starting_size.x, attack_to_charge.starting_size.y),
                                    _player_attack_direction); 
-    _game.playerAttackDisplayed();
+    _game->playerAttackDisplayed();
   }
-  _master.drawRectangle(_player_hp[0].getRectangle());
-  _master.drawRectangle(_player_hp[1].getRectangle());
+  _master->drawRectangle(_player_hp[0].getRectangle());
+  _master->drawRectangle(_player_hp[1].getRectangle());
 }
 
 void GameWindow::drawMobs(std::size_t player_quadrant_x, std::size_t player_quadrant_y) {
-  std::vector<std::shared_ptr<Spawner>> spawners = _game.getSpawners();
+  std::vector<std::shared_ptr<Spawner>> spawners = _game->getSpawners();
   _mobs.clear();
   _mobs_hp.clear();
 
@@ -77,23 +77,23 @@ void GameWindow::drawMobs(std::size_t player_quadrant_x, std::size_t player_quad
                                          sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
         if (in_screen_mobs[mob_index]->getAttackToDisplay()) {
           AttackToDisplay attack_to_charge = in_screen_mobs[mob_index]->getAttackDisplay();
-          std::shared_ptr<sf::Texture> animation_texture = _master.getMobAttackTexture(attack_to_charge.skin);
+          std::shared_ptr<sf::Texture> animation_texture = _master->getMobAttackTexture(attack_to_charge.skin);
           _animated_attacks_displays.emplace_back(attack_to_charge);
           _animated_attacks.emplace_back(animation_texture, sf::Vector2u(_mob_attack_1_x, _mob_attack_1_y), attack_to_charge.hit_display_time, false,
                                          Dimensions(attack_to_charge.pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.pos.y - (static_cast<float>(quot_y) * div_y)),
                                          Dimensions(attack_to_charge.size.x, attack_to_charge.size.y), attack_to_charge.attack_direction);
           in_screen_mobs[mob_index]->attackDisplayed();
         }
-        _master.drawRectangle(_mobs[mob_index].getRectangle());
-        _master.drawRectangle(_mobs_hp[mob_index][0].getRectangle());
-        _master.drawRectangle(_mobs_hp[mob_index][1].getRectangle());
+        _master->drawRectangle(_mobs[mob_index].getRectangle());
+        _master->drawRectangle(_mobs_hp[mob_index][0].getRectangle());
+        _master->drawRectangle(_mobs_hp[mob_index][1].getRectangle());
       }
     }
   }
 }
 
 void GameWindow::drawWalls(std::size_t player_quadrant_x, std::size_t player_quadrant_y) {
-  std::vector<std::shared_ptr<GameEntity>> walls = _game.getWalls(player_quadrant_x, player_quadrant_y);
+  std::vector<std::shared_ptr<GameEntity>> walls = _game->getWalls(player_quadrant_x, player_quadrant_y);
   _walls.clear();
 
   for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
@@ -102,7 +102,7 @@ void GameWindow::drawWalls(std::size_t player_quadrant_x, std::size_t player_qua
                         walls[wall_index]->getPosition().x - static_cast<float>(player_quadrant_x) * _projection_size_x,
                         walls[wall_index]->getPosition().y - static_cast<float>(player_quadrant_y) * _projection_size_y, 
                         sf::Color::White, sf::Color::Yellow, 0.f, 0.f);
-    _master.drawRectangle(_walls[wall_index].getRectangle());
+    _master->drawRectangle(_walls[wall_index].getRectangle());
   } 
 }
 
@@ -110,7 +110,7 @@ void GameWindow::processEvent(sf::Event event) {
   _swap_pressed = false;
   switch (event.type) {
     case sf::Event::Closed : {
-      _master.closeWindow();
+      _master->closeWindow();
       _open_window = false;
       break;
     }
@@ -135,7 +135,7 @@ void GameWindow::processEvent(sf::Event event) {
       else if (event.key.code == 73) {_top_attack = true; break;}
       else if (event.key.code == 74) {_bot_attack = true; break;}
       else if (event.key.code == sf::Keyboard::Escape) {
-        _master.closeWindow();
+        _master->closeWindow();
         _open_window = false;
         break;
       }
@@ -159,13 +159,13 @@ void GameWindow::processEvent(sf::Event event) {
 
 void GameWindow::concludeEvent() {
   if (_swap_pressed) swapMoveKeys();
-  if (!_game.isOver()) {
+  if (!_game->isOver()) {
     setPlayerDirections();
-    _game.updateGame(_player_direction, _player_attack_direction);
+    _game->updateGame(_player_direction, _player_attack_direction);
     setPlayerPosition();
   }
   else {
-    _master.closeWindow();
+    _master->closeWindow();
     _open_window = false;
   }
 }
@@ -188,16 +188,12 @@ void GameWindow::setPlayerDirections() {
 }
 
 void GameWindow::setPlayerPosition() {
-  Dimensions new_dimensions = _game.getPlayerDimensions();
+  Dimensions new_dimensions = _game->getPlayerDimensions();
   int quadrant_y = static_cast<int>(new_dimensions.y / _projection_size_y);
   int quadrant_x = static_cast<int>(new_dimensions.x / _projection_size_x);
   float screen_dimension_y = new_dimensions.y - static_cast<float>(quadrant_y * static_cast<int>(_projection_size_y));
   float screen_dimension_x = new_dimensions.x - static_cast<float>(quadrant_x * static_cast<int>(_projection_size_x));
   _player.setPosition(screen_dimension_x, screen_dimension_y);
-}
-
-bool GameWindow::pollEvent(sf::Event& event) {
-  return _master.pollEvent(event);
 }
 
 void GameWindow::deleteAttacksDisplays() {
@@ -212,8 +208,8 @@ void GameWindow::deleteAttacksDisplays() {
 
 void GameWindow::drawAttacks() {
   for (std::size_t attack_index = 0; attack_index < _animated_attacks.size(); ++attack_index) {
-    _animated_attacks[attack_index].nextImage(_game.getGameTimer());
-    _master.drawRectangle(_animated_attacks[attack_index].getRectangle());
+    _animated_attacks[attack_index].nextImage(_game->getGameTimer());
+    _master->drawRectangle(_animated_attacks[attack_index].getRectangle());
   }
 }
 
@@ -236,8 +232,3 @@ void GameWindow::swapMoveKeys() {
   _rgt_attack = false;
   _lft_attack = false;
 }
-
-
-// Getters
-bool GameWindow::getOpen() {return _master.getOpen();}
-Master& GameWindow::getMaster() {return _master;}

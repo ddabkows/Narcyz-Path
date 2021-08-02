@@ -74,7 +74,7 @@ class MovingEntity : public GameEntity {
     const int& getHealth() const;
     
     // Destructor
-    ~MovingEntity() = default;
+    virtual ~MovingEntity() = default;
 
 };
 #endif

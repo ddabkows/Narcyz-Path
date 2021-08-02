@@ -51,7 +51,8 @@ class Mob : public MovingEntity {
                               _hit_charge(mob._hit_charge),
                               _hit_cooldown(mob._hit_cooldown),
                               _hit_strength(mob._hit_strength),
-                              _attack_display(mob._attack_display) {
+                              _attack_display(mob._attack_display),
+                              _attack_skin(mob._attack_skin) {
       _position = mob._position;
       _size = mob._size;
     }
@@ -63,7 +64,8 @@ class Mob : public MovingEntity {
                          _hit_charge(mob._hit_charge),
                          _hit_cooldown(mob._hit_cooldown),
                          _hit_strength(mob._hit_strength),
-                         _attack_display(mob._attack_display) {
+                         _attack_display(mob._attack_display),
+                         _attack_skin(mob._attack_skin) {
       _position = mob._position;
       _size = mob._size;
     }
@@ -73,13 +75,15 @@ class Mob : public MovingEntity {
     void move(std::shared_ptr<Player>, std::vector<std::shared_ptr<Mob>>, const std::vector<std::shared_ptr<GameEntity>>, float);
     float checkDistanceToPlayer(std::shared_ptr<Player>, float, float);
     void chargeAttack(float);
-    virtual void attack(std::shared_ptr<Player>, float);
+    virtual void attack(std::shared_ptr<Player>, float) = 0;
     void attackDisplayed();
 
     // Getters
     const AttackToDisplay& getAttackDisplay() const;
     const bool& getAttackToDisplay() const;
 
+    // Destructor
+    virtual ~Mob() = default;
 
 };
 #endif

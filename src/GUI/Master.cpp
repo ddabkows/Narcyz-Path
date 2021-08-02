@@ -53,8 +53,14 @@ void Master::drawText(const sf::Text& text) {
 
 std::shared_ptr<sf::Texture> Master::getMobAttackTexture(Skin skin) {
   switch (skin) {
-    case classic_mob_attack: {
+    case no_skin : {
+      return nullptr;
+    }
+    case classic_mob_attack : {
       return _classic_mob_attack;
+    }
+    default : {
+      return nullptr;
     }
   }
 }

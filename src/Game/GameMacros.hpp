@@ -35,7 +35,7 @@ const std::size_t _classic_mob_spawn_1_x   = 0;
 const std::size_t _classic_mob_spawn_1_y   = 8;
 const float _classic_mob_hit_charge        = 0.5f;
 const float _classic_mob_hit_cooldown      = 2.f;
-const float _classic_mob_hit_display_time  = 0.5f;
+const float _classic_mob_hit_display_time  = 0.2f;
 const float _classic_mob_attack_radius     = 90.f;
 const float _classic_mob_attack_size_x     = 6.f * _player_size_x;
 const float _classic_mob_attack_size_y     = 3.f * _player_size_y;
@@ -48,5 +48,5 @@ const int _classic_weapon_damage           = 1;
 const float _classic_weapon_cooldown       = 1.f;
 const float _classic_weapon_attack_size_x  = 3.f * _player_size_y;
 const float _classic_weapon_attack_size_y  = _player_size_y;
-const float _classic_weapon_display_time   = 0.5f;
+const float _classic_weapon_display_time   = 0.25f;
 #endif

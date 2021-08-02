@@ -9,7 +9,7 @@
 
 
 // Methods
-void Mob::attack(std::shared_ptr<Player> player, float time) {
+void ClassicMob::attack(std::shared_ptr<Player> player, float time) {
   if (_charge_attack) {
     if (time - _last_hit > _hit_charge) {
       _charge_attack = false;

@@ -56,6 +56,6 @@ protected:
     const Dimensions& getPosition() const;
     
     // Destructor
-    ~GameEntity() = default;
+    virtual ~GameEntity() = default;
 };
 #endif

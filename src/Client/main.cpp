@@ -13,7 +13,9 @@
 #include <SFML/Window.hpp>
 
 int main() {
-  std::shared_ptr<GameWindow> game_win = std::make_shared<GameWindow>();
+  std::shared_ptr<Game> game = std::make_shared<Game>();
+  std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>();
+  std::shared_ptr<GameWindow> game_win = std::make_shared<GameWindow>(window, game);
   bool keep_program_open = true;
   
   while (keep_program_open) {

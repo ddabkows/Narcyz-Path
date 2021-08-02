@@ -33,9 +33,10 @@ class Master {
 
   public:
     // Constructor
-    Master() : _window(), 
-               _font_1(),
-               _magic_ball_texture() {
+    Master(std::shared_ptr<sf::RenderWindow> window) : _window(window), 
+                                                       _font_1(),
+                                                       _magic_ball_texture(),
+                                                       _classic_mob_attack() {
       setupWindow();
     }
 

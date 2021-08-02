@@ -34,5 +34,8 @@ class ClassicMob : public Mob {
 
     // Methods
     void attack(std::shared_ptr<Player>, float) override;
+
+    // Destructor
+    ~ClassicMob() = default;
 };
 #endif
