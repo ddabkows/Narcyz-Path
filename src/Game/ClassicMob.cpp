@@ -13,6 +13,7 @@ void ClassicMob::attack(std::shared_ptr<Player> player, float time) {
   if (_charge_attack) {
     if (time - _last_hit > _hit_charge) {
       _charge_attack = false;
+      _attack_display.pos = Dimensions(_position.x - ((_attack_display.size.x - _size.x) / 2.f), _position.y - ((_attack_display.size.y - _size.y) / 2.f));
       _last_hit = time;
       _attack_display.attack_direction = east;
       if (checkDistanceToPlayer(player, _attack_display.pos.x + (_attack_display.size.x / 2.f), _attack_display.pos.y + (_attack_display.size.y / 2.f)) <= _classic_mob_attack_radius) {

@@ -64,7 +64,6 @@ float Mob::checkDistanceToPlayer(std::shared_ptr<Player> player, float new_pos_x
 void Mob::chargeAttack(float time) {
   if (!_charge_attack && time - _last_hit > _hit_cooldown) {
     _charge_attack = true;
-    _attack_display.pos = Dimensions(_position.x - ((_attack_display.size.x - _size.x) / 2.f), _position.y - ((_attack_display.size.y - _size.y) / 2.f));
     _last_hit = time;
   }
 }
