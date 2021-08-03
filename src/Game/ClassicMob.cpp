@@ -16,11 +16,17 @@ void ClassicMob::attack(std::shared_ptr<Player> player, float time) {
       _attack_display.pos = Dimensions(_position.x - ((_attack_display.size.x - _size.x) / 2.f), _position.y - ((_attack_display.size.y - _size.y) / 2.f));
       _last_hit = time;
       _attack_display.attack_direction = east;
-      if (checkDistanceToPlayer(player, _attack_display.pos.x + (_attack_display.size.x / 2.f), _attack_display.pos.y + (_attack_display.size.y / 2.f)) <= _classic_mob_attack_radius) {
+      if (checkDistance(player, _attack_display.pos.x + (_attack_display.size.x / 2.f), _attack_display.pos.y + (_attack_display.size.y / 2.f)) <= _classic_mob_attack_radius) {
         player->takeDamage(_hit_strength);
       }
       _attack_display.display_moment = time;
       _display_attack = true;
     }
   }
+}
+
+float ClassicMob::checkDistance(std::shared_ptr<Player> player, float pos_x, float pos_y) {
+  float player_x = player->getPosition().x + (player->getSize().x / 2.f);
+  float player_y = player->getPosition().y + (player->getSize().y / 2.f);
+  return static_cast<float>(sqrt(pow(pos_x - player_x, 2) + pow(pos_y - player_y, 2) * 1.0));
 }

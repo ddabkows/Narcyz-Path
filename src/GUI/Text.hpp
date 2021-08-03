@@ -33,7 +33,7 @@ class Text {
 
     // Copy
     Text(const myClass&) = delete;
-    myClass& operator=(const myClass&&) = delete;
+    myClass& operator=(const myClass&) = delete;
 
     // Move
     Text(myClass&&) = default;

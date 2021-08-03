@@ -33,7 +33,7 @@ protected:
 
     // Copy
     Sprite(const myClass&) = delete;
-    myClass& operator=(const myClass&&) = delete;
+    myClass& operator=(const myClass&) = delete;
 
     // Move
     Sprite(myClass&&) = default;
