@@ -12,12 +12,12 @@
 void Player::horizontalMove(int right, std::vector<std::shared_ptr<GameEntity>> mobs, const std::vector<std::shared_ptr<GameEntity>> walls) {
   bool conflict;
   conflict = checkHorizontal(right, mobs);
-  if (!conflict) conflict = checkHorizontal(right, walls);
+  if (! conflict) conflict = checkHorizontal(right, walls);
   if (!conflict) {
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration;
     }
-    _position.x += static_cast<float>(right) * (_player_movement_mult / (_velocity) + _player_movement_trans);
+    _position.x += static_cast<float>(right) * (_player_movement_mult / (_velocity + _player_movement_x_trans) + _player_movement_trans);
   }
 }
 
@@ -55,7 +55,7 @@ void Player::verticalMove(int down, std::vector<std::shared_ptr<GameEntity>> mob
     if (_velocity + _acceleration < _max_velocity) {
       _velocity += _acceleration;
     }
-    _position. y += static_cast<float>(down) * (_player_movement_mult / (_velocity) + _player_movement_trans);
+    _position. y += static_cast<float>(down) * (_player_movement_mult / (_velocity + _player_movement_x_trans) + _player_movement_trans);
   }
 }
 
@@ -93,7 +93,7 @@ void Player::oblicMove(int right, int down, std::vector<std::shared_ptr<GameEnti
     if (_velocity + _acceleration < _max_velocity) {
       _velocity += _acceleration;
     }
-    _position.x += static_cast<float>(right) * _pi_fourth * (_player_movement_mult / (_velocity)+_player_movement_trans);
+    _position.x += static_cast<float>(right) * _pi_fourth * (_player_movement_mult / (_velocity + _player_movement_x_trans)+_player_movement_trans);
   }
 
   bool conflict_vertical;
@@ -106,7 +106,7 @@ void Player::oblicMove(int right, int down, std::vector<std::shared_ptr<GameEnti
         _velocity += _acceleration;
       }
     }
-    _position.y += static_cast<float>(down) * _pi_fourth * (_player_movement_mult / (_velocity)+_player_movement_trans);
+    _position.y += static_cast<float>(down) * _pi_fourth * (_player_movement_mult / (_velocity + _player_movement_x_trans)+_player_movement_trans);
   }
 }
 
