@@ -49,7 +49,7 @@ class Spawner {
 
     Spawner(std::size_t quadrant_x, std::size_t quadrant_y, float size_x, float size_y, float mob_velocity, std::size_t max_mobs, float spawn_speed, 
             const int max_hp, const float hit_charge, const float hit_cooldown, const int hit_strength, AttackToDisplay attack_display,
-            Skin skin, Skin _attack_skin) : _quadrant_x(quadrant_x),
+            Skin skin, Skin attack_skin) : _quadrant_x(quadrant_x),
                                             _quadrant_y(quadrant_y),
                                             _mob_size(size_x, size_y),
                                             _mob_velocity(mob_velocity),
@@ -61,7 +61,7 @@ class Spawner {
                                             _hit_strength(hit_strength),
                                             _attack_display(attack_display),
                                             _skin(skin),
-                                            _attack_skin(skin) {}
+                                            _attack_skin(attack_skin) {}
 
     // Copy
     Spawner(const myClass&) = default;
