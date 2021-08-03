@@ -40,7 +40,7 @@ void GameWindow::drawPlayer() {
   if (_game->getPlayerAttackToBeDisplayed()) {
     AttackToDisplay attack_to_charge = _game->getPlayerAttackDisplay();
     _animated_attacks_displays.emplace_back(attack_to_charge);
-    _animated_attacks.emplace_back(_master->getMagicBallTexture(), sf::Vector2u(_magic_ball_texture_x , _magic_ball_texture_y), 
+    _animated_attacks.emplace_back(_game_master.getMagicBallTexture(), sf::Vector2u(_magic_ball_texture_x , _magic_ball_texture_y), 
                                    attack_to_charge.hit_display_time, false,
                                    Dimensions(attack_to_charge.display_pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.display_pos.y - (static_cast<float>(quot_y) * div_y)),
                                    Dimensions(attack_to_charge.starting_size.x, attack_to_charge.starting_size.y),
@@ -77,7 +77,7 @@ void GameWindow::drawMobs(std::size_t player_quadrant_x, std::size_t player_quad
                                          sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
         if (in_screen_mobs[mob_index]->getAttackToDisplay()) {
           AttackToDisplay attack_to_charge = in_screen_mobs[mob_index]->getAttackDisplay();
-          std::shared_ptr<sf::Texture> animation_texture = _master->getMobAttackTexture(attack_to_charge.skin);
+          std::shared_ptr<sf::Texture> animation_texture = _game_master.getMobAttackTexture(attack_to_charge.skin);
           _animated_attacks_displays.emplace_back(attack_to_charge);
           _animated_attacks.emplace_back(animation_texture, sf::Vector2u(_mob_attack_1_x, _mob_attack_1_y), attack_to_charge.hit_display_time, false,
                                          Dimensions(attack_to_charge.pos.x - (static_cast<float>(quot_x) * div_x), attack_to_charge.pos.y - (static_cast<float>(quot_y) * div_y)),
@@ -111,7 +111,6 @@ void GameWindow::processEvent(sf::Event event) {
   switch (event.type) {
     case sf::Event::Closed : {
       _master->closeWindow();
-      _open_window = false;
       break;
     }
     case sf::Event::MouseButtonPressed : {
@@ -136,7 +135,6 @@ void GameWindow::processEvent(sf::Event event) {
       else if (event.key.code == 74) {_bot_attack = true; break;}
       else if (event.key.code == sf::Keyboard::Escape) {
         _master->closeWindow();
-        _open_window = false;
         break;
       }
       break;
@@ -166,7 +164,6 @@ void GameWindow::concludeEvent() {
   }
   else {
     _master->closeWindow();
-    _open_window = false;
   }
 }
 
