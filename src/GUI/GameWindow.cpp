@@ -115,8 +115,12 @@ void GameWindow::processEvent(sf::Event event) {
     }
     case sf::Event::MouseButtonPressed : {
       if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (_keys_swap.getX() <= static_cast<float>(event.mouseButton.x) && static_cast<float>(event.mouseButton.x) <= _keys_swap.getX() + _keys_swap.getText().getGlobalBounds().width &&
-            _keys_swap.getY() <= static_cast<float>(event.mouseButton.y) && static_cast<float>(event.mouseButton.y) <= _keys_swap.getY() + _keys_swap.getText().getGlobalBounds().height) {
+        Dimensions keys_swap_pos(_keys_swap.getX() * (static_cast<float>(_master->getWindow()->getSize().x) / _projection_size_x),
+                                 _keys_swap.getY() * (static_cast<float>(_master->getWindow()->getSize().y) / _projection_size_y));
+        Dimensions keys_swap_size(_keys_swap.getText().getGlobalBounds().width * (static_cast<float>(_master->getWindow()->getSize().x) / _projection_size_x),
+                                  _keys_swap.getText().getGlobalBounds().height * (static_cast<float>(_master->getWindow()->getSize().y) / _projection_size_y));
+        if (keys_swap_pos.x <= static_cast<float>(event.mouseButton.x) && static_cast<float>(event.mouseButton.x) <= keys_swap_pos.x + keys_swap_size.x &&
+            keys_swap_pos.y <= static_cast<float>(event.mouseButton.y) && static_cast<float>(event.mouseButton.y) <= keys_swap_pos.y + keys_swap_size.y) {
           _swap_pressed = true;
           break;
         }
