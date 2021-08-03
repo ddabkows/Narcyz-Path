@@ -27,18 +27,10 @@ class Master {
     using myClass = Master;
 
     std::shared_ptr<sf::RenderWindow> _window;
-    std::shared_ptr<sf::Font> _font_1;
-    std::shared_ptr<sf::Texture> _magic_ball_texture;
-    std::shared_ptr<sf::Texture> _classic_mob_attack;
 
   public:
     // Constructor
-    Master(std::shared_ptr<sf::RenderWindow> window) : _window(window), 
-                                                       _font_1(),
-                                                       _magic_ball_texture(),
-                                                       _classic_mob_attack() {
-      setupWindow();
-    }
+    Master(std::shared_ptr<sf::RenderWindow> window) : _window(window) {setupWindow();}
 
     // Copy
     Master(const myClass&) = default;
@@ -60,9 +52,6 @@ class Master {
 
     // Getters
     std::shared_ptr<sf::RenderWindow>& getWindow();
-    std::shared_ptr<sf::Font>& getFont1();
-    std::shared_ptr<sf::Texture> getMagicBallTexture();
-    std::shared_ptr<sf::Texture> getMobAttackTexture(Skin);
     bool getOpen();
 
     // Destructor
