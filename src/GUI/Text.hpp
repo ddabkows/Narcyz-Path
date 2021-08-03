@@ -25,6 +25,7 @@ class Text {
 
   public:
     // Constructor
+    Text() : _text() {};
     Text(float pos_x, float pos_y, sf::Color inside_color, sf::Color outside_color, float rotation, std::shared_ptr<sf::Font> font, std::string string) :
           _text() {
       setupText(pos_x, pos_y, inside_color, outside_color, rotation, font, string);
@@ -36,7 +37,7 @@ class Text {
 
     // Move
     Text(myClass&&) = default;
-    myClass& operator=(myClass&&) = delete;
+    myClass& operator=(myClass&&) = default;
 
     // Methods
     void setupText(float, float, sf::Color, sf::Color, float, std::shared_ptr<sf::Font> font, std::string string);
