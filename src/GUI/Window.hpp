@@ -26,19 +26,24 @@
 #define _WINDOW_HPP
 
 
+class GUI;
+
+
 class Window {
   private:
     // Trait
     using myClass = Window;
 
   protected:
+    GUI* _gui{};
     std::shared_ptr<Master> _master{};
+    std::shared_ptr<Game> _game{};
 
   public:
     // Constructor
-    Window(std::shared_ptr<sf::RenderWindow> window) {
-      _master = std::make_shared<Master>(window);
-    }
+    Window(GUI* gui, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Game> game) : _gui(gui),
+                                                                                             _master(std::make_shared<Master>(window)),
+                                                                                             _game(game) {}
 
     // Copy
     Window(const myClass&) = delete;
