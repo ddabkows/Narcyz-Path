@@ -32,6 +32,7 @@ class Mob : public MovingEntity {
     bool _display_attack = false;
     AttackToDisplay _attack_display;
     Skin _attack_skin;
+    unsigned int _states_number;
 
   public:
     // Constructor
@@ -77,10 +78,12 @@ class Mob : public MovingEntity {
     void chargeAttack(float);
     virtual void attack(std::shared_ptr<Player>, float) = 0;
     void attackDisplayed();
+    virtual unsigned int getState() = 0;
 
     // Getters
     const AttackToDisplay& getAttackDisplay() const;
     const bool& getAttackToDisplay() const;
+    const unsigned int& getStatesNumber() const;
 
     // Destructor
     virtual ~Mob() = default;

@@ -35,6 +35,7 @@ class ClassicMob : public Mob {
     // Methods
     void attack(std::shared_ptr<Player>, float) override;
     float checkDistance(std::shared_ptr<Player>, float, float);
+    unsigned int getState() override;
 
     // Destructor
     ~ClassicMob() = default;

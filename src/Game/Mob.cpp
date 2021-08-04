@@ -82,3 +82,4 @@ void Mob::attackDisplayed() {
 // Getters
 const AttackToDisplay& Mob::getAttackDisplay() const {return _attack_display;}
 const bool& Mob::getAttackToDisplay() const {return _display_attack;}
+const unsigned int& Mob::getStatesNumber() const {return _states_number;}

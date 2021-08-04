@@ -30,3 +30,12 @@ float ClassicMob::checkDistance(std::shared_ptr<Player> player, float pos_x, flo
   float player_y = player->getPosition().y + (player->getSize().y / 2.f);
   return static_cast<float>(sqrt(pow(pos_x - player_x, 2) + pow(pos_y - player_y, 2) * 1.0));
 }
+
+unsigned int ClassicMob::getState() {
+  if (_display_attack) {return 5;}
+  else if (_directions == standby) {return 0;}
+  else if (_directions == north) {return 4;}
+  else if (_directions == south) {return 3;}
+  else if (_directions < south) {return 1;}
+  else if (_directions > south) {return 2;}
+}
