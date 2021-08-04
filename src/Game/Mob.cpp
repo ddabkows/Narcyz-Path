@@ -18,7 +18,6 @@ void Mob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>>
   Dimensions old_position = _position;
   float best_distance = INFINITY;
   Dimensions best_position = _position;
-  std::cout << "New mob" << std::endl;
   if (!(checkDistanceToPlayer(player, _position.x, _position.y) <= _classic_mob_attack_radius/2.f)) {
     for (int quadrant = 0; quadrant < _circle_div_max; ++quadrant) {
       _position.x = old_position.x + _max_velocity * static_cast<float>(cos(static_cast<float>(quadrant) / _circle_div_iterator * M_PI));
@@ -44,8 +43,6 @@ void Mob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>>
         }
         if (!other_mob_conflict) {
           float new_dist = checkDistanceToPlayer(player, _position.x, _position.y);
-          std::cout << new_dist << std::endl;
-          std::cout << best_distance << std::endl;
           if (new_dist < best_distance) {
             best_distance = new_dist;
             best_position = _position;

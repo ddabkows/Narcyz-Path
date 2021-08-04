@@ -16,7 +16,6 @@ void Animation::update(unsigned int row) {
 }
 
 void Animation::nextImage(float time) {
-  if (_current_image.y != 0) std::cout << _current_image.y << std::endl;
   if (time - _last_change > _switch_time) {
     _last_change = time;
     ++_current_image.x;
