@@ -25,12 +25,12 @@ void GameWindow::updateWindow() {
 }
 
 void GameWindow::drawPlayer() {
+  choosePlayerAnimation();
   float div_x = _game_board_size_x / _board_divider;
   float div_y = _game_board_size_y / _board_divider;
   int quot_x = std::div(static_cast<int>(_game->getPlayerDimensions().x), static_cast<int>(div_x)).quot;
   int quot_y = std::div(static_cast<int>(_game->getPlayerDimensions().y), static_cast<int>(div_y)).quot;
   _player_hp.clear();
-  _master->drawRectangle(_player.getRectangle());
   _player_hp.emplace_back(_game->getPlayerSize().x * _hp_display_prop, _hp_display_height,
                           _player.getX() - _game->getPlayerSize().x, _player.getY() + _game->getPlayerSize().y + _hp_display_height,
                           sf::Color(255, 255, 255, 100), sf::Color::Transparent, 0.f, 0.f);
@@ -38,6 +38,7 @@ void GameWindow::drawPlayer() {
                           _player.getX() - _game->getPlayerSize().x, _player.getY() + _game->getPlayerSize().y + _hp_display_height,
                           sf::Color(255, 0, 0, 100), sf::Color::Transparent, 0.f, 0.f);
   if (_game->getPlayerAttackToBeDisplayed()) {
+    setPlayerAttackAnimation();
     AttackToDisplay attack_to_charge = _game->getPlayerAttackDisplay();
     _animated_attacks_displays.emplace_back(attack_to_charge);
     _animated_attacks.emplace_back(_game_master.getMagicBallTexture(), sf::Vector2u(_magic_ball_texture_x , _magic_ball_texture_y), 
@@ -47,6 +48,7 @@ void GameWindow::drawPlayer() {
                                    _player_attack_direction); 
     _game->playerAttackDisplayed();
   }
+  _master->drawRectangle(_player.getRectangle());
   _master->drawRectangle(_player_hp[0].getRectangle());
   _master->drawRectangle(_player_hp[1].getRectangle());
 }
@@ -232,4 +234,33 @@ void GameWindow::swapMoveKeys() {
   _bot_attack = false;
   _rgt_attack = false;
   _lft_attack = false;
+}
+
+void GameWindow::setPlayerAttackAnimation() {
+  _player.setLoop(false);
+  _player.setSwitchTime(_classic_weapon_display_time);
+  if (_player_attack_direction == north) _player.update(8);
+  else if (_player_attack_direction == south) _player.update(7);
+  else if (_player_attack_direction == west) _player.update(6);
+  else if (_player_attack_direction == east) _player.update(5);
+}
+
+void GameWindow::choosePlayerAnimation() {
+  _player.nextImage(_game->getGameTimer());
+  if (_player.checkLoop() || (!_player.checkLoop() && _player.checkLastImage()) || _old_player_direction != _player_direction) {
+    if (!_player.checkLoop()) {
+      _player.setLoop(true);
+      _player.setSwitchTime(_player_display_time);
+    }
+    setPlayerNormalAnimation();
+  }
+  _old_player_direction = _player_direction;
+}
+
+void GameWindow::setPlayerNormalAnimation() {
+  if (_player_direction == standby) _player.update(0);
+  else if (_player_direction == north) _player.update(4);
+  else if (_player_direction == south) _player.update(3);
+  else if (_player_direction < south) _player.update(1);
+  else if (_player_direction > south) _player.update(2);
 }

@@ -20,6 +20,10 @@ void GameMaster::setupMaster() {
   _classic_mob_attack = std::make_shared<sf::Texture>();
   _classic_mob_attack->loadFromFile(_mob_attack_1_path);
   _classic_mob_attack->setSmooth(true);
+
+  _player_texture = std::make_shared<sf::Texture>();
+  _player_texture->loadFromFile(_player_path);
+  _player_texture->setSmooth(true);
 }
 
 std::shared_ptr<sf::Texture> GameMaster::getMobAttackTexture(Skin skin) {
@@ -39,3 +43,4 @@ std::shared_ptr<sf::Texture> GameMaster::getMobAttackTexture(Skin skin) {
 // Getters
 std::shared_ptr<sf::Font>& GameMaster::getFont1() {return _font_1;}
 std::shared_ptr<sf::Texture> GameMaster::getMagicBallTexture() {return _magic_ball_texture;}
+std::shared_ptr<sf::Texture> GameMaster::getPlayerTexture() {return _player_texture;}

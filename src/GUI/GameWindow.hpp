@@ -35,7 +35,7 @@ class GameWindow : public Window {
     using myClass = GameWindow;
 
     Rectangle _background;
-    Rectangle _player;
+    Animation _player{};
     std::vector<Rectangle> _player_hp{};
     std::vector<Rectangle> _walls{};
     std::vector<Rectangle> _mobs{};
@@ -58,6 +58,7 @@ class GameWindow : public Window {
     sf::Keyboard::Key _move_rgt = sf::Keyboard::D;
     sf::Keyboard::Key _move_lft = sf::Keyboard::A;
 
+    Directions _old_player_direction;
     Directions _player_direction;
     Directions _player_attack_direction;
     Text _spawn_message;
@@ -69,12 +70,14 @@ class GameWindow : public Window {
     // Constructor
     GameWindow(GUI* gui, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Game> game) : Window(gui, window, game),
                                                                                                  _background(_projection_size_x, _projection_size_y, 0.f, 0.f, sf::Color(0, 50, 0, 255), sf::Color(0, 0, 0, 255), 0.f, 0.f),
-                                                                                                 _player(_player_size_x, _player_size_y, _game_board_size_y - _player_size_y, (_projection_size_x - _player_size_x) / 2.f,
-                                                                                                 sf::Color(0, 0, 100), sf::Color(0, 0, 0, 255), 0.f, 0.f),
+                                                                                                 _old_player_direction(standby),
                                                                                                  _player_direction(standby),
                                                                                                  _player_attack_direction(standby),
                                                                                                  _spawn_message() ,
                                                                                                  _keys_swap() {
+      _player = Animation(_game_master.getPlayerTexture(), sf::Vector2u(_player_texture_x, _player_texture_y), _player_display_time, true,
+                          Dimensions(_game_board_size_y - _player_size_y, (_projection_size_x - _player_size_x) / 2.f),
+                          Dimensions(_player_size_x, _player_size_y), _player_rotation);
       _spawn_message = Text(20.f, 20.f, sf::Color::Black, sf::Color::White, 0.f, _game_master.getFont1(), _spawn_text);
       _keys_swap = Text(1388.f, 10.f, sf::Color::Black, sf::Color::White, 0.f, _game_master.getFont1(), _swap_keys_text); 
     }
@@ -97,6 +100,9 @@ class GameWindow : public Window {
     void drawAttacks();
     void deleteAttacksDisplays();
     void swapMoveKeys();
+    void choosePlayerAnimation();
+    void setPlayerNormalAnimation();
+    void setPlayerAttackAnimation();
 
     // Setters
     void setPlayerPosition();
