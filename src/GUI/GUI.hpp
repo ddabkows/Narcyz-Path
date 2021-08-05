@@ -26,7 +26,8 @@ class GUI {
 
     std::shared_ptr<Window> _window = nullptr;
     std::shared_ptr<Game> _game = std::make_shared<Game>();
-    std::shared_ptr<sf::RenderWindow> _display_window = std::make_shared<sf::RenderWindow>();
+    std::shared_ptr<sf::RenderWindow> _display_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(static_cast<int>(_projection_size_x), static_cast<int>(_projection_size_y)),
+                                                                                           "Narcyz Path");
     bool _open = true;
 
   public:

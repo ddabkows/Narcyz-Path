@@ -6,6 +6,7 @@
 
 
 #include "GameWindow.hpp"
+#include "LauncherWindow.hpp"
 
 
 void GameWindow::updateWindow() {
@@ -139,10 +140,7 @@ void GameWindow::processEvent(sf::Event event) {
       else if (event.key.code == 72) {_rgt_attack = true; break;}
       else if (event.key.code == 73) {_top_attack = true; break;}
       else if (event.key.code == 74) {_bot_attack = true; break;}
-      else if (event.key.code == sf::Keyboard::Escape) {
-        _master->closeWindow();
-        break;
-      }
+      else if (event.key.code == sf::Keyboard::Escape) {_escape_clicked = true; break;}
       break;
     }
     case sf::Event::KeyReleased : {
@@ -168,9 +166,8 @@ void GameWindow::concludeEvent() {
     _game->updateGame(_player_direction, _player_attack_direction);
     setPlayerPosition();
   }
-  else {
-    _master->closeWindow();
-  }
+  else _gui->setWindow(std::make_shared<LauncherWindow>(_gui, _master->getWindow(), _game));
+  if (_escape_clicked) _gui->setWindow(std::make_shared<LauncherWindow>(_gui, _master->getWindow(), _game));;
 }
 
 void GameWindow::setPlayerDirections() {

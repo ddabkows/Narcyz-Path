@@ -22,6 +22,7 @@ class Text {
 
   protected:
     sf::Text _text;
+    bool _clicked = false;
 
   public:
     // Constructor
@@ -32,7 +33,7 @@ class Text {
     }
 
     // Copy
-    Text(const myClass&) = delete;
+    Text(const myClass&) = default;
     myClass& operator=(const myClass&) = delete;
 
     // Move
@@ -41,6 +42,8 @@ class Text {
 
     // Methods
     void setupText(float, float, sf::Color, sf::Color, float, std::shared_ptr<sf::Font> font, std::string string);
+    void click();
+    void unClick();
 
     // Setters
     void setPosition(float, float);
@@ -51,6 +54,7 @@ class Text {
     float getX() const;
     float getY() const;
     const sf::Vector2f& getScale() const;
+    const bool& isClicked() const;
 
     // Destructor
     ~Text() = default;

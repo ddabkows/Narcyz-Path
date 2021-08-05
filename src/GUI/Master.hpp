@@ -27,10 +27,12 @@ class Master {
     using myClass = Master;
 
     std::shared_ptr<sf::RenderWindow> _window;
+    std::shared_ptr<sf::Font> _font_1;
 
   public:
     // Constructor
-    Master(std::shared_ptr<sf::RenderWindow> window) : _window(window) {setupWindow();}
+    Master(std::shared_ptr<sf::RenderWindow> window) : _window(window),
+                                                       _font_1() {setupWindow();}
 
     // Copy
     Master(const myClass&) = default;
@@ -52,6 +54,7 @@ class Master {
 
     // Getters
     std::shared_ptr<sf::RenderWindow>& getWindow();
+    std::shared_ptr<sf::Font>& getFont1();
     bool getOpen();
 
     // Destructor

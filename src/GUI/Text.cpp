@@ -20,6 +20,8 @@ void Text::setupText(float pos_x, float pos_y, sf::Color inside_color, sf::Color
   _text.setOutlineThickness(1.f);
   _text.setScale(1.f, 1.f);
 }
+void Text::click() {_clicked = true;}
+void Text::unClick() {_clicked = false;}
 
 
 // Setters
@@ -37,3 +39,4 @@ const sf::Text& Text::getText() const {return _text;}
 float Text::getX() const {return _text.getGlobalBounds().left;}
 float Text::getY() const {return _text.getGlobalBounds().top;}
 const sf::Vector2f& Text::getScale() const {return _text.getScale();}
+const bool& Text::isClicked() const {return _clicked;}

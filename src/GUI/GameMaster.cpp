@@ -10,9 +10,6 @@
 
 // Methods
 void GameMaster::setupMaster() {
-  _font_1 = std::make_shared<sf::Font>();
-  _font_1->loadFromFile(_font_1_path);
-
   _magic_ball_texture = std::make_shared<sf::Texture>();
   _magic_ball_texture->loadFromFile(_magic_ball_path);
   _magic_ball_texture->setSmooth(true);
@@ -41,6 +38,5 @@ std::shared_ptr<sf::Texture> GameMaster::getMobAttackTexture(Skin skin) {
 }
 
 // Getters
-std::shared_ptr<sf::Font>& GameMaster::getFont1() {return _font_1;}
 std::shared_ptr<sf::Texture> GameMaster::getMagicBallTexture() {return _magic_ball_texture;}
 std::shared_ptr<sf::Texture> GameMaster::getPlayerTexture() {return _player_texture;}
