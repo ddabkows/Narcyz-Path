@@ -17,7 +17,7 @@ void Player::horizontalMove(int right, std::vector<std::shared_ptr<GameEntity>> 
     if (_velocity + _acceleration < _max_velocity) { 
       _velocity += _acceleration;
     }
-    _position.x += static_cast<float>(right) * (_player_movement_mult / (_velocity + _player_movement_x_trans) + _player_movement_trans);
+    _position.x += static_cast<float>(right) * (_velocity * _velocity);
   }
 }
 
@@ -29,10 +29,10 @@ bool Player::checkHorizontal(int right, std::vector<std::shared_ptr<GameEntity>>
     if (entity_position_y < _position.y + _size.y && _position.y < entity_position_y + entity_size_y) {
       float entity_position_x = entities[entity_index]->getPosition().x;
       float entity_size_x = entities[entity_index]->getSize().x;
-      if ((0 < right && _position.x + _size.x <= entity_position_x && !(_position.x + _size.x + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < entity_position_x)) ||
-        (right < 0 && entity_position_x + entity_size_x <= _position.x && !(entity_position_x + entity_size_x < _position.x - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+      if ((0 < right && _position.x + _size.x <= entity_position_x && !(_position.x + _size.x + (_velocity * _velocity) < entity_position_x)) ||
+        (right < 0 && entity_position_x + entity_size_x <= _position.x && !(entity_position_x + entity_size_x < _position.x - (_velocity * _velocity)))) {
         conflict = true;
-        _velocity = 0.f;
+        _velocity = _player_min_velocity;
         if (0 < right && _position.x + _size.x < entity_position_x) {
           _position.x = entity_position_x - _size.x;
         }
@@ -55,7 +55,7 @@ void Player::verticalMove(int down, std::vector<std::shared_ptr<GameEntity>> mob
     if (_velocity + _acceleration < _max_velocity) {
       _velocity += _acceleration;
     }
-    _position. y += static_cast<float>(down) * (_player_movement_mult / (_velocity + _player_movement_x_trans) + _player_movement_trans);
+    _position. y += static_cast<float>(down) * (_velocity * _velocity);
   }
 }
 
@@ -67,10 +67,10 @@ bool Player::checkVertical(int down, std::vector<std::shared_ptr<GameEntity>> en
     if (entity_position_x < _position.x + _size.x && _position.x < entity_position_x + entity_size_x) {
       float entity_position_y = entities[entity_index]->getPosition().y;
       float entity_size_y = entities[entity_index]->getSize().y;
-      if ((0 < down && _position.y + _size.y <= entity_position_y && !(_position.y + _size.y + (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans) < entity_position_y)) ||
-         (down < 0 && entity_position_y + entity_size_y <= _position.y && !(entity_position_y + entity_size_y < _position.y - (_player_movement_mult / (_velocity + _acceleration) + _player_movement_trans)))) {
+      if ((0 < down && _position.y + _size.y <= entity_position_y && !(_position.y + _size.y + (_velocity * _velocity) < entity_position_y)) ||
+         (down < 0 && entity_position_y + entity_size_y <= _position.y && !(entity_position_y + entity_size_y < _position.y - (_velocity * _velocity)))) {
         conflict = true;
-        _velocity = 0.f;
+        _velocity = _player_min_velocity;
         if (0 < down && _position.y + _size.y < entity_position_y) {
           _position.y = entity_position_y - _size.y;
         }
@@ -93,7 +93,7 @@ void Player::oblicMove(int right, int down, std::vector<std::shared_ptr<GameEnti
     if (_velocity + _acceleration < _max_velocity) {
       _velocity += _acceleration;
     }
-    _position.x += static_cast<float>(right) * _pi_fourth * (_player_movement_mult / (_velocity + _player_movement_x_trans)+_player_movement_trans);
+    _position.x += static_cast<float>(right) * _pi_fourth * (_velocity * _velocity);
   }
 
   bool conflict_vertical;
@@ -106,7 +106,7 @@ void Player::oblicMove(int right, int down, std::vector<std::shared_ptr<GameEnti
         _velocity += _acceleration;
       }
     }
-    _position.y += static_cast<float>(down) * _pi_fourth * (_player_movement_mult / (_velocity + _player_movement_x_trans)+_player_movement_trans);
+    _position.y += static_cast<float>(down) * _pi_fourth * (_velocity * _velocity);
   }
 }
 
@@ -120,7 +120,7 @@ void Player::move(Directions player_decision, std::vector<std::shared_ptr<Moving
   }
   if (player_decision - _directions > _direction_change || player_decision - _directions < -_direction_change) {
     if (!((player_decision == north && _directions == north_west) || (player_decision == north_west && _directions == north))) {
-      _velocity = 0.f;
+      _velocity = _player_min_velocity;
     }
   }
   switch (player_decision) {
