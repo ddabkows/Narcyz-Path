@@ -48,11 +48,12 @@ void Game::updateGame(Directions updating_directions, Directions updating_attack
 void Game::checkSpawners() {
   float time = _game_timer.getElapsedTime().asSeconds();
   for (std::size_t spawner_index = 0; spawner_index < _mob_spawners.size(); ++spawner_index) {
-    std::size_t dist_x = checkDist(_player->getQuadrantX(), _mob_spawners[spawner_index]->getQuadrantX());
-    std::size_t dist_y = checkDist(_player->getQuadrantY(), _mob_spawners[spawner_index]->getQuadrantY());
+    std::shared_ptr<Spawner> spawner = _mob_spawners[spawner_index];
+    std::size_t dist_x = checkDist(_player->getQuadrantX(), spawner->getQuadrantX());
+    std::size_t dist_y = checkDist(_player->getQuadrantY(), spawner->getQuadrantY());
     if (dist_x == 0 && dist_y == 0) {
-      _mob_spawners[spawner_index]->killMobs();
-      std::vector<std::shared_ptr<Mob>> mobs_to_move = _mob_spawners[spawner_index]->getMobs();
+      spawner->killMobs();
+      std::vector<std::shared_ptr<Mob>> mobs_to_move = spawner->getMobs();
       for (std::size_t mob_index = 0; mob_index < mobs_to_move.size(); ++mob_index) {
         std::vector<std::shared_ptr<Mob>> other_mobs = mobs_to_move;
         other_mobs.erase(other_mobs.begin() + static_cast<int>(mob_index));
@@ -60,10 +61,10 @@ void Game::checkSpawners() {
       }
     }
     if (dist_x <= _spawn_dist && dist_y <= _spawn_dist) {
-      _mob_spawners[spawner_index]->spawnMobs(time, _walls[_mob_spawners[spawner_index]->getQuadrantX()][_mob_spawners[spawner_index]->getQuadrantY()]);
+      spawner->spawnMobs(time, _walls[spawner->getQuadrantX()][spawner->getQuadrantY()]);
     }
     else if (dist_x > _despawn_dist || dist_y > _despawn_dist) {
-      _mob_spawners[spawner_index]->despawnMobs();
+      spawner->despawnMobs();
     }
   }
 }

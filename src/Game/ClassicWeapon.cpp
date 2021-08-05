@@ -41,9 +41,10 @@ void ClassicWeapon::attack(std::vector<std::shared_ptr<MovingEntity>> mobs, floa
       }
     }
     for (std::size_t mob_index = 0; mob_index < mobs.size(); ++mob_index) {
-      if (_attack_display.pos.x <= mobs[mob_index]->getPosition().x + mobs[mob_index]->getSize().x && mobs[mob_index]->getPosition().x <= _attack_display.pos.x + _attack_display.size.x &&
-          _attack_display.pos.y <= mobs[mob_index]->getPosition().y + mobs[mob_index]->getSize().y && mobs[mob_index]->getPosition().y <= _attack_display.pos.y + _attack_display.size.y) {
-            mobs[mob_index]->takeDamage(_damage);
+      std::shared_ptr<MovingEntity> mob = mobs[mob_index];
+      if (_attack_display.pos.x <= mob->getPosition().x + mob->getSize().x && mob->getPosition().x <= _attack_display.pos.x + _attack_display.size.x &&
+          _attack_display.pos.y <= mob->getPosition().y + mob->getSize().y && mob->getPosition().y <= _attack_display.pos.y + _attack_display.size.y) {
+            mob->takeDamage(_damage);
           }
     }
   }

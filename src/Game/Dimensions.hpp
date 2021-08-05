@@ -18,5 +18,8 @@ struct Dimensions {
   bool operator==(const Dimensions& other_dimensions) {
     return (x == other_dimensions.x && y == other_dimensions.y);
   }
+  bool operator!=(const Dimensions& other_dimensions) {
+    return (x != other_dimensions.x || y != other_dimensions.y);
+  }
 };
 #endif 

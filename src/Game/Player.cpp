@@ -24,11 +24,12 @@ void Player::horizontalMove(int right, std::vector<std::shared_ptr<GameEntity>> 
 bool Player::checkHorizontal(int right, std::vector<std::shared_ptr<GameEntity>> entities) {
   bool conflict = false;
   for (std::size_t entity_index = 0; entity_index < entities.size(); ++entity_index) {
-    float entity_position_y = entities[entity_index]->getPosition().y;
-    float entity_size_y = entities[entity_index]->getSize().y;
+    std::shared_ptr<GameEntity> entity = entities[entity_index];
+    float entity_position_y = entity->getPosition().y;
+    float entity_size_y = entity->getSize().y;
     if (entity_position_y < _position.y + _size.y && _position.y < entity_position_y + entity_size_y) {
-      float entity_position_x = entities[entity_index]->getPosition().x;
-      float entity_size_x = entities[entity_index]->getSize().x;
+      float entity_position_x = entity->getPosition().x;
+      float entity_size_x = entity->getSize().x;
       if ((0 < right && _position.x + _size.x <= entity_position_x && !(_position.x + _size.x + (_velocity * _velocity) < entity_position_x)) ||
         (right < 0 && entity_position_x + entity_size_x <= _position.x && !(entity_position_x + entity_size_x < _position.x - (_velocity * _velocity)))) {
         conflict = true;
@@ -62,11 +63,12 @@ void Player::verticalMove(int down, std::vector<std::shared_ptr<GameEntity>> mob
 bool Player::checkVertical(int down, std::vector<std::shared_ptr<GameEntity>> entities) {
   bool conflict = false;
   for (std::size_t entity_index = 0; entity_index < entities.size(); ++entity_index) {
-    float entity_position_x = entities[entity_index]->getPosition().x;
-    float entity_size_x = entities[entity_index]->getSize().x;
+    std::shared_ptr<GameEntity> entity = entities[entity_index];
+    float entity_position_x = entity->getPosition().x;
+    float entity_size_x = entity->getSize().x;
     if (entity_position_x < _position.x + _size.x && _position.x < entity_position_x + entity_size_x) {
-      float entity_position_y = entities[entity_index]->getPosition().y;
-      float entity_size_y = entities[entity_index]->getSize().y;
+      float entity_position_y = entity->getPosition().y;
+      float entity_size_y = entity->getSize().y;
       if ((0 < down && _position.y + _size.y <= entity_position_y && !(_position.y + _size.y + (_velocity * _velocity) < entity_position_y)) ||
          (down < 0 && entity_position_y + entity_size_y <= _position.y && !(entity_position_y + entity_size_y < _position.y - (_velocity * _velocity)))) {
         conflict = true;

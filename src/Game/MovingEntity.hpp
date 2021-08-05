@@ -64,8 +64,8 @@ class MovingEntity : public GameEntity {
 
     // Methods
     void takeDamage(int);
-    bool checkCollisionME(std::shared_ptr<MovingEntity>);
-    bool checkCollisionGE(std::shared_ptr<GameEntity>);
+    bool checkCollisionME(Dimensions, std::shared_ptr<MovingEntity>);
+    bool checkCollisionGE(Dimensions, std::shared_ptr<GameEntity>);
 
     // Setters
 

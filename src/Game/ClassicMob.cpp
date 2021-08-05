@@ -10,7 +10,7 @@
 
 // Methods
 void ClassicMob::move(std::shared_ptr<Player> player, std::vector<std::shared_ptr<Mob>> other_mobs, const std::vector<std::shared_ptr<GameEntity>> walls, float time) {
-  Dimensions new_position(_position.x, _position.y);
+  Dimensions new_position(INFINITY, INFINITY);
   for (int quadrant = 0; quadrant < _circle_div_max; ++quadrant) {
     float new_pos_x = _position.x + _max_velocity * static_cast<float>(cos(static_cast<float>(quadrant) / _circle_div_iterator * M_PI));
     float new_pos_y = _position.y + _max_velocity * static_cast<float>(sin(static_cast<float>(quadrant) / _circle_div_iterator * M_PI));
@@ -19,8 +19,7 @@ void ClassicMob::move(std::shared_ptr<Player> player, std::vector<std::shared_pt
       bool wall_conflict = false;
       for (std::size_t wall_index = 0; wall_index < walls.size(); ++wall_index) {
         std::shared_ptr<GameEntity> wall = walls[wall_index];
-        if (wall->getPosition().x <= new_pos_x + _size.x && new_pos_x <= wall->getPosition().x + wall->getSize().x &&
-          wall->getPosition().y <= new_pos_y + _size.y && new_pos_y <= wall->getPosition().y + wall->getSize().y) {
+        if (checkCollisionGE(Dimensions(new_pos_x, new_pos_y), wall)) {
           wall_conflict = true;
           break;
         }
@@ -29,7 +28,7 @@ void ClassicMob::move(std::shared_ptr<Player> player, std::vector<std::shared_pt
         bool other_mob_conflict = false;
         for (std::size_t other_mob_index = 0; other_mob_index < other_mobs.size(); ++other_mob_index) {
           std::shared_ptr<MovingEntity> other_mob = other_mobs[other_mob_index];
-          if (checkCollisionME(other_mob)) {
+          if (checkCollisionME(Dimensions(new_pos_x, new_pos_y), other_mob)) {
             other_mob_conflict = true;
             break;
           } 
@@ -48,8 +47,10 @@ void ClassicMob::move(std::shared_ptr<Player> player, std::vector<std::shared_pt
     }
     attack(player, time);
   }
-  _position.x = new_position.x;
-  _position.y = new_position.y;
+  if (new_position != Dimensions(INFINITY, INFINITY)) {
+    _position.x = new_position.x;
+    _position.y = new_position.y;
+  }
 }
 void ClassicMob::attack(std::shared_ptr<Player> player, float time) {
   if (_charge_attack) {
