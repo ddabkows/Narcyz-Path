@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameEntity.hpp"
+#include "ClassicSpawner.hpp"
 #include "GameBoard.hpp"
 #include "MovingEntity.hpp"
 #include "Player.hpp"
@@ -38,12 +39,7 @@ class Game {
     float _player_walk_timer = 0.f;
     sf::Clock _game_timer{};
     bool _is_over = false;
-    std::vector<std::shared_ptr<Spawner>> _mob_spawners = {std::make_shared<Spawner>(_classic_mob_spawn_1_x, _classic_mob_spawn_1_y, 
-                                                           _player_size_x, _player_size_y, _classic_mob_velocity, _classic_mob_max_count, 
-                                                           _classic_mob_spawn_speed, _classic_mob_max_hp, _classic_mob_hit_charge, _classic_mob_hit_cooldown,
-                                                           _classic_mob_attack_strength,
-                                                           AttackToDisplay(_classic_mob_attack_size_x, _classic_mob_attack_size_y, _classic_mob_hit_display_time, Skin(classic_mob_attack)),
-                                                           Skin(no_skin), Skin(classic_mob_attack))};
+    std::vector<std::shared_ptr<Spawner>> _mob_spawners = {std::make_shared<ClassicSpawner>(_classic_mob_spawn_1_x, _classic_mob_spawn_1_y)};
 
   public:
   // Constructor

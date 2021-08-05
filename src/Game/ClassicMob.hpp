@@ -19,11 +19,10 @@ class ClassicMob : public Mob {
 
   public:
     // Constructor
-    ClassicMob(float size_x, float size_y, float pos_x, float pos_y, float max_velocity, std::size_t quadrant_x, std::size_t quadrant_y, const int max_hp,
-               float hit_charge, float hit_cooldown, int hit_strength, AttackToDisplay attack_display, Skin skin, Skin attack_skin) : Mob(size_x, size_y, pos_x, pos_y,
-                                                                                                                                          max_velocity, quadrant_x, quadrant_y,
-                                                                                                                                          max_hp, hit_charge, hit_cooldown, hit_strength,
-                                                                                                                                          attack_display, skin, attack_skin) {}
+    ClassicMob(float pos_x, float pos_y) : Mob(_player_size_x, _player_size_y, pos_x, pos_y, _classic_mob_velocity, _classic_mob_spawn_1_x, _classic_mob_spawn_1_y,
+               _classic_mob_max_hp, _classic_mob_hit_charge, _classic_mob_hit_cooldown, _classic_mob_attack_strength, 
+               AttackToDisplay(_classic_mob_attack_size_x, _classic_mob_attack_size_y, _classic_mob_hit_display_time, Skin(classic_mob_attack)),
+               no_skin, classic_mob_attack, _classic_mob_states_nbr) {}
     // Copy
     ClassicMob(const myClass&) = default;
     myClass& operator=(const myClass&) = delete;
@@ -33,6 +32,7 @@ class ClassicMob : public Mob {
     myClass& operator=(myClass&&) = delete;
 
     // Methods
+    void move(std::shared_ptr<Player>, std::vector<std::shared_ptr<Mob>>, const std::vector<std::shared_ptr<GameEntity>>, float) override;
     void attack(std::shared_ptr<Player>, float) override;
     float checkDistance(std::shared_ptr<Player>, float, float);
     unsigned int getState() override;

@@ -21,12 +21,12 @@ class Animation final {
     // Trait
     using myClass = Animation;
 
-    sf::Vector2u _image_count;
+    sf::Vector2u _image_count{};
     sf::Vector2u _current_image{};
 
     float _last_change = 0.f;
-    float _switch_time;
-    bool _repeat;
+    float _switch_time{};
+    bool _repeat{};
 
     sf::IntRect _animation{};
     sf::Texture* _texture{};

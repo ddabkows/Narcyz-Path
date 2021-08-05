@@ -41,6 +41,7 @@ const float _classic_mob_attack_radius     = 90.f;
 const float _classic_mob_attack_size_x     = 6.f * _player_size_x;
 const float _classic_mob_attack_size_y     = 3.f * _player_size_y;
 const int _classic_mob_attack_strength     = 10;
+const unsigned int _classic_mob_states_nbr = 6;
 const double _game_tick                    = 0.04;
 const int _circle_div_iterator             = 4;
 const int _circle_div_max                  = 8;
