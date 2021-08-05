@@ -39,8 +39,6 @@ class LauncherWindow : public Window {
     LauncherWindow(GUI* gui, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<Game> game) : Window(gui, window, game) {
       _new_game = Text(_new_game_x, _new_game_y, sf::Color::Black, sf::Color::White, 0.f, _master->getFont1(), _new_game_text);
       _exit_game = Text(_exit_game_x, _exit_game_y, sf::Color::Black, sf::Color::White, 0.f, _master->getFont1(), _exit_game_text);
-      std::cout << _new_game.getText().getGlobalBounds().width << std::endl;
-      std::cout << _exit_game.getText().getGlobalBounds().width << std::endl;
     }
 
     // Copy
