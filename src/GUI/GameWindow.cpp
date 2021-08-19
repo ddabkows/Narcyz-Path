@@ -166,7 +166,7 @@ void GameWindow::concludeEvent() {
     _game->updateGame(_player_direction, _player_attack_direction);
     setPlayerPosition();
   }
-  else _gui->setWindow(std::make_shared<LauncherWindow>(_gui, _master->getWindow(), _game));
+  else _gui->setWindow(std::make_shared<LauncherWindow>(_gui, _master->getWindow(), std::make_shared<Game>()));
   if (_escape_clicked) _gui->setWindow(std::make_shared<LauncherWindow>(_gui, _master->getWindow(), _game));;
 }
 
