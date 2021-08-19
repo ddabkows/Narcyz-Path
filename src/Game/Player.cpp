@@ -159,7 +159,7 @@ void Player::move(Directions player_decision, std::vector<std::shared_ptr<Moving
       break;
     }
     default : {
-      _velocity = 0;
+      _velocity = _player_min_velocity;
       break;
     }
   }
